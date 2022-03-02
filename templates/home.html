@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
-<body>
-    <h1>Recipes of the Week</h1>
+{% extends 'base.html' %}
+{% block content %}
+<h1>Recipes of the Week</h1>
     {% for recipe in recipes %}
         {{ recipe.recipe_name }}
         {{ recipe.category_name }}
@@ -18,5 +11,4 @@
         {{ recipe.created_by }}
         {{ recipe.recipe_of_week }}
     {% endfor %}
-</body>
-</html>
+{% endblock %}
