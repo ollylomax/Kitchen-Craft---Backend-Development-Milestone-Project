@@ -7,6 +7,16 @@
     <title>Home</title>
 </head>
 <body>
-    <h1>functional</h1>
+    <h1>Recipes of the Week</h1>
+    {% for recipe in recipes %}
+        {{ recipe.recipe_name }}
+        {{ recipe.category_name }}
+        {{ recipe.prep_time }}
+        {{ recipe.cook_time }}
+        {{ recipe.ingredients }}
+        {{ recipe.steps }}
+        {{ recipe.created_by }}
+        {{ recipe.recipe_of_week }}
+    {% endfor %}
 </body>
 </html>

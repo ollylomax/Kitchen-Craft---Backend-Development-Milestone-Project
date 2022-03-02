@@ -30,9 +30,11 @@ mongo = PyMongo(app)
 @app.route('/')
 # Home page route decorator
 @app.route('/home')
-# Temp function
+# Find all docs from recipes collection on mongodb and assign to recipes variable
+# Render home.html template and pass through recipes variable to access on page
 def home():
-    return render_template('home.html')
+    recipes = mongo.db.recipes.find()
+    return render_template('home.html', recipes=recipes)
 
 
 # Where and how to run app
