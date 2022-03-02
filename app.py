@@ -1,7 +1,7 @@
 import os
 
 # Import flask
-from flask import Flask
+from flask import Flask, render_template
 
 # Wire up flask with mongodb
 from flask_pymongo import PyMongo
@@ -32,7 +32,7 @@ mongo = PyMongo(app)
 @app.route('/home')
 # Temp function
 def home():
-    return 'home page'
+    return render_template('home.html')
 
 
 # Where and how to run app
