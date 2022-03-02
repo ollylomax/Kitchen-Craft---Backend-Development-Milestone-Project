@@ -1,3 +1,11 @@
 nav {
     background-color: purple;
 }
+
+.dropdown-content li a {
+    color: purple;
+}
+
+.dropdown-content {
+    min-width: 150px;
+}
