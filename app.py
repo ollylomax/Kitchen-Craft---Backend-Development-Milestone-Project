@@ -1,7 +1,7 @@
 import os
 
 # Import flask
-from flask import Flask, render_template, url_for
+from flask import Flask, render_template, url_for, redirect, session, request, flash
 
 # Wire up flask with mongodb
 from flask_pymongo import PyMongo
@@ -43,6 +43,25 @@ def home():
 @app.route('/register', methods=['GET', 'POST'])
 # Render register page from html template
 def register():
+    if request.method == "POST":
+        # check if username already exists in db
+        existing_user = mongo.db.users.find_one(
+            {"username": request.form.get("username").lower()})
+        if existing_user:
+            flash("Sorry, that Username is already taken")
+            return redirect(url_for("register"))
+        register = {
+            "username": request.form.get("username").lower(),
+            "fname": request.form.get("fname").lower(),
+            "lname": request.form.get("lname").lower(),
+            "email": request.form.get("email").lower(),
+            "password": generate_password_hash(request.form.get("password"))
+        }
+        mongo.db.users.insert_one(register)
+
+        # Initiate session cookie
+        session["user"] = request.form.get('username').lower()
+        flash("Welcome to Kitchen Craft!")
     return render_template('register.html')
 
 
