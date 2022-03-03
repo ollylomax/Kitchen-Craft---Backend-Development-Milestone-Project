@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+<!-- Content to be injected into respective base.html block when register page
+     is rendered by register function -->
+{% block content %}
+<!-- Register block -->
+<div class="row register">
+  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+    <div class="card purple darken-4">
+      <!-- Title block -->
+      <div class="card-content white-text">
+        <span class="card-title">Register</span>
+        <p>Register with these ease, just fill in the form below</p>
+      </div>
+      <!-- Form block -->
+      <div class="row register-form">
+        <form class="col s12" methon="POST" action="{{ url_for('register') }}">
+          <!-- Name block -->
+          <div class="row register-input">
+            <div class="input-field col s6 white-text">
+              <!-- First name input -->
+              <input id="fname" name="fname" type="text" class="validate">
+              <label for="fname">First Name</label>
+            </div>
+            <div class="input-field col s6 white-text">
+              <!-- Last name input -->
+              <input id="lname" name="lname" type="text" class="validate">
+              <label for="lname">Last Name</label>
+            </div>
+          </div>
+          <!-- Password block -->
+          <div class="row register-input">
+            <div class="input-field col s12">
+              <!-- Password input -->
+              <input id="password" name="password" type="password" class="validate">
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <!-- Email block -->
+          <div class="row register-input">
+            <div class="input-field col s12">
+              <!-- Email input -->
+              <input id="email" name="email" type="email" class="validate">
+              <label for="email">Email</label>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Submit block -->
+      <div class="card-action">
+        <div class="row">
+          <!-- Submit button -->
+          <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
+            Register Now
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

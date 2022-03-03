@@ -58,6 +58,25 @@ footer .container {
 }
 
 
+/* Register page */
+
+.register {
+    margin-top: 20px;
+}
+
+.register-input {
+    padding: 0 30px;
+}
+
+.register-input input {
+    border-bottom: 1px solid white !important;
+}
+
+.register-input label {
+    color: white;
+}
+
+
 
 
 @media(min-width: 300px) {
