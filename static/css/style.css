@@ -1,5 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+header {
+    font-family: 'Roboto', sans-serif;
+}
+
 nav {
     background-color: purple;
+}
+
+.brand-logo {
+    line-height: 3.1;
+    left: 6rem;
 }
 
 .dropdown-content li a {
@@ -7,5 +18,51 @@ nav {
 }
 
 .dropdown-content {
-    min-width: 150px;
+    min-width: 15%;
+    padding-top: 0;
+}
+
+.sidenav {
+    width: 200px;
+    min-width: 15%;
+    max-width: 60%;
+    padding-top: 0;
+}
+
+.fa-bars {
+    padding-top: 15px;
+    padding-right: 15px;
+}
+
+
+@media(min-width: 300px) {
+
+    nav {
+        height: 96px;
+    }
+
+    nav img {
+        padding-right: 10px;
+        padding-left: 40px;
+        padding-top: 30px;
+    }
+
+    nav ul {
+        padding-top: 15px
+    }
+}
+
+
+@media(min-width: 900px) {
+
+    .brand-logo {
+        line-height: 3;
+        padding-left: 0;
+    }
+}
+
+@media only screen and (max-width: 992px) {
+nav .brand-logo.left {
+    left: 6rem;
+}
 }
