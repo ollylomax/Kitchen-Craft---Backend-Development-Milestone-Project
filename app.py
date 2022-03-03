@@ -13,6 +13,9 @@ from bson.objectid import ObjectId
 if os.path.exists('env.py'):
     import env
 
+# Import werkzeug security helpers for hashing and salting passwords
+from werkzeug.security import generate_password_hash, check_password_hash
+
 # Create instance of flask
 app = Flask(__name__)
 
@@ -35,6 +38,12 @@ mongo = PyMongo(app)
 def home():
     recipes = mongo.db.recipes.find()
     return render_template('home.html', recipes=recipes)
+
+# Register page route decorator
+@app.route('/register', methods=['GET', 'POST'])
+# Render register page from html template
+def register():
+    return render_template('register.html')
 
 
 # Where and how to run app
