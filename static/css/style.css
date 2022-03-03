@@ -1,8 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
-header {
+body {
     font-family: 'Roboto', sans-serif;
-}
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+  main {
+    flex: 1 0 auto;
+  }
 
 nav {
     background-color: purple;
@@ -34,7 +41,6 @@ nav {
     padding-right: 15px;
 }
 
-
 @media(min-width: 300px) {
 
     nav {
@@ -52,6 +58,27 @@ nav {
     }
 }
 
+.social {
+    list-style-type: none;
+    padding: 0 6px;
+}
+
+footer .social a i {
+    width: 30px;
+    height: 30px;
+    padding: 6px;
+    font-size: 16px;
+    line-height: 16px;
+    border-radius: 30%;
+    text-align: center;
+    color: #fff;
+    background: #133510;
+    border: 1px outset transparent;
+}
+
+footer .social a i:hover {
+    border: 1px solid #fff;
+}
 
 @media(min-width: 900px) {
 

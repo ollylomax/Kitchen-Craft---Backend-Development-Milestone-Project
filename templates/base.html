@@ -68,8 +68,13 @@
           </ul>
 
     </header>
+
+    <main>
+
     {% block content %}
     {% endblock %}
+
+    </main>
 
     <!-- jQuery import -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -83,6 +88,45 @@
     {% block scripts %}
     {% endblock %}
 
+
+
+    <footer class="page-footer purple lighten-2">
+        <div class="footer-copyright purple darken-1">
+          <div class="container">
+          © <span id="year"></span> Kitchen Craft All rights reserved
+          
+            <li class="social right">
+                <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
+                    <i class="fa-brands fa-twitter"></i>
+                </a>
+            </li>
+
+            <li class="social right">
+                <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram link">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </li>
+
+            <li class="social right">
+                <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Youtube link">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </li>
+
+            <li class="social right">
+                <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest link">
+                    <i class="fa-brands fa-pinterest"></i>
+                </a>
+            </li>
+
+            <li class="social right">
+                <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook link">
+                    <i class="fa-brands fa-facebook"></i>
+                </a>
+            </li>
+          </div>
+        </div>
+      </footer>
 </body>
 
 </html>
