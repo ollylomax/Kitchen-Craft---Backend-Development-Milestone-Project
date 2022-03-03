@@ -72,6 +72,21 @@
 
     </header>
 
+    <section>
+
+        <!-- Flash block -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="row flash-panel">
+                        <h2 class="purple darken-4 center-align white-text">{{ message }}</h2>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+    </section>
+
     <main>
 
         {% block content %}
