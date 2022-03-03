@@ -5,19 +5,20 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
 
-  main {
+main {
     flex: 1 0 auto;
-  }
+}
 
 nav {
     background-color: purple;
 }
 
-.brand-logo {
-    line-height: 3.1;
+nav .brand-logo {
     left: 6rem;
+    font-size: 1.7rem;
+    line-height: 4;
 }
 
 .dropdown-content li a {
@@ -36,10 +37,28 @@ nav {
     padding-top: 0;
 }
 
+.sidenav img {
+    display: block;
+    padding: 15px;
+    margin: 0 auto;
+}
+
 .fa-bars {
     padding-top: 15px;
     padding-right: 15px;
 }
+
+footer .container {
+    width: 90%;
+    text-align: center;
+}
+
+.social {
+    display:inline
+}
+
+
+
 
 @media(min-width: 300px) {
 
@@ -56,28 +75,43 @@ nav {
     nav ul {
         padding-top: 15px
     }
+
+    .social {
+        list-style-type: none;
+        padding: 0 6px;
+    }
+
+    
+
+    footer .social a i {
+        width: 30px;
+        height: 30px;
+        padding: 6px 1px;
+        font-size: 16px;
+        line-height: 16px;
+        border-radius: 50%;
+        text-align: center;
+        color: #fff;
+        background: #133510;
+        border: 1px outset transparent;
+    }
+
+    footer .social a i:hover {
+        border: 1px solid #fff;
+    }
 }
 
-.social {
-    list-style-type: none;
-    padding: 0 6px;
-}
 
-footer .social a i {
-    width: 30px;
-    height: 30px;
-    padding: 6px;
-    font-size: 16px;
-    line-height: 16px;
-    border-radius: 30%;
-    text-align: center;
-    color: #fff;
-    background: #133510;
-    border: 1px outset transparent;
-}
+@media(min-width: 600px) {
 
-footer .social a i:hover {
-    border: 1px solid #fff;
+    nav .brand-logo {
+        line-height: 3.1;
+        font-size: 2.1rem;
+    }
+    
+    footer .container {
+        text-align: left;
+    }
 }
 
 @media(min-width: 900px) {
@@ -89,7 +123,7 @@ footer .social a i:hover {
 }
 
 @media only screen and (max-width: 992px) {
-nav .brand-logo.left {
-    left: 6rem;
-}
+    nav .brand-logo.left {
+        left: 6rem;
+    }
 }

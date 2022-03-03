@@ -40,7 +40,8 @@
             <div class="nav-wrapper">
                 <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
                 <a href="#!" class="brand-logo left">Kitchen Craft</a>
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons fas fa-bars"></i></a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i
+                        class="material-icons fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="">Home</a></li>
                     <li><a href="">Tools</a></li>
@@ -50,40 +51,42 @@
                     <!-- Dropdown Trigger -->
                     <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">User<i
                                 class="fa-solid fa-caret-down right"></i></a></li>
-                                
+
                 </ul>
             </div>
         </nav>
 
         <ul class="sidenav right" id="mobile-demo">
+            <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+
             <li><a href="">Home</a></li>
-                    <li><a href="">Tools</a></li>
-                    <li><a href="">Recipes</a></li>
-                    <li><a href="">Profile</a></li>
-                    <li><a href="">Add Recipe</a></li>
-                    <li><a href="">Manage Cuisines</a></li>
-                    <li><a href="">Register</a></li>
-                    <li><a href="">Log In</a></li>
-                    <li><a href="">Log Out</a></li>
-          </ul>
+            <li><a href="">Tools</a></li>
+            <li><a href="">Recipes</a></li>
+            <li><a href="">Profile</a></li>
+            <li><a href="">Add Recipe</a></li>
+            <li><a href="">Manage Cuisines</a></li>
+            <li><a href="">Register</a></li>
+            <li><a href="">Log In</a></li>
+            <li><a href="">Log Out</a></li>
+        </ul>
 
     </header>
 
     <main>
 
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
 
     </main>
 
     <!-- jQuery import -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    
-        <!-- Materialize framework minified javasript -->
+
+    <!-- Materialize framework minified javasript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-    
+
     <!-- Custom script injection from child templates -->
     {% block scripts %}
     {% endblock %}
@@ -92,41 +95,66 @@
 
     <footer class="page-footer purple lighten-2">
         <div class="footer-copyright purple darken-1">
-          <div class="container">
-          © <span id="year"></span> Kitchen Craft All rights reserved
-          
-            <li class="social right">
-                <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
-                    <i class="fa-brands fa-twitter"></i>
-                </a>
-            </li>
-
-            <li class="social right">
-                <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram link">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-            </li>
-
-            <li class="social right">
-                <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Youtube link">
-                    <i class="fa-brands fa-youtube"></i>
-                </a>
-            </li>
-
-            <li class="social right">
-                <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest link">
-                    <i class="fa-brands fa-pinterest"></i>
-                </a>
-            </li>
-
-            <li class="social right">
-                <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook link">
-                    <i class="fa-brands fa-facebook"></i>
-                </a>
-            </li>
-          </div>
+            <div class="container">
+                © <span id="year"></span> Kitchen Craft All rights reserved
+                <li class="social right hide-on-small-only">
+                    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="social right hide-on-small-only">
+                    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram link">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </li>
+                <li class="social right hide-on-small-only">
+                    <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Youtube link">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </li>
+                <li class="social right hide-on-small-only">
+                    <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest link">
+                        <i class="fa-brands fa-pinterest"></i>
+                    </a>
+                </li>
+                <li class="social right hide-on-small-only">
+                    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook link">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                </li>
+            </div>
         </div>
-      </footer>
+
+        <div class="footer-copyright purple darken-1 hide-on-med-and-up">
+            <div class="container" id="mobile-socials">
+                <li class="social">
+                    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
+                        <i class="fa-brands fa-twitter"></i>
+                    </a>
+                </li>
+                <li class="social">
+                    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram link">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </li>
+                <li class="social">
+                    <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Youtube link">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </li>
+                <li class="social">
+                    <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest link">
+                        <i class="fa-brands fa-pinterest"></i>
+                    </a>
+                </li>
+                <li class="social">
+                    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook link">
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                </li>
+            </div>
+        </div>
+    </footer>
 </body>
 
 </html>
