@@ -79,20 +79,6 @@
 
     </main>
 
-    <!-- jQuery import -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-    <!-- Materialize framework minified javasript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
-    <!-- Custom script injection from child templates -->
-    {% block scripts %}
-    {% endblock %}
-
-
-
     <footer class="page-footer purple lighten-2">
         <div class="footer-copyright purple darken-1">
             <div class="container">
@@ -125,7 +111,7 @@
             </div>
         </div>
 
-        <div class="footer-copyright purple darken-1 hide-on-med-and-up">
+        <div class="footer-copyright purple darken-1 hide-on-med-and-up" style="padding-bottom:20px;padding-top:0">
             <div class="container" id="mobile-socials">
                 <li class="social">
                     <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
@@ -155,6 +141,19 @@
             </div>
         </div>
     </footer>
+
+    <!-- jQuery import -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+    <!-- Materialize framework minified javasript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Custom script injection from child templates -->
+    {% block scripts %}
+    {% endblock %}
+    
 </body>
 
 </html>
