@@ -14,7 +14,16 @@
       </div>
       <!-- Form block -->
       <div class="row register-form">
-        <form class="col s12" methon="POST" action="{{ url_for('register') }}">
+        <form class="col s12" method="POST" action="{{ url_for('register') }}">
+          <!-- Username block -->
+          <div class="row register-input">
+            <div class="input-field col s12">
+              <!-- Username input -->
+              <input id="username" name="username" type="text" class="validate"
+              pattern="^[a-zA-Z0-9]{5,15}$">
+              <label for="username">Username</label>
+            </div>
+          </div>
           <!-- Name block -->
           <div class="row register-input">
             <div class="input-field col s6 white-text">
@@ -32,7 +41,8 @@
           <div class="row register-input">
             <div class="input-field col s12">
               <!-- Password input -->
-              <input id="password" name="password" type="password" class="validate">
+              <input id="password" name="password" type="password" class="validate"
+              pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})">
               <label for="password">Password</label>
             </div>
           </div>
@@ -44,16 +54,16 @@
               <label for="email">Email</label>
             </div>
           </div>
+          <!-- Submit block -->
+          <div class="card-action">
+            <div class="row">
+              <!-- Submit button -->
+              <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
+                Register Now
+              </button>
+            </div>
+          </div>
         </form>
-      </div>
-      <!-- Submit block -->
-      <div class="card-action">
-        <div class="row">
-          <!-- Submit button -->
-          <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
-            Register Now
-          </button>
-        </div>
       </div>
     </div>
   </div>
