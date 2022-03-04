@@ -35,9 +35,6 @@
             <li><a href="#!">Add Recipe</a></li>
             <li class="divider"></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
-            {% else %}
-            <li><a href="{{ url_for('login') }}">Log In</a></li>
-            <li><a href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
         </ul>
         <nav>
@@ -51,9 +48,15 @@
                     <li><a href="">Tools</a></li>
                     <li><a href="">Recipes</a></li>
                     <li><a href="">Manage Cuisines</a></li>
+                    
                     <!-- Dropdown Trigger -->
-                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">User<i
+                    {% if session.user_session %}
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ username.username }}<i
                                 class="fa-solid fa-caret-down right"></i></a></li>
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Log In</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    {% endif %}
 
                 </ul>
             </div>
