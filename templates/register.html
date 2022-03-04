@@ -10,7 +10,8 @@
       <!-- Title block -->
       <div class="card-content white-text">
         <span class="card-title">Register</span>
-        <p>Register with these ease, just fill in the form below</p>
+        <p>Register to share your own great recipes with our community.
+          It's simple, just fill in the short form below.</p>
       </div>
       <!-- Form block -->
       <div class="row register-form">
@@ -20,20 +21,21 @@
             <div class="input-field col s12">
               <!-- Username input -->
               <input id="username" name="username" type="text" class="validate"
-              pattern="^[a-zA-Z0-9]{5,15}$">
+              pattern="^[a-zA-Z0-9]{5,15}$" required>
               <label for="username">Username</label>
+              <span class="white-text left pattern"><em>Username must be between 5 and 15 characters long</em></span>
             </div>
           </div>
           <!-- Name block -->
           <div class="row register-input">
             <div class="input-field col s6 white-text">
               <!-- First name input -->
-              <input id="fname" name="fname" type="text" class="validate">
+              <input id="fname" name="fname" type="text" class="validate" required>
               <label for="fname">First Name</label>
             </div>
             <div class="input-field col s6 white-text">
               <!-- Last name input -->
-              <input id="lname" name="lname" type="text" class="validate">
+              <input id="lname" name="lname" type="text" class="validate" required>
               <label for="lname">Last Name</label>
             </div>
           </div>
@@ -42,15 +44,17 @@
             <div class="input-field col s12">
               <!-- Password input -->
               <input id="password" name="password" type="password" class="validate"
-              pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})">
+              pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})" required>
               <label for="password">Password</label>
+              <span class="white-text left pattern"><em>Password must contain both uppercase and 
+                  lowercase letters as well as at least one number and special character</em></span>
             </div>
           </div>
           <!-- Email block -->
           <div class="row register-input">
             <div class="input-field col s12">
               <!-- Email input -->
-              <input id="email" name="email" type="email" class="validate">
+              <input id="email" name="email" type="email" class="validate" required>
               <label for="email">Email</label>
             </div>
           </div>

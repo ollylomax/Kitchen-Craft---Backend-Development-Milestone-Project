@@ -81,6 +81,18 @@ footer .container {
     color: white;
 }
 
+.pattern {
+    font-size: 0.75em;
+}
+
+.card-action {
+    padding: 0 30px !important;
+}
+
+.card-action .row {
+    margin: 0 0 20px !important;
+}
+
 
 
 
