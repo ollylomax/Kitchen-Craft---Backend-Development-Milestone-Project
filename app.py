@@ -33,16 +33,11 @@ mongo = PyMongo(app)
 @app.route('/')
 # Home page route decorator
 @app.route('/home')
-# Find all docs from recipes collection on mongodb and assign to recipes variab le
+# Find all docs from recipes collection on mongodb and assign to recipes variable
 # Render home.html template and pass through recipes variable to access on page
 def home():
     recipes = mongo.db.recipes.find()
-    if session == True:
-        # Get username from current session
-        username = mongo.db.users.find_one({'username': session['user_session']})
-        return render_template('home.html', recipes=recipes, username=username)
-    else:
-        return render_template('home.html', recipes=recipes)
+    return render_template('home.html', recipes=recipes)
 
 # Register page route decorator
 @app.route('/register', methods=['GET', 'POST'])
@@ -131,14 +126,30 @@ def profile(username):
 @app.route('/logout')
 def logout():
     # Flash message to alert user ot successful log out
-    flash('Successfully Logged Out')
+    flash('You have been Logged Out')
     # Specify which session cookie to remove
     session.pop('user_session')
     # Redirect to login page
     return redirect(url_for('login'))
 
 
+@app.route("/edit_profile/<username>", methods=["GET", "POST"])
+def edit_profile(username):
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
+    if request.method == "POST":
 
+        submit = {
+            "fname": request.form.get("fname"),
+            "lname": request.form.get("lname"),
+            "email": request.form.get("email")
+        }
+        mongo.db.users.update_one({'username': session['user_session']}, {"$set": submit})
+        flash("Profile Updated")
+        return redirect(url_for('profile', username=session['user_session']))
+
+    
+    return render_template("edit_profile.html", username=username)
 
 
 
