@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+<!-- Content to be injected into respective base.html block when login page
+     is rendered by login function -->
+{% block content %}
+<!-- Sign in block -->
+<div class="row register">
+  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+    <div class="card purple darken-4">
+      <!-- Title block -->
+      <div class="card-content white-text">
+        <span class="card-title">Sign In</span>
+        <p>Sign In using your Username and Password below</p>
+      </div>
+      <!-- Form block -->
+      <div class="row register-form">
+        <form class="col s12" method="POST" action="{{ url_for('login') }}">
+          <!-- Username block -->
+          <div class="row register-input">
+            <div class="input-field col s12">
+              <!-- Username input -->
+              <input id="username" name="username" type="text" class="validate" required>
+              <label for="username">Username</label>
+            </div>
+          </div>
+          <!-- Password block -->
+          <div class="row register-input">
+            <div class="input-field col s12">
+              <!-- Password input -->
+              <input id="password" name="password" type="password" class="validate" required>
+              <label for="password">Password</label>
+            </div>
+          </div>
+          <!-- Submit block -->
+          <div class="card-action">
+            <div class="row">
+              <!-- Submit button -->
+              <button type="submit" class="col s12 btn-small purple darken-1">
+                Sign In
+              </button>
+            </div>
+            <!-- Register page link -->
+            <div class="row">
+              <p class="center-align">
+                <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Account</a>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
