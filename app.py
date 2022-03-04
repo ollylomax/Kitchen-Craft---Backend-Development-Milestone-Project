@@ -109,11 +109,16 @@ def login():
 # Profile page route decorator
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
+    # Get username from current session
     username = mongo.db.users.find_one(
-        {'username': session['user_session']})['username']
+        {'username': session['user_session']})
+    # If a valid session exists
     if session['user_session']:
+        # Render profile page from html template
         return render_template('profile.html', username=username)
+    # If session does not exist
     else:
+        # Redirect user to login page
         return redirect(url_for('login'))
 
 
