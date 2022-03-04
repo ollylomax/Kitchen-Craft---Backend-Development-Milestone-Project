@@ -12,6 +12,16 @@
         <span class="card-title">Sign In</span>
         <p>Sign In using your Username and Password below</p>
       </div>
+      <!-- Flash block -->
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+          {% for message in messages %}
+          <div class="card-content white-text red darken-4 form-flash">
+                  <span class="center-align white-text">{{ message }}</span>
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
       <!-- Form block -->
       <div class="row register-form">
         <form class="col s12" method="POST" action="{{ url_for('login') }}">
