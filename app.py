@@ -60,7 +60,11 @@ def register():
 
         # Initiate session cookie
         session['user_session'] = request.form.get('username').lower()
+        # Flash message to welcome user
         flash('Welcome to Kitchen Craft!')
+        # Redirect user to profile page
+        return redirect(url_for(
+            'profile', username=session['user']))
     # Render register page from html template
     return render_template('register.html')
 
@@ -81,6 +85,9 @@ def login():
                 session['user_session'] = request.form.get('username').lower()
                 # Flash message to welcome user
                 flash('Welcome, {}'.format(request.form.get('username')))
+                # Redirect user to profile page
+                return redirect(url_for(
+                    'profile', username=session['user']))
 
             # If password doesn't match that stored in users collection
             else:
@@ -98,6 +105,16 @@ def login():
     # Render login page from html template
     return render_template('login.html')
 
+
+# Profile page route decorator
+@app.route('/profile/<username>', methods=['GET', 'POST'])
+def profile(username):
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})['username']
+    if session['user_session']:
+        return render_template('profile.html', username=username)
+    else:
+        return redirect(url_for('login'))
 
 
 # Where and how to run app
