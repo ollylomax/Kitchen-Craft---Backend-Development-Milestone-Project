@@ -31,7 +31,7 @@
         <!-- Dropdown Structure -->
         <ul id="dropdown1" class="dropdown-content">
             <li><a href="{{ url_for('login') }}">Log In</a></li>
-            <li><a href="#!">Profile</a></li>
+            <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
             <li><a href="#!">Add Recipe</a></li>
             <li class="divider"></li>
             <li><a href="#!">Log Out</a></li>
@@ -62,7 +62,7 @@
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <li><a href="">Tools</a></li>
             <li><a href="">Recipes</a></li>
-            <li><a href="">Profile</a></li>
+            <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
             <li><a href="">Add Recipe</a></li>
             <li><a href="">Manage Cuisines</a></li>
             <li><a href="{{ url_for('register') }}">Register</a></li>
