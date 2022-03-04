@@ -33,11 +33,16 @@ mongo = PyMongo(app)
 @app.route('/')
 # Home page route decorator
 @app.route('/home')
-# Find all docs from recipes collection on mongodb and assign to recipes variable
+# Find all docs from recipes collection on mongodb and assign to recipes variab le
 # Render home.html template and pass through recipes variable to access on page
 def home():
     recipes = mongo.db.recipes.find()
-    return render_template('home.html', recipes=recipes)
+    if session == True:
+        # Get username from current session
+        username = mongo.db.users.find_one({'username': session['user_session']})
+        return render_template('home.html', recipes=recipes, username=username)
+    else:
+        return render_template('home.html', recipes=recipes)
 
 # Register page route decorator
 @app.route('/register', methods=['GET', 'POST'])
@@ -87,7 +92,7 @@ def login():
                 flash('Welcome, {}'.format(request.form.get('username')))
                 # Redirect user to profile page
                 return redirect(url_for(
-                    'profile', username=session['user']))
+                    'profile', username=session['user_session']))
 
             # If password doesn't match that stored in users collection
             else:
@@ -120,9 +125,10 @@ def profile(username):
     else:
         # Redirect user to login page
         return redirect(url_for('login'))
+        
 
 # Logout route decorator
-@app.route("/logout")
+@app.route('/logout')
 def logout():
     # Flash message to alert user ot successful log out
     flash('Successfully Logged Out')
@@ -130,6 +136,12 @@ def logout():
     session.pop('user_session')
     # Redirect to login page
     return redirect(url_for('login'))
+
+
+
+
+
+
 
 # Where and how to run app
 if __name__ == "__main__":
