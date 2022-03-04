@@ -121,6 +121,15 @@ def profile(username):
         # Redirect user to login page
         return redirect(url_for('login'))
 
+# Logout route decorator
+@app.route("/logout")
+def logout():
+    # Flash message to alert user ot successful log out
+    flash('Successfully Logged Out')
+    # Specify which session cookie to remove
+    session.pop('user_session')
+    # Redirect to login page
+    return redirect(url_for('login'))
 
 # Where and how to run app
 if __name__ == "__main__":
