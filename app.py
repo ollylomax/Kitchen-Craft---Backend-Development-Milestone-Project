@@ -41,28 +41,63 @@ def home():
 
 # Register page route decorator
 @app.route('/register', methods=['GET', 'POST'])
-# Render register page from html template
 def register():
-    if request.method == "POST":
+    if request.method == 'POST':
         # check if username already exists in db
         existing_user = mongo.db.users.find_one(
-            {"username": request.form.get("username").lower()})
+            {'username': request.form.get('username').lower()})
         if existing_user:
             flash("Sorry, that Username is already taken")
-            return redirect(url_for("register"))
+            return redirect(url_for('register'))
         register = {
-            "username": request.form.get("username").lower(),
-            "fname": request.form.get("fname").lower(),
-            "lname": request.form.get("lname").lower(),
-            "email": request.form.get("email").lower(),
-            "password": generate_password_hash(request.form.get("password"))
+            'username': request.form.get('username').lower(),
+            'fname': request.form.get('fname').lower(),
+            'lname': request.form.get('lname').lower(),
+            'email': request.form.get('email').lower(),
+            'password': generate_password_hash(request.form.get('password'))
         }
         mongo.db.users.insert_one(register)
 
         # Initiate session cookie
-        session["user"] = request.form.get('username').lower()
-        flash("Welcome to Kitchen Craft!")
+        session['user_session'] = request.form.get('username').lower()
+        flash('Welcome to Kitchen Craft!')
+    # Render register page from html template
     return render_template('register.html')
+
+
+# Login page route decorator
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # Assign username input to variable if it exists in users collection
+        existing_user = mongo.db.users.find_one(
+            {'username': request.form.get('username').lower()})
+        # Conditional to check if new variable is truthy
+        if existing_user:
+            # Conditional to ensure password input matches that stored in users collection
+            # using werkzeug hashing function
+            if check_password_hash(existing_user['password'], request.form.get('password')):
+                # Initiate user session
+                session['user_session'] = request.form.get('username').lower()
+                # Flash message to welcome user
+                flash('Welcome, {}'.format(request.form.get('username')))
+
+            # If password doesn't match that stored in users collection
+            else:
+                # Flash message to tell user that either username or password are incorrect
+                flash("Incorrect Username and/or Password")
+                # Redirect to login page
+                return redirect(url_for('login'))
+        # If username doesn't exist
+        else:
+            # Flash message to tell user that either username or password are incorrect
+            flash("Incorrect Username and/or Password")
+            # Redirect to login page
+            return redirect(url_for('login'))
+
+    # Render login page from html template
+    return render_template('login.html')
+
 
 
 # Where and how to run app
