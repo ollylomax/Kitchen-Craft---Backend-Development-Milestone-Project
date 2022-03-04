@@ -35,7 +35,7 @@
       <div class="card-action">
       <div class="row profile-buttons">
         <p class="center-align">
-          <a href="{{ url_for('login') }}" class="col s12 btn-small purple darken-1">Edit Profile</a>
+          <a href="{{ url_for('edit_profile', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Edit Profile</a>
           <a href="{{ url_for('logout') }}" class="col s12 btn-small purple darken-1">Sign Out</a>
         </p>
       </div>
