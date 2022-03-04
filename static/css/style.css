@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
+/* Misc */
 body {
     font-family: 'Roboto', sans-serif;
     display: flex;
@@ -16,6 +17,14 @@ main {
     flex: 1 0 auto;
 }
 
+.register-panel,
+.login-panel,
+.profile-panel {
+    margin-top: 20px;
+}
+
+
+/* Navbar */
 nav {
     background-color: purple;
 }
@@ -65,10 +74,6 @@ footer .container {
 
 /* Register page */
 
-.register {
-    margin-top: 20px;
-}
-
 .register-input {
     padding: 0 30px;
 }
@@ -97,9 +102,25 @@ footer .container {
     margin: 0 30px;
 }
 
+/* Profile Page */
+
+.profile-panel .user-details {
+    margin: 0;
+    padding: 0 30px;
+}
+
+.profile-buttons {
+    padding-bottom: 10px;
+}
+
+.profile-buttons a {
+    margin-bottom: 15px;
+}
 
 
 
+
+/* Media Queries */
 @media(min-width: 300px) {
 
     nav {

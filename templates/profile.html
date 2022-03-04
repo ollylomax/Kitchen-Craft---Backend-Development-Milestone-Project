@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+<!-- Content to be injected into respective base.html block when profile page
+     is rendered by profile function -->
+{% block content %}
+<!-- Profile block -->
+<div class="row profile-panel">
+  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+    <div class="card purple darken-4">
+      <!-- Title block -->
+      <div class="card-content white-text">
+        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+        <span class="card-title">{{ username.username }}</span>
+        <p>Are all your details up to date {{ username.fname.capitalize() }}?</p>
+      </div>
+      <!-- Flash block -->
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          {% for message in messages %}
+          <div class="card-content white-text green darken-4 form-flash">
+                  <span class="center-align white-text">{{ message }}</span>
+              </div>
+          {% endfor %}
+        {% endif %}
+      {% endwith %}
+      <!-- User details block -->
+      <div class="row user-details">
+        <ul class="collection with-header">
+          <li class="collection-header"><h4>Your Details</h4></li>
+          <li class="collection-item"><div>{{ username.fname.capitalize() }}</div></li>
+          <li class="collection-item"><div>{{ username.lname.capitalize() }}</div></li>
+          <li class="collection-item"><div>{{ username.email }}</div></li>
+        </ul>
+      </div>
+      <div class="card-action">
+      <div class="row profile-buttons">
+        <p class="center-align">
+          <a href="{{ url_for('login') }}" class="col s12 btn-small purple darken-1">Edit Profile</a>
+          <a href="{{ url_for('login') }}" class="col s12 btn-small purple darken-1">Sign Out</a>
+        </p>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
