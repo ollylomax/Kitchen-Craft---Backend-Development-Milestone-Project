@@ -64,7 +64,7 @@ def register():
         flash('Welcome to Kitchen Craft!')
         # Redirect user to profile page
         return redirect(url_for(
-            'profile', username=session['user']))
+            'profile', username=session['user_session']))
     # Render register page from html template
     return render_template('register.html')
 
