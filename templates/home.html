@@ -1,14 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
+
 <h1>Recipes of the Week</h1>
-    {% for recipe in recipes %}
-        {{ recipe.recipe_name }}
-        {{ recipe.category_name }}
-        {{ recipe.prep_time }}
-        {{ recipe.cook_time }}
-        {{ recipe.ingredients }}
-        {{ recipe.steps }}
-        {{ recipe.created_by }}
-        {{ recipe.recipe_of_week }}
-    {% endfor %}
+<div class="row">
+  {% for recipe in recipes %}
+
+  <div class=" col s12 m6 l4">
+    <div class="card-panel purple darken-4 white-text">
+      <div class="center-align">
+      <h5>{{ recipe.cuisine_name }} Cuisine</h5>
+      <h6>{{ recipe.recipe_name }}</h6>
+      <span>Preparation: {{ recipe.prep_time }}</span><br>
+      <span>Cooking: {{ recipe.cook_time }}</span>
+    </div>
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header purple darken-4">
+            <i class="fa-solid fa-basket-shopping"></i> Ingredients</div>
+          <div class="collapsible-body white black-text"><span>{{ recipe.ingredients }}</span></div>
+        </li>
+        <li>
+          <div class="collapsible-header purple darken-4">
+            <i class="fa-solid fa-clipboard-list"></i> Steps</div>
+          <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
+        </li>
+      </ul>
+      <span class="right"><em>Recipe by: </em>{{ recipe.created_by }}</span>
+    </div>
+  </div>
+
+
+  {% endfor %}
+</div>
+
+
 {% endblock %}
