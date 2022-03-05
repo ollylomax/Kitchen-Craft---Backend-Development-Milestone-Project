@@ -71,6 +71,15 @@ footer .container {
     display:inline
 }
 
+/* Generic form styles */
+
+form input {
+    color: white;
+}
+
+.dropdown-content li > span{
+    color:black;
+}
 
 /* Register page */
 

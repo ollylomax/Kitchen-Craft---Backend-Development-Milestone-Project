@@ -5,6 +5,7 @@ $(document).ready(function(){
     document.getElementById("year").innerHTML = new Date().getFullYear();
     $('.collapsible').collapsible();
     $('.tooltipped').tooltip();
+    $('select').formSelect();
   });
 
   
