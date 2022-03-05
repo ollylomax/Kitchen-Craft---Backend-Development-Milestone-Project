@@ -176,6 +176,14 @@ def recipes():
     return render_template('recipes.html', recipes=recipes)
 
 
+@app.route("/add_recipe")
+def add_recipe():
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
+    cuisines = mongo.db.cuisines.find().sort("cuisine_name", 1)
+    return render_template("add_recipe.html", cuisines=cuisines, username=username)
+
+
 
 # Where and how to run app
 if __name__ == "__main__":

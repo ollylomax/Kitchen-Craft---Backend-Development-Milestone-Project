@@ -32,7 +32,7 @@
         <ul id="dropdown1" class="dropdown-content">
             {% if session.user_session %}
             <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
-            <li><a href="#!">Add Recipe</a></li>
+            <li><a href="{{ url_for('add_recipe', username=session['user_session']) }}">Add Recipe</a></li>
             <li class="divider"></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% endif %}
@@ -66,7 +66,7 @@
             {% if session.user_session %}
             <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ username.username }}<i
                         class="fa-solid fa-caret-down right"></i></a></li>
-                            {% else %}
+            {% else %}
             <li><a href="{{ url_for('login') }}">Log In</a></li>
             <li><a href="{{ url_for('register') }}">Register</a></li>
             {% endif %}
@@ -83,7 +83,7 @@
             <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
             {% if session.user_session %}
             <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
-            <li><a href="">Add Recipe</a></li>
+            <li><a href="{{ url_for('add_recipe') }}">Add Recipe</a></li>
             <li><a href="">Manage Cuisines</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
