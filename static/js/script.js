@@ -4,6 +4,7 @@ $(document).ready(function(){
     // Get current year in footer copyright by assigning new date object to year id
     document.getElementById("year").innerHTML = new Date().getFullYear();
     $('.collapsible').collapsible();
+    $('.tooltipped').tooltip();
   });
 
   

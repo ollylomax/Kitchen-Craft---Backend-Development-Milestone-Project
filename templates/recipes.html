@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row">
+  {% for recipe in recipes %}
+
+  <div class=" col s12 m6 l4">
+    <div class="card-panel purple darken-4 white-text">
+      {% if recipe.hot == 'on' %}
+        <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
+        {% endif %}
+        {% if recipe.vegetarian == 'on' %}
+        <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
+        {% endif %}
+        {% if recipe.vegan == 'on' %}
+        <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
+        {% endif %}
+      <div class="center-align">
+      <h5>{{ recipe.recipe_name }}</h5>
+      <h6>{{ recipe.cuisine_name }} Cuisine</h6>
+      <span>Preparation: {{ recipe.prep_time }}</span><br>
+      <span>Cooking: {{ recipe.cook_time }}</span>
+    </div>
+      <ul class="collapsible">
+        <li>
+          <div class="collapsible-header purple darken-4">
+            <i class="fa-solid fa-basket-shopping"></i> Ingredients</div>
+          <div class="collapsible-body white black-text"><span>{{ recipe.ingredients }}</span></div>
+        </li>
+        <li>
+          <div class="collapsible-header purple darken-4">
+            <i class="fa-solid fa-clipboard-list"></i> Steps</div>
+          <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
+        </li>
+      </ul>
+      <span class="right"><em>Recipe by: </em>{{ recipe.created_by }}</span>
+    </div>
+  </div>
+
+
+  {% endfor %}
+</div>
+
+
+{% endblock %}
