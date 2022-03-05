@@ -39,6 +39,23 @@ def home():
     recipes = mongo.db.recipes.find()
     return render_template('home.html', recipes=recipes)
 
+
+
+# Default route decorator
+@app.route('/<username>')
+# Home page route decorator
+@app.route('/home/<username>')
+# Find all docs from recipes collection on mongodb and assign to recipes variable
+# Render home.html template and pass through recipes variable to access on page
+def home_two(username):
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
+    recipes = mongo.db.recipes.find()
+    return render_template('home.html', recipes=recipes, username=username)
+
+
+
+
 # Register page route decorator
 @app.route('/register', methods=['GET', 'POST'])
 def register():

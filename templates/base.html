@@ -38,34 +38,46 @@
             {% endif %}
         </ul>
         <nav>
+            {% if session.user_session %}
+            <div class="nav-wrapper">
+                <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+                <a href="{{ url_for('home_two', username=session['user_session']) }}" class="brand-logo left">Kitchen Craft</a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i
+                        class="material-icons fas fa-bars"></i></a>
+                <ul class="right hide-on-med-and-down">
+                    <li><a href="{{ url_for('home_two', username=session['user_session']) }}">Home</a></li>
+                    <li><a href="">Tools</a></li>
+                    <li><a href="">Recipes</a></li>
+                    <li><a href="">Manage Cuisines</a></li>
+            {% else %}
             <div class="nav-wrapper">
                 <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
                 <a href="{{ url_for('home') }}" class="brand-logo left">Kitchen Craft</a>
-                <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i
+                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i
                         class="material-icons fas fa-bars"></i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('home') }}">Home</a></li>
                     <li><a href="">Tools</a></li>
                     <li><a href="">Recipes</a></li>
                     <li><a href="">Manage Cuisines</a></li>
-                    
-                    <!-- Dropdown Trigger -->
-                    {% if session.user_session %}
-                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ username.username }}<i
-                                class="fa-solid fa-caret-down right"></i></a></li>
-                    {% else %}
-                    <li><a href="{{ url_for('login') }}">Log In</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                    {% endif %}
+            {% endif %}
+            <!-- Dropdown Trigger -->
+            {% if session.user_session %}
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ username.username }}<i
+                        class="fa-solid fa-caret-down right"></i></a></li>
+                            {% else %}
+            <li><a href="{{ url_for('login') }}">Log In</a></li>
+            <li><a href="{{ url_for('register') }}">Register</a></li>
+            {% endif %}
 
-                </ul>
-            </div>
-        </nav>
+            </ul>
+        </div>
+    </nav>
 
         <ul class="sidenav right" id="mobile-demo">
             <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
 
-            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <li><a href="{{ url_for('home', username=session['user_session']) }}">Home</a></li>
             <li><a href="">Tools</a></li>
             <li><a href="">Recipes</a></li>
             {% if session.user_session %}
@@ -164,7 +176,7 @@
     <!-- Custom script injection from child templates -->
     {% block scripts %}
     {% endblock %}
-    
+
 </body>
 
 </html>
