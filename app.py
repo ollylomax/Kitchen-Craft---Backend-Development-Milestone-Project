@@ -169,6 +169,12 @@ def edit_profile(username):
     return render_template("edit_profile.html", username=username)
 
 
+# Recipes page route decorator
+@app.route('/recipes')
+def recipes():
+    recipes = mongo.db.recipes.find()
+    return render_template('recipes.html', recipes=recipes)
+
 
 
 # Where and how to run app
