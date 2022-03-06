@@ -183,9 +183,9 @@ def recipes():
 @app.route("/add_recipe", methods=['GET', 'POST'])
 def add_recipe():
     if request.method == "POST":
-        vegetarian = "yes" if request.form.get("vegetarian") else "no"
-        vegan = "yes" if request.form.get("vegan") else "no"
-        hot = "yes" if request.form.get("hot") else "no"
+        vegetarian = "checked" if request.form.get("vegetarian") else "unchecked"
+        vegan = "checked" if request.form.get("vegan") else "unchecked"
+        hot = "checked" if request.form.get("hot") else "unchecked"
 
         now = date.today()
         recipe = {
@@ -202,17 +202,21 @@ def add_recipe():
             "upload_date": now.strftime("%d/%m/%Y")
         }
         mongo.db.recipes.insert_one(recipe)
-        flash("Recipe Successfully Added")
+        flash("You have successfully shared your recipe with our community!")
         return redirect(url_for("recipes"))
-
-
-
 
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
     cuisines = mongo.db.cuisines.find().sort("cuisine_name", 1)
     return render_template("add_recipe.html", cuisines=cuisines, username=username)
 
+
+@app.route("/edit_recipe/<recipe_id>", methods=['GET', 'POST'])
+def edit_recipe(recipe_id):
+
+    recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    cuisines = mongo.db.cuisines.find().sort("cuisine_name", 1)
+    return render_template("edit_recipe.html", recipe=recipe, cuisines=cuisines)
 
 
 # Where and how to run app
