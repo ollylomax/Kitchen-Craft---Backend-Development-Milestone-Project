@@ -150,7 +150,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route("/edit_profile/<username>", methods=["GET", "POST"])
+@app.route("/edit_profile/<username>", methods=['GET', 'POST'])
 def edit_profile(username):
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
@@ -176,8 +176,32 @@ def recipes():
     return render_template('recipes.html', recipes=recipes)
 
 
-@app.route("/add_recipe")
+@app.route("/add_recipe", methods=['GET', 'POST'])
 def add_recipe():
+    if request.method == "POST":
+        vegetarian = "yes" if request.form.get("vegetarian") else "no"
+        vegan = "yes" if request.form.get("vegan") else "no"
+        hot = "yes" if request.form.get("hot") else "no"
+
+        recipe = {
+            "cuisine_name": request.form.get("cuisine_name"),
+            "recipe_name": request.form.get("recipe_name"),
+            "prep_time": request.form.get("prep_time"),
+            "cook_time": request.form.get("cook_time"),
+            "ingredients": request.form.get("ingredients"),
+            "steps": request.form.get("steps"),
+            "created_by": session["user"],
+            "vegetarian": vegetarian,
+            "vegan": vegan,
+            "hot": hot,
+        }
+        mongo.db.recipes.insert_one(recipe)
+        flash("Recipe Successfully Added")
+        return redirect(url_for("recipes"))
+
+
+
+
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
     cuisines = mongo.db.cuisines.find().sort("cuisine_name", 1)
