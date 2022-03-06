@@ -2,25 +2,36 @@
 {% block content %}
 
 <div class="row">
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  {% for message in messages %}
+  <div class="card-content white-text green darken-4 form-flash">
+    <span class="center-align white-text">{{ message }}</span>
+  </div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
   {% for recipe in recipes %}
 
   <div class=" col s12 m6 l4">
     <div class="card-panel purple darken-4 white-text">
       {% if recipe.hot == 'yes' %}
-        <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
-        {% endif %}
-        {% if recipe.vegetarian == 'yes' %}
-        <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
-        {% endif %}
-        {% if recipe.vegan == 'yes' %}
-        <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
-        {% endif %}
+      <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
+      {% endif %}
+      {% if recipe.vegetarian == 'yes' %}
+      <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
+      {% endif %}
+      {% if recipe.vegan == 'yes' %}
+      <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
+      {% endif %}
       <div class="center-align">
-      <h5>{{ recipe.recipe_name }}</h5>
-      <h6>{{ recipe.cuisine_name }} Cuisine</h6>
-      <span>Preparation: {{ recipe.prep_time }}</span><br>
-      <span>Cooking: {{ recipe.cook_time }}</span>
-    </div>
+        <h5>{{ recipe.recipe_name }}</h5>
+        <h6>{{ recipe.cuisine_name }} Cuisine</h6>
+        <span>Preparation: {{ recipe.prep_time }}</span><br>
+        <span>Cooking: {{ recipe.cook_time }}</span>
+      </div>
       <ul class="collapsible">
         <li>
           <div class="collapsible-header purple darken-4">
@@ -34,7 +45,11 @@
         </li>
       </ul>
       <div class="chip">
-      <span><em>Recipe by: </em>{{ recipe.created_by }}</span>
+        <span><em>Recipe by: </em>{{ recipe.created_by }}<em> on: {{ recipe.upload_date }}</em></span>
+      </div>
+      <div class="col s12 right-align">
+        <a href="" class="btn-small green">Edit</a>
+        <a href="" class="btn-small red">Delete</a>
       </div>
     </div>
   </div>
