@@ -43,8 +43,8 @@
           <!-- Recipe name input -->
           <div class="row register-input">
             <div class="input-field col s12">
-              <input id="recipe_name" name="recipe_name" type="text" class="validate" pattern="^[a-zA-Z]{5,20}$"
-                value="{{ recipe.recipe_name }}" required>
+              <input id="recipe_name" name="recipe_name" type="text" class="validate" minlength="5" maxlength="20"
+              pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ recipe.recipe_name }}" required>
               <label for="recipe_name">Recipe Name</label>
               <span class="white-text left pattern"><em>No more than 20 letters</em></span>
             </div>
@@ -61,7 +61,7 @@
           <div class="row register-input">
             <div class="input-field col s12">
               <input id="cook_time" name="cook_time" type="text" class="validate" minlength="5" maxlength="20"
-                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ recipe.cook_time }}"required>
+                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ recipe.cook_time }}" required>
               <label for="cook_time">Cooking Time</label>
             </div>
           </div>
@@ -69,8 +69,7 @@
           <div class="row register-input">
             <div class="input-field col s12">
               <textarea id="ingredients" name="ingredients" minlength="5" maxlength="200"
-                class="materialize-textarea validate" data-length="200"
-                required>{{ recipe.ingredients }}</textarea>
+                class="materialize-textarea validate" data-length="200" required>{{ recipe.ingredients }}</textarea>
               <label for="ingredients">Ingredients</label>
             </div>
           </div>
@@ -78,7 +77,7 @@
           <div class="row register-input">
             <div class="input-field col s12">
               <textarea id="steps" name="steps" minlength="5" maxlength="200" class="materialize-textarea validate"
-                data-length="200" value = "{{ recipe.steps }}" required>{{ recipe.ingredients }}</textarea>
+                data-length="200" value="{{ recipe.steps }}" required>{{ recipe.ingredients }}</textarea>
               <label for="steps">Steps</label>
             </div>
           </div>
@@ -92,11 +91,11 @@
                   <span>Vegetarian</span>
                 </label>
                 <label for="vegan" class="form-checkboxes">
-                  <input id="vegan" name="vegan" type="checkbox" {{ recipe.vegan }}/>
+                  <input id="vegan" name="vegan" type="checkbox" {{ recipe.vegan }} />
                   <span>Vegan</span>
                 </label>
                 <label for="hot" class="form-checkboxes">
-                  <input id="hot" name="hot" type="checkbox" {{ recipe.hot }}/>
+                  <input id="hot" name="hot" type="checkbox" {{ recipe.hot }} />
                   <span>Hot</span>
                 </label>
               </p>
@@ -108,13 +107,21 @@
             <div class="row">
               <!-- Submit button -->
               <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
-                Edit Recipe
+                Confirm Edit
               </button>
             </div>
             <!-- Sign in page link -->
             <div class="row">
               <p class="center-align">
-                <a href="{{ url_for('profile', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Cancel</a>
+                <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}"
+                  class="col s12 btn-small purple darken-1">Reset Changes</a>
+              </p>
+            </div>
+            <!-- Sign in page link -->
+            <div class="row">
+              <p class="center-align">
+                <a href="{{ url_for('recipes') }}"
+                  class="col s12 btn-small purple darken-1">Cancel</a>
               </p>
             </div>
           </div>
