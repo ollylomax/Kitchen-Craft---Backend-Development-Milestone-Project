@@ -73,22 +73,28 @@ footer .container {
 
 /* Generic form styles */
 
-form input {
+form input,
+textarea {
     color: white;
+    border-bottom: 1px solid white !important;
 }
 
 .dropdown-content li > span{
     color:black;
 }
 
+span.character-counter {
+    color: white;
+}
+
+.form-checkboxes {
+    padding-right: 40px;
+}
+
 /* Register page */
 
 .register-input {
     padding: 0 30px;
-}
-
-.register-input input {
-    border-bottom: 1px solid white !important;
 }
 
 .register-input label {
