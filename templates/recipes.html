@@ -17,13 +17,13 @@
 
   <div class=" col s12 m6 l4">
     <div class="card-panel purple darken-4 white-text">
-      {% if recipe.hot == 'yes' %}
+      {% if recipe.hot == 'checked' %}
       <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
       {% endif %}
-      {% if recipe.vegetarian == 'yes' %}
+      {% if recipe.vegetarian == 'checked' %}
       <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
       {% endif %}
-      {% if recipe.vegan == 'yes' %}
+      {% if recipe.vegan == 'checked' %}
       <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
       {% endif %}
       <div class="center-align">
@@ -45,11 +45,19 @@
         </li>
       </ul>
       <div class="chip">
-        <span><em>Recipe by: </em>{{ recipe.created_by }}<em> on: {{ recipe.upload_date }}</em></span>
+        <span><em>Recipe by: 
+          {% if session.user_session|lower == recipe.created_by|lower %}
+        </em>You<em>
+          {% else %} 
+        </em>{{ recipe.created_by }}<em></em>
+        {% endif %}
+          on: {{ recipe.upload_date }}</em></span>
       </div>
       <div class="col s12 right-align">
-        <a href="" class="btn-small green">Edit</a>
-        <a href="" class="btn-small red">Delete</a>
+        {% if session.user|lower == recipe.created_by|lower %}
+        <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}" class="btn-small green">Edit</a>
+        <a href="{{ url_for('remove_recipe', recipe_id = recipe._id) }}" class="btn-small red">Remove</a>
+        {% endif %}
       </div>
     </div>
   </div>

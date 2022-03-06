@@ -7,6 +7,7 @@
     <div class="card purple darken-4">
       <!-- Title block -->
       <div class="card-content white-text">
+        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
         <span class="card-title">Add Recipe</span>
         <p>Share your favourite recipes with the rest of our commmunity!</p>
       </div>
@@ -38,8 +39,8 @@
           <!-- Recipe name input -->
           <div class="row register-input">
             <div class="input-field col s12">
-              <input id="recipe_name" name="recipe_name" type="text" class="validate" pattern="^[a-zA-Z]{5,20}$"
-                required>
+              <input id="recipe_name" name="recipe_name" type="text" class="validate" minlength="5" maxlength="20"
+                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" required>
               <label for="recipe_name">Recipe Name</label>
               <span class="white-text left pattern"><em>No more than 20 letters</em></span>
             </div>
@@ -108,7 +109,8 @@
             <!-- Sign in page link -->
             <div class="row">
               <p class="center-align">
-                <a href="{{ url_for('profile', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Cancel</a>
+                <a href="{{ url_for('profile', username=session['user_session']) }}"
+                  class="col s12 btn-small purple darken-1">Cancel</a>
               </p>
             </div>
           </div>
