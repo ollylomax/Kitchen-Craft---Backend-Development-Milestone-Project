@@ -54,10 +54,9 @@
           on: {{ recipe.upload_date }}</em></span>
       </div>
       <div class="col s12 right-align">
-        {% if session.user|lower == recipe.created_by|lower %}
+        {% if session.user_session|lower == recipe.created_by|lower %}
         <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}" class="btn-small green">Edit</a>
         <a href="#modal-{{ recipe._id }}" class="btn-small red modal-trigger">Remove</a>
-        <!-- <a href="{{ url_for('remove_recipe', recipe_id = recipe._id) }}" class="btn-small red">Remove</a> -->
         {% endif %}
       </div>
     </div>
