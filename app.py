@@ -1,5 +1,7 @@
 import os
 
+from datetime import date
+
 # Import flask
 from flask import Flask, render_template, url_for, redirect, session, request, flash
 
@@ -172,7 +174,9 @@ def edit_profile(username):
 # Recipes page route decorator
 @app.route('/recipes')
 def recipes():
-    recipes = mongo.db.recipes.find()
+    # upload_dates = mongo.db.recipes.find("upload_date")
+    # recipes = mongo.db.recipes.find().sort(upload_dates.sort(key=lambda date: datetime.strptime(date, "%d/%m/Y")))
+    recipes = mongo.db.recipes.find().sort("upload_date", -1)
     return render_template('recipes.html', recipes=recipes)
 
 
@@ -183,6 +187,7 @@ def add_recipe():
         vegan = "yes" if request.form.get("vegan") else "no"
         hot = "yes" if request.form.get("hot") else "no"
 
+        now = date.today()
         recipe = {
             "cuisine_name": request.form.get("cuisine_name"),
             "recipe_name": request.form.get("recipe_name"),
@@ -194,6 +199,7 @@ def add_recipe():
             "vegetarian": vegetarian,
             "vegan": vegan,
             "hot": hot,
+            "upload_date": now.strftime("%d/%m/%Y")
         }
         mongo.db.recipes.insert_one(recipe)
         flash("Recipe Successfully Added")
