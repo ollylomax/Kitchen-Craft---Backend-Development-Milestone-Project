@@ -179,7 +179,7 @@ def add_recipe():
             "cook_time": request.form.get("cook_time"),
             "ingredients": request.form.get("ingredients"),
             "steps": request.form.get("steps"),
-            "created_by": session["user"],
+            "created_by": session["user_session"],
             "vegetarian": vegetarian,
             "vegan": vegan,
             "hot": hot,
