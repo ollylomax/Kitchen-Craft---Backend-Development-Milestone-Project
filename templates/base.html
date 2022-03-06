@@ -64,7 +64,7 @@
             {% endif %}
             <!-- Dropdown Trigger -->
             {% if session.user_session %}
-            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ username.username }}<i
+            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">User<i
                         class="fa-solid fa-caret-down right"></i></a></li>
             {% else %}
             <li><a href="{{ url_for('login') }}">Log In</a></li>
