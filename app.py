@@ -179,7 +179,8 @@ def recipes():
     # upload_dates = mongo.db.recipes.find("upload_date")
     # recipes = mongo.db.recipes.find().sort(upload_dates.sort(key=lambda date: datetime.strptime(date, "%d/%m/Y")))
     recipes = mongo.db.recipes.find().sort("upload_date", -1)
-    return render_template('recipes.html', recipes=recipes)
+    cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
+    return render_template('recipes.html', recipes=recipes, cuisines=cuisines)
 
 
 @app.route("/search", methods=["GET", "POST"])

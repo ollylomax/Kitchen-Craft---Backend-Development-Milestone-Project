@@ -63,6 +63,15 @@
       {% if recipe.vegan == 'checked' %}
       <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
       {% endif %}
+
+        {% for cuisine in cuisines %}
+          {% if recipe.cuisine_name == cuisine.cuisine_name %}
+          <img src="data:image/png;base64,{{ cuisine.flag }}" alt="Flag for {{ cuisine.cuisine_name }}" 
+          class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine"
+          width="32px" height="32px">
+          {% endif %}
+        {% endfor %}
+        
       <div class="center-align">
         <h5>{{ recipe.recipe_name }}</h5>
         <h6>{{ recipe.cuisine_name }} Cuisine</h6>
