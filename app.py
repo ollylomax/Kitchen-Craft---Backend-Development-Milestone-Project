@@ -1,5 +1,7 @@
 import os
 
+import base64
+
 from datetime import date
 
 # Import flask
@@ -238,6 +240,25 @@ def remove_recipe(recipe_id):
 def cuisines():
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
     return render_template("cuisines.html", cuisines=cuisines)
+
+
+@app.route("/add_cuisine", methods=["GET", "POST"])
+def add_cuisine():
+
+    if request.method == "POST":
+        # with open(request.form.get('flag'), "rb") as img_file:
+        #     my_string = base64.b64encode(img_file.read())
+
+        cuisine = {
+            'cuisine_name': request.form.get('cuisine_name'),
+            'flag': request.form.get('flag'),
+            'description': request.form.get('description')
+        }
+        mongo.db.cuisines.insert_one(cuisine)
+        flash("Your New Cuisine has been Successfully Added to the Database")
+        return redirect(url_for("cuisines"))
+
+    return render_template("add_cuisine.html")
 
 
 # Where and how to run app
