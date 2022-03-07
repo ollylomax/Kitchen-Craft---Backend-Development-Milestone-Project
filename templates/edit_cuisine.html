@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row register-panel">
+  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+    <div class="card purple darken-4">
+      <!-- Title block -->
+      <div class="card-content white-text">
+        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+        <span class="card-title">Edit Cuisine</span>
+        <p>Don't forget to add a flag and description</p>
+      </div>
+
+      <!-- Form block -->
+      <div class="row register-form">
+        <form enctype = "multipart/form-data" class="col s12" method="POST" 
+          action="{{ url_for('edit_cuisine', cuisine_id=cuisine._id) }}">
+
+          <!-- Recipe name input -->
+          <div class="row register-input">
+            <div class="input-field col s12">
+              <input id="cuisine_name" name="cuisine_name" type="text" class="validate" minlength="4" maxlength="20"
+                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ cuisine.cuisine_name }}" required>
+              <label for="cuisine_name">Cuisine Name</label>
+              <span class="white-text left pattern"><em>No more than 20 letters</em></span>
+            </div>
+          </div>
+          <div class="row register-input">
+          <div class="file-field input-field col s12">
+            <div class="btn-small green">
+              <span>Upload Flag</span>
+              <input type="file" value="{{ cuisine.flag }}">
+            </div>
+            <div class="file-path-wrapper">
+              <input class="file-path validate" type="text">
+            </div>
+          </div>
+          </div>
+
+          <div class="row register-input">
+            <div class="input-field col s12">
+              <textarea id="description" name="description" minlength="5" maxlength="200"
+                class="materialize-textarea validate" data-length="200" required>
+                  {{- cuisine.description -}}</textarea>
+              <label for="description">Description</label>
+            </div>
+          </div>
+
+          <!-- Submit block -->
+          <div class="card-action">
+            <div class="row">
+              <!-- Submit button -->
+              <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
+                Confirm Edit
+              </button>
+            </div>
+            <!-- Sign in page link -->
+            <div class="row">
+              <p class="center-align">
+                <a href="{{ url_for('edit_cuisine', cuisine_id=cuisine._id) }}"
+                  class="col s12 btn-small purple darken-1">Reset Changes</a>
+              </p>
+            </div>
+            <!-- Sign in page link -->
+            <div class="row">
+              <p class="center-align">
+                <a href="{{ url_for('cuisines') }}"
+                  class="col s12 btn-small purple darken-1">Cancel</a>
+              </p>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

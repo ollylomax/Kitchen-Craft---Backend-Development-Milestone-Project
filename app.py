@@ -144,12 +144,12 @@ def edit_profile(username):
         {'username': session['user_session']})
     if request.method == "POST":
 
-        submit = {
+        upload = {
             "fname": request.form.get("fname"),
             "lname": request.form.get("lname"),
             "email": request.form.get("email")
         }
-        mongo.db.users.update_one({'username': session['user_session']}, {"$set": submit})
+        mongo.db.users.update_one({'username': session['user_session']}, {"$set": upload})
         flash("Profile Updated")
         return redirect(url_for('profile', username=session['user_session']))
 
@@ -206,7 +206,7 @@ def edit_recipe(recipe_id):
         hot = "checked" if request.form.get("hot") else "unchecked"
 
         now = date.today()
-        submit = {
+        upload = {
             "cuisine_name": request.form.get("cuisine_name"),
             "recipe_name": request.form.get("recipe_name"),
             "prep_time": request.form.get("prep_time"),
@@ -219,7 +219,7 @@ def edit_recipe(recipe_id):
             "hot": hot,
             "upload_date": now.strftime("%d/%m/%Y")
         }
-        mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {"$set": submit})
+        mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {"$set": upload})
         flash("Your Recipe has been successfully updated")
         return redirect(url_for("recipes"))
 
@@ -259,6 +259,27 @@ def add_cuisine():
         return redirect(url_for("cuisines"))
 
     return render_template("add_cuisine.html")
+
+
+@app.route("/edit_cuisine/<cuisine_id>", methods=["GET", "POST"])
+def edit_cuisine(cuisine_id):
+    if request.method == "POST":
+        upload = {
+            "cuisine_name": request.form.get("cuisine_name")
+        }
+        mongo.db.cuisines.update_one({"_id": ObjectId(cuisine_id)}, {"$set": upload})
+        flash("You have Successfully Updated the Category")
+        return redirect(url_for("cuisines"))
+
+    cuisine = mongo.db.cuisines.find_one({"_id": ObjectId(cuisine_id)})
+    return render_template("edit_cuisine.html", cuisine=cuisine)
+
+
+@app.route("/remove_cuisine/<cuisine_id>")
+def remove_cuisine(cuisine_id):
+    mongo.db.cuisines.delete_one({"_id": ObjectId(cuisine_id)})
+    flash("You have Successfully Removed this Category")
+    return redirect(url_for("cuisines"))
 
 
 # Where and how to run app
