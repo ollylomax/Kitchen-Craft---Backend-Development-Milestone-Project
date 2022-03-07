@@ -234,6 +234,12 @@ def remove_recipe(recipe_id):
     return redirect(url_for("recipes"))
 
 
+@app.route("/cuisines")
+def cuisines():
+    cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
+    return render_template("cuisines.html", cuisines=cuisines)
+
+
 # Where and how to run app
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

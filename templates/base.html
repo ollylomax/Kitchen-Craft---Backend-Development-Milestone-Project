@@ -47,7 +47,7 @@
                     <li><a href="{{ url_for('home') }}">Home</a></li>
                     <li><a href="">Tools</a></li>
                     <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
-                    <li><a href="">Manage Cuisines</a></li>
+                    <li><a href="{{ url_for('cuisines') }}">Cuisines</a></li>
 
             <!-- Dropdown Trigger -->
             {% if session.user_session %}
@@ -71,7 +71,7 @@
             {% if session.user_session %}
             <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
             <li><a href="{{ url_for('add_recipe') }}">Add Recipe</a></li>
-            <li><a href="">Manage Cuisines</a></li>
+            <li><a href="{{ url_for('cuisines') }}">Cuisines</a></li>
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% else %}
             <li><a href="{{ url_for('login') }}">Log In</a></li>
