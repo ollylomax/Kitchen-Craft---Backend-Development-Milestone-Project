@@ -166,6 +166,13 @@ def recipes():
     return render_template('recipes.html', recipes=recipes)
 
 
+@app.route("/search", methods=["GET", "POST"])
+def search():
+    index_query = request.form.get("index_query")
+    recipes = list(mongo.db.recipes.find({"$text": {"$search": index_query}}))
+    return render_template("recipes.html", recipes=recipes)
+
+
 @app.route("/add_recipe", methods=['GET', 'POST'])
 def add_recipe():
     if request.method == "POST":
