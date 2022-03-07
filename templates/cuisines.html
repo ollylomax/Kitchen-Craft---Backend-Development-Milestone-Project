@@ -10,7 +10,10 @@
       <span class="title">{{ cuisine.cuisine_name }}</span>
       <p>{{ cuisine.description }}
       </p>
-      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+      <div class="col s12 right-align">
+        <a href="{" class="btn-small green">Edit</a>
+        <a href="" class="btn-small red">Remove</a>
+      </div>
     </li>
     {% endfor %}
   </ul>
