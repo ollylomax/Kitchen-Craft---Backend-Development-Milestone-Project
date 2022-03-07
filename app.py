@@ -275,6 +275,7 @@ def edit_cuisine(cuisine_id):
     return render_template("edit_cuisine.html", cuisine=cuisine)
 
 
+# Route to remove cuisine from collection
 @app.route("/remove_cuisine/<cuisine_id>")
 def remove_cuisine(cuisine_id):
     mongo.db.cuisines.delete_one({"_id": ObjectId(cuisine_id)})
