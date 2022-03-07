@@ -149,17 +149,17 @@ span.character-counter {
 
 /* Cuisines */
 
-.collection {
+.cuisines {
     padding: 0 20px;
     border: 0;
 }
 
-.collection-item {
+.cuisines .collection-item {
     margin: 10px 0 !important;
     border: 1px solid purple;
 }
 
-ul:not(.browser-default) {
+.cuisines:not(.browser-default) {
     padding-left: 20px;
 }
 

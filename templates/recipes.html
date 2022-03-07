@@ -18,30 +18,37 @@
 
 <div class="row">
   <div class="col s12 center-align title-footer">
-    <h1>Share your own recipes with the community!</h1>
-    {% if session.user_session %}
-    <p class="center-align">
-      <a href="{{ url_for('add_recipe') }}" class="col s12 btn-small purple darken-1">Add Recipe</a>
-    </p>
-    {% else %}
-    <p class="center-align">
-      <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Now</a>
-    </p>
-    {% endif %}
+    <div class="row card-panel purple darken-4">
+      <h1 class="white-text">Search our recipes or share your own recipes with the community!</h1>
+      <form action="{{ url_for('search') }}" method="post" class="col s12">
+        <div class="valign-wrapper center-align">
+          <div class="input-field col s6 m8">
+            <input type="text" name="index_query" id="index_query" minlength="3" class="validate" required>
+            <label for="index_query">Search Recipes</label>
+          </div>
+          <div class="col s6 m4">
+            <button type="submit" class="btn purple">
+              <i class="fas fa-search left"></i> Search
+            </button>
+            <a href="{{ url_for('recipes') }}" class="btn green">Reset</a>
+          </div>
+        </div>
+      </form>
+      {% if session.user_session %}
+      <p class="center-align">
+        <a href="{{ url_for('add_recipe') }}" class="col s12 btn-small purple darken-1">Add Recipe</a>
+      </p>
+      {% else %}
+      <p class="center-align">
+        <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Now</a>
+      </p>
+      {% endif %}
+    </div>
   </div>
 </div>
 
-<div class="row">
 
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  {% for message in messages %}
-  <div class="card-content white-text green darken-4 form-flash">
-    <span class="center-align white-text">{{ message }}</span>
-  </div>
-  {% endfor %}
-  {% endif %}
-  {% endwith %}
+<div class="row">
 
   {% for recipe in recipes %}
 
@@ -107,7 +114,8 @@
   {% endfor %}
 </div>
 
-<div class="row">
+<div class="row card-panel purple darken-4">
+  <h5 class="white-text center-align">Share your own recipes with the community!</h5>
   <div class="col s12 center-align">
     {% if session.user_session %}
     <p class="center-align">
