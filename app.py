@@ -157,6 +157,22 @@ def edit_profile(username):
     return render_template("edit_profile.html", username=username)
 
 
+
+@app.route("/change_password/<username>", methods=['GET', 'POST'])
+def change_password(username):
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
+    if request.method == "POST":
+        upload = {
+            'password': generate_password_hash(request.form.get('password'))
+        }
+        mongo.db.users.update_one({'username': session['user_session']}, {"$set": upload})
+        flash("Your Password has been changed")
+        return redirect(url_for('profile', username=session['user_session']))
+
+    return render_template("change_password.html", username=username)
+
+
 # Recipes page route decorator
 @app.route('/recipes')
 def recipes():
