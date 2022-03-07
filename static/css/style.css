@@ -15,6 +15,10 @@ h1 {
     color: purple;
 }
 
+h5 {
+    margin: 0;
+}
+
 section .flash-panel h2 {
     padding: 30px;
     font-size: 2rem;
@@ -145,6 +149,12 @@ span.character-counter {
 
 .profile-buttons a {
     margin-bottom: 15px;
+}
+
+/* Recipes */
+
+.recipe-flags {
+
 }
 
 /* Cuisines */
