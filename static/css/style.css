@@ -153,8 +153,8 @@ span.character-counter {
 
 /* Recipes */
 
-.recipe-flags {
-
+.chip {
+    margin-top: 10px;
 }
 
 /* Cuisines */

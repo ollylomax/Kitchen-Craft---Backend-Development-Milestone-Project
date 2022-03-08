@@ -15,7 +15,7 @@
       <!-- Form block -->
       <div class="row register-form">
         <form enctype = "multipart/form-data" class="col s12" method="POST" 
-          action="{{ url_for('edit_cuisine', cuisine_id=cuisine._id) }}">
+          action="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}">
 
           <!-- Recipe name input -->
           <div class="row register-input">
@@ -58,14 +58,14 @@
             <!-- Sign in page link -->
             <div class="row">
               <p class="center-align">
-                <a href="{{ url_for('edit_cuisine', cuisine_id=cuisine._id) }}"
+                <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}"
                   class="col s12 btn-small purple darken-1">Reset Changes</a>
               </p>
             </div>
             <!-- Sign in page link -->
             <div class="row">
               <p class="center-align">
-                <a href="{{ url_for('cuisines') }}"
+                <a href="{{ url_for('cuisines', username=session['user_session']) }}"
                   class="col s12 btn-small purple darken-1">Cancel</a>
               </p>
             </div>

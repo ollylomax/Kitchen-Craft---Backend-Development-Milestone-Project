@@ -19,9 +19,12 @@
 <div class="row">
     <div class="col s12 center-align title-footer">
     <h1>Read about all the cuisines of the world below</h1>
+    {% if username.is_admin == 'yes' %}
     <p class="center-align">
-      <a href="{{ url_for('add_cuisine', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Add Cuisine</a>
+      <a href="{{ url_for('add_cuisine', username=session['user_session']) }}"
+        class="col s12 btn-small purple darken-1">Add Cuisine</a>
     </p>
+    {% endif %}
   </div>
 </div>
 
@@ -34,7 +37,7 @@
       </p>
       {% if username.is_admin == 'yes' %}
       <div class="col s12 right-align">
-        <a href="{{ url_for('edit_cuisine', cuisine_id=cuisine._id) }}" class="btn-small green">Edit</a>
+        <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}" class="btn-small green">Edit</a>
         <a href="#modal-{{ cuisine._id }}" class="btn-small red modal-trigger">Remove</a>
       </div>
       {% endif %}
@@ -57,12 +60,15 @@
     {% endfor %}
   </ul>
 
+  {% if username.is_admin == 'yes' %}
   <div class="row">
     <div class="col s12 center-align">
     <p class="center-align">
-      <a href="{{ url_for('add_cuisine', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Add Cuisine</a>
+      <a href="{{ url_for('add_cuisine', username=session['user_session']) }}"
+        class="col s12 btn-small purple darken-1">Add Cuisine</a>
     </p>
   </div>
 </div>
+{% endif %}
 
 {% endblock %}

@@ -287,7 +287,7 @@ def add_cuisine(username):
         }
         mongo.db.cuisines.insert_one(cuisine)
         flash("Your New Cuisine has been Successfully Added to the Database")
-        return redirect(url_for("cuisines"))
+        return redirect(url_for('cuisines', username=session['user_session']))
 
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
@@ -295,21 +295,27 @@ def add_cuisine(username):
     if username['is_admin'] == 'yes':
         return render_template("add_cuisine.html")
     else:
-        return render_template("home.html")
+        return redirect(url_for("home"))
 
 
-@app.route("/edit_cuisine/<cuisine_id>", methods=["GET", "POST"])
-def edit_cuisine(cuisine_id):
+@app.route("/edit_cuisine/<username>/<cuisine_id>", methods=["GET", "POST"])
+def edit_cuisine(username, cuisine_id):
     if request.method == "POST":
         upload = {
             "cuisine_name": request.form.get("cuisine_name")
         }
         mongo.db.cuisines.update_one({"_id": ObjectId(cuisine_id)}, {"$set": upload})
-        flash("You have Successfully Updated the Category")
-        return redirect(url_for("cuisines"))
-
+        flash("You have Successfully Updated the Cuisine")
+        return redirect(url_for('cuisines', username=session['user_session']))
+    
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
     cuisine = mongo.db.cuisines.find_one({"_id": ObjectId(cuisine_id)})
-    return render_template("edit_cuisine.html", cuisine=cuisine)
+
+    if username['is_admin'] == 'yes':
+        return render_template("edit_cuisine.html", cuisine=cuisine, username=username)
+    else:
+        return redirect(url_for("home"))
 
 
 # Route to remove cuisine from collection
