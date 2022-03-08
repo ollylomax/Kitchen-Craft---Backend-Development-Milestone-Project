@@ -176,9 +176,7 @@ def change_password(username):
 # Recipes page route decorator
 @app.route('/recipes')
 def recipes():
-    # upload_dates = mongo.db.recipes.find("upload_date")
-    # recipes = mongo.db.recipes.find().sort(upload_dates.sort(key=lambda date: datetime.strptime(date, "%d/%m/Y")))
-    recipes = mongo.db.recipes.find().sort("upload_date", -1)
+    recipes = mongo.db.recipes.find().sort('$natural', -1)
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
     return render_template('recipes.html', recipes=recipes, cuisines=cuisines)
 
@@ -237,7 +235,7 @@ def edit_recipe(recipe_id):
             "cook_time": request.form.get("cook_time"),
             "ingredients": request.form.get("ingredients"),
             "steps": request.form.get("steps"),
-            "created_by": session["user"],
+            "created_by": session["user_session"],
             "vegetarian": vegetarian,
             "vegan": vegan,
             "hot": hot,
