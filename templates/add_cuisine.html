@@ -14,7 +14,7 @@
 
       <!-- Form block -->
       <div class="row register-form">
-        <form enctype = "multipart/form-data" class="col s12" method="POST" action="{{ url_for('add_cuisine') }}">
+        <form enctype = "multipart/form-data" class="col s12" method="POST" action="{{ url_for('add_cuisine', username=session['user_session']) }}">
 
           <!-- Recipe name input -->
           <div class="row register-input">
