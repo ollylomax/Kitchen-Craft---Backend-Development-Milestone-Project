@@ -19,11 +19,13 @@
 <div class="row">
     <div class="col s12 center-align title-footer">
     <h1>Read about all the cuisines of the world below</h1>
+    {% if session.user_session %}
     {% if username.is_admin == 'yes' %}
     <p class="center-align">
       <a href="{{ url_for('add_cuisine', username=session['user_session']) }}"
         class="col s12 btn-small purple darken-1">Add Cuisine</a>
     </p>
+    {% endif %}
     {% endif %}
   </div>
 </div>
@@ -35,11 +37,13 @@
       <span class="title">{{ cuisine.cuisine_name }}</span>
       <p>{{ cuisine.description }}
       </p>
+      {% if session.user_session %}
       {% if username.is_admin == 'yes' %}
       <div class="col s12 right-align">
         <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}" class="btn-small green">Edit</a>
         <a href="#modal-{{ cuisine._id }}" class="btn-small red modal-trigger">Remove</a>
       </div>
+      {% endif %}
       {% endif %}
     </li>
 
@@ -59,7 +63,7 @@
 
     {% endfor %}
   </ul>
-
+  {% if session.user_session %}
   {% if username.is_admin == 'yes' %}
   <div class="row">
     <div class="col s12 center-align">
@@ -69,6 +73,7 @@
     </p>
   </div>
 </div>
+{% endif %}
 {% endif %}
 
 {% endblock %}

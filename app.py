@@ -257,20 +257,24 @@ def remove_recipe(recipe_id):
     mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
     flash("Your recipe has been successfully removed")
     return redirect(url_for("recipes"))
+    
 
-
+@app.route("/cuisines/", defaults={'username': None})
 @app.route("/cuisines/<username>")
 def cuisines(username):
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
 
-    username = mongo.db.users.find_one(
-        {'username': session['user_session']})
-    
-    # if username['is_admin'] == 'yes':
-    #     return render_template('cuisines.html', username=username)
-    # else:
-    #     return redirect(url_for('home'))
-    return render_template("cuisines.html", cuisines=cuisines, username=username)
+    if session.get('user_session') is not None:
+        username = mongo.db.users.find_one(
+            {'username': session['user_session']})
+        
+        # if username['is_admin'] == 'yes':
+        #     return render_template('cuisines.html', username=username)
+        # else:
+        #     return redirect(url_for('home'))
+        return render_template("cuisines.html", cuisines=cuisines, username=username)
+    else:
+        return render_template("cuisines.html", cuisines=cuisines)
 
 
 @app.route("/add_cuisine/<username>", methods=["GET", "POST"])
