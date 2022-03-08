@@ -6,8 +6,7 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    background: url('../images/background.jpg') no-repeat center top fixed;
-    background-size: 1200px;
+    background-color: rgb(192, 192, 192, 0.5)
 }
 
 h1 {
@@ -108,6 +107,39 @@ span.character-counter {
 
 .form-checkboxes {
     padding-right: 40px;
+}
+
+/* Home */
+
+.intro {
+    background: url('../images/intro-pic.jpg') center;
+}
+
+.intro-header {
+    height: 500px;
+    border-bottom: 2px solid purple;
+}
+
+.intro-header h2 {
+    margin: 20px 0 0 0;
+}
+
+.intro-header p {
+    margin: 0 0 20px 0;
+}
+
+.intro-header h2,
+.intro-header p {
+    background-color:rgba(100, 0, 95, 0.5);
+    padding: 20px;
+}
+
+.home-footer-panel {
+    margin: 10.5px;
+    padding: 25px
+}
+.home-footer-panel a {
+    margin-bottom: 10px;
 }
 
 /* Register page */

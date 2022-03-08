@@ -40,8 +40,11 @@ mongo = PyMongo(app)
 # Find all docs from recipes collection on mongodb and assign to recipes variable
 # Render home.html template and pass through recipes variable to access on page
 def home():
-    recipes = mongo.db.recipes.find()
-    return render_template('home.html', recipes=recipes)
+    find_cuisine_of_week = list(mongo.db.cuisines.find({"cuisine_of_week": "yes"}))
+    cuisine_of_week = find_cuisine_of_week[0]['cuisine_name']
+    recipes = mongo.db.recipes.find({"cuisine_name": cuisine_of_week})
+    cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
+    return render_template('home.html', recipes=recipes, cuisines=cuisines)
 
 
 # Register page route decorator
