@@ -59,7 +59,8 @@ def register():
             'fname': request.form.get('fname').lower(),
             'lname': request.form.get('lname').lower(),
             'email': request.form.get('email').lower(),
-            'password': generate_password_hash(request.form.get('password'))
+            'password': generate_password_hash(request.form.get('password')),
+            'is_admin': 'no'
         }
         mongo.db.users.insert_one(register)
 
@@ -258,14 +259,22 @@ def remove_recipe(recipe_id):
     return redirect(url_for("recipes"))
 
 
-@app.route("/cuisines")
-def cuisines():
+@app.route("/cuisines/<username>")
+def cuisines(username):
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
-    return render_template("cuisines.html", cuisines=cuisines)
+
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
+    
+    # if username['is_admin'] == 'yes':
+    #     return render_template('cuisines.html', username=username)
+    # else:
+    #     return redirect(url_for('home'))
+    return render_template("cuisines.html", cuisines=cuisines, username=username)
 
 
-@app.route("/add_cuisine", methods=["GET", "POST"])
-def add_cuisine():
+@app.route("/add_cuisine/<username>", methods=["GET", "POST"])
+def add_cuisine(username):
 
     if request.method == "POST":
         # with open(request.form.get('flag'), "rb") as img_file:
@@ -280,7 +289,13 @@ def add_cuisine():
         flash("Your New Cuisine has been Successfully Added to the Database")
         return redirect(url_for("cuisines"))
 
-    return render_template("add_cuisine.html")
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
+
+    if username['is_admin'] == 'yes':
+        return render_template("add_cuisine.html")
+    else:
+        return render_template("home.html")
 
 
 @app.route("/edit_cuisine/<cuisine_id>", methods=["GET", "POST"])
