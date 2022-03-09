@@ -265,7 +265,8 @@ def remove_recipe(recipe_id):
 @app.route("/cuisines/", defaults={'username': None})
 @app.route("/cuisines/<username>")
 def cuisines(username):
-    cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
+
+    cuisines = list(mongo.db.cuisines.find().sort("cuisine_of_week", -1))
 
     if session.get('user_session') is not None:
         username = mongo.db.users.find_one(
@@ -287,12 +288,20 @@ def add_cuisine(username):
         # with open(request.form.get('flag'), "rb") as img_file:
         #     my_string = base64.b64encode(img_file.read())
 
-        cuisine = {
+        cuisines = list(mongo.db.cuisines.find())
+        if request.form.get('cuisine_of_week'):
+            for cuisine in cuisines:
+                mongo.db.cuisines.update_one(cuisine, {"$set": {'cuisine_of_week': 'no'}})
+
+        cuisine_of_week = "yes" if request.form.get("cuisine_of_week") else "no"
+
+        upload = {
             'cuisine_name': request.form.get('cuisine_name'),
             'flag': request.form.get('flag'),
-            'description': request.form.get('description')
+            'description': request.form.get('description'),
+            'cuisine_of_week': cuisine_of_week
         }
-        mongo.db.cuisines.insert_one(cuisine)
+        mongo.db.cuisines.insert_one(upload)
         flash("Your New Cuisine has been Successfully Added to the Database")
         return redirect(url_for('cuisines', username=session['user_session']))
 
@@ -307,18 +316,37 @@ def add_cuisine(username):
 
 @app.route("/edit_cuisine/<username>/<cuisine_id>", methods=["GET", "POST"])
 def edit_cuisine(username, cuisine_id):
-    if request.method == "POST":
-        upload = {
-            "cuisine_name": request.form.get("cuisine_name")
-        }
-        mongo.db.cuisines.update_one({"_id": ObjectId(cuisine_id)}, {"$set": upload})
-        flash("You have Successfully Updated the Cuisine")
-        return redirect(url_for('cuisines', username=session['user_session']))
-    
+
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
     cuisine = mongo.db.cuisines.find_one({"_id": ObjectId(cuisine_id)})
 
+    if request.method == "POST":
+
+        cuisines = list(mongo.db.cuisines.find())
+        dict = list(mongo.db.cuisines.find({"_id": ObjectId(cuisine_id)}))[0]
+
+        if request.form.get('cuisine_of_week'):
+            for cuisine in cuisines:
+                mongo.db.cuisines.update_one(cuisine, {"$set": {'cuisine_of_week': 'no'}})
+
+        if not request.form.get('cuisine_of_week') and dict['cuisine_of_week'] == 'yes':
+            flash('There must always be a Cuisine of the Week')
+            return render_template("edit_cuisine.html", cuisine=cuisine, username=username)
+        else:
+            cuisine_of_week = "yes" if request.form.get("cuisine_of_week") else "no"
+
+        upload = {
+            'cuisine_name': request.form.get('cuisine_name'),
+            'flag': request.form.get('flag'),
+            'description': request.form.get('description'),
+            'cuisine_of_week': cuisine_of_week
+        }
+
+        mongo.db.cuisines.update_one({"_id": ObjectId(cuisine_id)}, {"$set": upload})
+        flash("You have Successfully Updated the Cuisine")
+        return redirect(url_for('cuisines', username=session['user_session']))
+    
     if username['is_admin'] == 'yes':
         return render_template("edit_cuisine.html", cuisine=cuisine, username=username)
     else:
