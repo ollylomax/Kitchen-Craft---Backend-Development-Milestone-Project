@@ -385,7 +385,14 @@ def edit_admin(user_id):
         flash("Admins Updated")
         return redirect(url_for('users', username=session['user_session']))
 
-    return redirect(url_for("recipes"))
+    return redirect(url_for('users', username=session['user_session']))
+
+
+@app.route("/remove_user/<user_id>")
+def remove_user(user_id):
+    mongo.db.users.delete_one({"_id": ObjectId(user_id)})
+    flash("User has been permanently removed from the Database")
+    return redirect(url_for('users', username=session['user_session']))
 
 
 # Where and how to run app
