@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!-- Flash block -->
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<div class="card-content white-text red darken-4 form-flash">
+  <span class="center-align white-text">{{ message }}</span>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<ul class="collection users">
+  <li class="collection-item"><em>Username</em>
+    <div class="right">
+      <em>Is Admin?</em>
+    </div>
+  </li>
+  {% for user in users %}
+  <li class="collection-item">{{ user.username }}<br> {{ user.fname.capitalize() }} {{ user.lname.capitalize() }}
+    <form class="admin-form" method="POST" action="{{ url_for('edit_admin', user_id = user._id) }}">
+      <div class="switch right-align">
+        <label for="is_admin-{{ user.username }}">
+          {% if user.is_admin == 'yes'%}
+          <input class="right" type="checkbox" id="is_admin-{{ user.username }}" name="is_admin" checked onchange="this.form.submit()">
+          {% else %}
+          <input type="checkbox" id="is_admin-{{ user.username }}" name="is_admin" onchange="this.form.submit()">
+          {% endif %}
+          <span class="lever"></span>
+        </label>
+      </div>
+    
+    </form>
+  </li>
+
+  {% endfor %}
+</ul>
+
+{% endblock %}
