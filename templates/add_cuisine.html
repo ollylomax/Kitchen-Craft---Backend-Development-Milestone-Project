@@ -14,7 +14,8 @@
 
       <!-- Form block -->
       <div class="row register-form">
-        <form enctype = "multipart/form-data" class="col s12" method="POST" action="{{ url_for('add_cuisine', username=session['user_session']) }}">
+        <form enctype="multipart/form-data" class="col s12" method="POST"
+          action="{{ url_for('add_cuisine', username=session['user_session']) }}">
 
           <!-- Recipe name input -->
           <div class="row register-input">
@@ -26,15 +27,15 @@
             </div>
           </div>
           <div class="row register-input">
-          <div class="file-field input-field col s12">
-            <div class="btn-small green">
-              <span>Upload Flag</span>
-              <input type="file">
+            <div class="file-field input-field col s12">
+              <div class="btn-small green">
+                <span>Upload Flag</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text">
-            </div>
-          </div>
           </div>
 
           <div class="row register-input">
@@ -42,6 +43,19 @@
               <textarea id="description" name="description" minlength="5" maxlength="200"
                 class="materialize-textarea validate" data-length="200" required></textarea>
               <label for="description">Description</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <div class="switch">
+                <i class="purple darken-4"></i>
+                <label for="cuisine_of_week">
+                  <input type="checkbox" id="cuisine_of_week" name="cuisine_of_week">
+                  <span class="lever"></span>
+                  Cuisine of the Week?
+                </label>
+              </div>
             </div>
           </div>
 

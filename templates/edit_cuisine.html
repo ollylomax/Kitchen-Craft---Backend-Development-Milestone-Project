@@ -12,9 +12,20 @@
         <p>Don't forget to add a flag and description</p>
       </div>
 
+      <!-- Flash block -->
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      {% for message in messages %}
+      <div class="card-content white-text red darken-4 form-flash">
+        <span class="center-align white-text">{{ message }}</span>
+      </div>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+
       <!-- Form block -->
       <div class="row register-form">
-        <form enctype = "multipart/form-data" class="col s12" method="POST" 
+        <form enctype="multipart/form-data" class="col s12" method="POST"
           action="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}">
 
           <!-- Recipe name input -->
@@ -26,16 +37,13 @@
               <span class="white-text left pattern"><em>No more than 20 letters</em></span>
             </div>
           </div>
+
           <div class="row register-input">
-          <div class="file-field input-field col s12">
-            <div class="btn-small green">
-              <span>Upload Flag</span>
-              <input type="file" value="{{ cuisine.flag }}">
+            <div class="input-field col s12">
+              <input id="flag" name="flag" type="text" class="validate" value="{{ cuisine.flag }}" required>
+              <label for="flag">Flag (Base64)</label>
+              <span class="white-text left pattern"><em>Please input Base64 string</em></span>
             </div>
-            <div class="file-path-wrapper">
-              <input class="file-path validate" type="text">
-            </div>
-          </div>
           </div>
 
           <div class="row register-input">
@@ -44,6 +52,23 @@
                 class="materialize-textarea validate" data-length="200" required>
                   {{- cuisine.description -}}</textarea>
               <label for="description">Description</label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="input-field col s12">
+              <div class="switch">
+                <i class="purple darken-4"></i>
+                <label for="cuisine_of_week">
+                  {% if cuisine.cuisine_of_week == 'yes'%}
+                  <input type="checkbox" id="cuisine_of_week" name="cuisine_of_week" checked>
+                  {% else %}
+                  <input type="checkbox" id="cuisine_of_week" name="cuisine_of_week">
+                  {% endif %}
+                  <span class="lever"></span>
+                  Cuisine of the Week?
+                </label>
+              </div>
             </div>
           </div>
 
