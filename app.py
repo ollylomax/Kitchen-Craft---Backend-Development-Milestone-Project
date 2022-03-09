@@ -361,6 +361,18 @@ def remove_cuisine(cuisine_id):
     return redirect(url_for("cuisines"))
 
 
+@app.route("/users/<username>")
+def users(username):
+
+    username = mongo.db.users.find_one(
+        {'username': session['user_session']})
+    users = mongo.db.users.find().sort("username", 1)
+    return render_template("users.html", username=username, users=users)
+
+
+
+
+
 # Where and how to run app
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
