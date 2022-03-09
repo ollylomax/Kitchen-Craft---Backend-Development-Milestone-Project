@@ -205,6 +205,13 @@ span.character-counter {
     padding-left: 20px;
 }
 
+/* Users */
+
+.users {
+    margin: 25px 50px;
+    border: 1px solid black;
+}
+
 
 /* Media Queries */
 @media(min-width: 300px) {
