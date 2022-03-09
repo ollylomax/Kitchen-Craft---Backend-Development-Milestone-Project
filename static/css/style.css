@@ -168,6 +168,12 @@ span.character-counter {
     margin: 0 30px;
 }
 
+.users-form-flash {
+    margin: 0;
+    text-align: center;
+    padding: 20px;
+}
+
 /* Profile Page */
 
 .profile-panel .user-details {
