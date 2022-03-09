@@ -370,7 +370,22 @@ def users(username):
     return render_template("users.html", username=username, users=users)
 
 
+@app.route("/edit_admin/<user_id>", methods=['GET', 'POST'])
+def edit_admin(user_id):
 
+    if request.method == "POST":
+
+        is_admin = "yes" if request.form.get('is_admin') else "no"
+        
+        upload = {
+            "is_admin": is_admin
+        }
+        
+        mongo.db.users.update_one({"_id": ObjectId(user_id)}, {"$set": upload})
+        flash("Admins Updated")
+        return redirect(url_for('users', username=session['user_session']))
+
+    return redirect(url_for("recipes"))
 
 
 # Where and how to run app

@@ -46,6 +46,7 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{ url_for('home') }}">Home</a></li>
                     <li><a href="">Tools</a></li>
+                    <li><a href="{{ url_for('users', username=session['user_session']) }}">Users</a></li>
                     <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
                     <li><a href="{{ url_for('cuisines', username=session['user_session']) }}">Cuisines</a></li>
 
@@ -69,6 +70,7 @@
             <li><a href="">Tools</a></li>
             <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
             <li><a href="{{ url_for('cuisines', username=session['user_session']) }}">Cuisines</a></li>
+            <li><a href="{{ url_for('users', username=session['user_session']) }}">Users</a></li>
             {% if session.user_session %}
             <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
             <li><a href="{{ url_for('add_recipe') }}">Add Recipe</a></li>
