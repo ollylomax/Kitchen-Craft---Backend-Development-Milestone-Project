@@ -116,7 +116,7 @@ span.character-counter {
 }
 
 .intro-header {
-    height: 500px;
+    height: 625px;
     border-bottom: 2px solid purple;
 }
 
@@ -191,8 +191,24 @@ span.character-counter {
 
 /* Recipes */
 
+.recipe-info {
+    margin: 40px 0 15px;
+}
+.collapsible-header {
+    background-color: #4a148c;
+}
+
+.collapsible-header:hover {
+    color: #4a148c;
+    background-color: white;
+}
+
 .chip {
-    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.card-panel .recipe-buttons {
+    padding: 0;
 }
 
 /* Cuisines */
@@ -269,6 +285,10 @@ span.character-counter {
         font-size: 2.1rem;
     }
     
+    .intro-header {
+        height: 400px;
+    }
+
     footer .container {
         text-align: left;
     }
@@ -280,6 +300,13 @@ span.character-counter {
         line-height: 3;
         padding-left: 0;
     }
+
+    .intro-header h2,
+    .intro-header p {
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
 }
 
 @media only screen and (max-width: 992px) {
