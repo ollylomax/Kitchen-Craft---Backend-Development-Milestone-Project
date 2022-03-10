@@ -23,10 +23,11 @@
     <div class="row">
         <div class="col s12 center-align">
             <h4>Cuisine of the Week:</h4>
-            <!-- Iterate over the filtered cuisines object being passed from home function -->
+            <!-- Iterate over the cuisines object being passed from home function -->
             {% for cuisine in cuisines %}
             <!-- Conditional statement to check if the iteration is the cuisine of the week -->
             {% if cuisine.cuisine_of_week == 'yes' %}
+            <!-- Inject cuisine name and convert base64 to image from the injected string -->
             <h4><img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"><br>
                 {{ cuisine.cuisine_name}}</h4>
             <h5>Check out the latest recipes with {{ cuisine.cuisine_name}} origins below!</h2>
@@ -44,27 +45,27 @@
         <div class=" col s12 m6 l4">
             <!-- Recipe card -->
             <div class="card-panel purple darken-4 white-text">
-                <!-- Conditional to check if Hot! checkbox is checked for each iteration-->
+                <!-- Conditional to check if Hot! checkbox is checked for each iteration -->
                 {% if recipe.hot == 'checked' %}
-                <!-- Insertion of Hot! icon -->
+                <!-- Insert Hot! icon -->
                 <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
                 {% endif %}
                 <!-- Conditional to check if Vegetarian checkbox is checked for each iteration-->
                 {% if recipe.vegetarian == 'checked' %}
-                <!-- Insertion of Vegetarian icon -->
+                <!-- Insert Vegetarian icon -->
                 <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
                 {% endif %}
                 <!-- Conditional to check if Vegan checkbox is checked for each iteration-->
                 {% if recipe.vegan == 'checked' %}
-                <!-- Insertion of Vegan icon -->
+                <!-- Insert Vegan icon -->
                 <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
                 {% endif %}
 
-                <!-- Iterate over the filtered cuisines object being passed from home function -->
+                <!-- Iterate over the cuisines object being passed from home function -->
                 {% for cuisine in cuisines %}
-                <!-- Conditional to check if the cuisine name of the recipe matches that of the filtered object-->
+                <!-- Conditional to check cuisine_name in recipe iteration matches that of cuisine iteration-->
                 {% if recipe.cuisine_name == cuisine.cuisine_name %}
-                <!-- Convert base64 to image from the injected string -->
+                <!-- Insert image by converting base64 from injected flag string -->
                 <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
                     class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine"
                     width="32px" height="32px">
@@ -78,22 +79,25 @@
                     <span>Preparation: {{ recipe.prep_time }}</span><br>
                     <span>Cooking: {{ recipe.cook_time }}</span>
                 </div>
-                <!-- Ingredients and steps list injected from recipes object -->
+
+                <!-- Unordered collapsible list for ingredients and steps -->
                 <ul class="collapsible">
                     <!-- Ingredients collapsible -->
                     <li>
                         <div class="collapsible-header">
                             <i class="fa-solid fa-basket-shopping"></i> Ingredients</div>
+                        <!-- Inject ingredients from recipes object -->
                         <div class="collapsible-body white black-text"><span>{{ recipe.ingredients }}</span></div>
                     </li>
                     <!-- Steps collapsible -->
                     <li>
                         <div class="collapsible-header">
                             <i class="fa-solid fa-clipboard-list"></i> Steps</div>
+                            <!-- Inject steps from recipes object -->
                         <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
                     </li>
                 </ul>
-                <!-- Created_by styled chip injected from recipes object -->
+                <!-- Styled div to display recipe creator by using created_by from recipes object -->
                 <div class="chip">
                     <span><em>Recipe by:
                             <!-- Conditional to check if current user session matches created_by value from recipes object -->
@@ -147,7 +151,7 @@
         <h5 class="white-text center-align">Check out our full list of community shared recipes!</h5>
         <div class="col s12 center-align">
             <p class="center-align">
-                <!-- Anchor link for recipes page -->
+                <!-- Anchor link for recipes route -->
                 <a href="{{ url_for('recipes') }}" class="col s12 btn-small purple darken-1">Recipes</a>
             </p>
         </div>

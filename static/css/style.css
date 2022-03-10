@@ -16,6 +16,7 @@ h1 {
 
 h5 {
     margin: 0;
+    font-size: 1.8rem;
 }
 
 section .flash-panel h2 {
@@ -190,6 +191,26 @@ span.character-counter {
 }
 
 /* Recipes */
+
+.search-buttons {
+    margin-bottom: 10px;
+}
+
+.search-buttons .search,
+.search-buttons .reset {
+    width: 49%;
+    padding: 0 10px;
+}
+
+.search-ar {
+    width: 98.6%;
+    margin-top: 15px;
+}
+
+.search-buttons .search i {
+    font-size: 1rem;
+    margin-right: 0;
+}
 
 .recipe-info {
     margin: 40px 0 15px;
