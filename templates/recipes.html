@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
+
+<!-- Content to be injected into respective base.html block when recipes view is accessed -->
 {% block content %}
 
+<!-- Flashed messages section-->
 <section>
-
-  <!-- Flash messages -->
+  <!-- In-built flask method to pull all flashed messages from the session and return them -->
   {% with messages = get_flashed_messages() %}
+  <!-- Conditional to check for flashed messages -->
   {% if messages %}
+  <!-- Iterate through flashed messages -->
   {% for message in messages %}
   <div class="row flash-panel green">
+    <!-- Inject message -->
     <h2 class="white-text center-align"><i class="fa-solid fa-check"></i><br>{{ message }}</h2>
   </div>
   {% endfor %}
@@ -16,126 +21,171 @@
 
 </section>
 
-<div class="row">
-  <div class="col s12 center-align title-footer">
-    <div class="row card-panel purple darken-4">
-      <h1 class="white-text">Search our recipes or share your own recipes with the community!</h1>
-      <form action="{{ url_for('search') }}" method="post" class="col s12">
-        <div class="valign-wrapper center-align">
-          <div class="input-field col s6 m8">
-            <input type="text" name="index_query" id="index_query" minlength="3" class="validate" required>
-            <label for="index_query">Search Recipes</label>
+<!-- Search/query section -->
+<section>
+  <div class="row">
+    <div class="col s12 center-align title-footer">
+      <div class="row card-panel purple darken-4">
+        <h1 class="white-text">Search our recipes or share your own recipes with the community!</h1>
+        <!-- Search form with post directing to search route -->
+        <form action="{{ url_for('search') }}" method="post" class="col s12">
+          <div class="center-align">
+            <div class="input-field col s12">
+              <!-- Search input field with validators -->
+              <input type="text" name="index_query" id="index_query" minlength="3" class="validate" required>
+              <label for="index_query">Search Recipes</label>
+            </div>
+            <div class="col s12 search-buttons">
+              <!-- Search button to submit form -->
+              <button type="submit" class="btn-small purple darken-1 search">
+                <i class="fas fa-search left"></i> Search
+              </button>
+              <!-- Reset button directing to recipes route to reset form index -->
+              <a href="{{ url_for('recipes') }}" class="btn-small green reset">Reset</a>
+              <!-- Conditional to check if user session exists -->
+              {% if session.user_session %}
+              <!-- Add recipe button directing to add_recipe route -->
+              <a href="{{ url_for('add_recipe') }}" class="btn-small purple darken-1 search-ar">Add Recipe</a>
+              <!-- Otherwise if no session -->
+              {% else %}
+              <!-- Register now button directing to register route -->
+              <a href="{{ url_for('register') }}" class="btn-small purple darken-1 search-ar">Register Now</a>
+              {% endif %}
+            </div>
           </div>
-          <div class="col s6 m4">
-            <button type="submit" class="btn purple">
-              <i class="fas fa-search left"></i> Search
-            </button>
-            <a href="{{ url_for('recipes') }}" class="btn green">Reset</a>
-          </div>
-        </div>
-      </form>
-      {% if session.user_session %}
-      <p class="center-align">
-        <a href="{{ url_for('add_recipe') }}" class="col s12 btn-small purple darken-1">Add Recipe</a>
-      </p>
-      {% else %}
-      <p class="center-align">
-        <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Now</a>
-      </p>
-      {% endif %}
+        </form>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
+<!-- Recipes section -->
+<section>
+  <div class="row">
+    <!-- Iterate over the recipes object being passed from the recipes function -->
+    {% for recipe in recipes %}
+    <div class=" col s12 m6 l4">
+      <!-- Recipe card -->
+      <div class="card-panel purple darken-4 white-text">
+        <!-- Conditional to check if Hot! checkbox is checked for each iteration -->
+        {% if recipe.hot == 'checked' %}
+        <!-- Insert Hot! icon -->
+        <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
+        {% endif %}
+        <!-- Conditional to check if Vegetarian checkbox is checked for each iteration-->
+        {% if recipe.vegetarian == 'checked' %}
+        <!-- Insert Vegetarian icon -->
+        <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
+        {% endif %}
+        <!-- Conditional to check if Vegan checkbox is checked for each iteration-->
+        {% if recipe.vegan == 'checked' %}
+        <!-- Insert Vegan icon -->
+        <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
+        {% endif %}
 
-<div class="row">
-
-  {% for recipe in recipes %}
-
-  <div class=" col s12 m6 l4">
-    <div class="card-panel purple darken-4 white-text">
-      {% if recipe.hot == 'checked' %}
-      <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
-      {% endif %}
-      {% if recipe.vegetarian == 'checked' %}
-      <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
-      {% endif %}
-      {% if recipe.vegan == 'checked' %}
-      <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
-      {% endif %}
-
+        <!-- Iterate over the cuisines object being passed from recipes function -->
         {% for cuisine in cuisines %}
-          {% if recipe.cuisine_name == cuisine.cuisine_name %}
-          <img src="data:image/png;base64,{{ cuisine.flag }}" alt="Flag for {{ cuisine.cuisine_name }}" 
-          class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine"
-          width="32px" height="32px">
-          {% endif %}
+        <!-- Conditional to check cuisine_name in recipe iteration matches that of cuisine iteration-->
+        {% if recipe.cuisine_name == cuisine.cuisine_name %}
+        <!-- Insert image by converting base64 from injected flag string -->
+        <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
+          class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine" width="32px"
+          height="32px">
+        {% endif %}
         {% endfor %}
-        
-      <div class="center-align">
-        <h5>{{ recipe.recipe_name }}</h5>
-        <h6>{{ recipe.cuisine_name }} Cuisine</h6>
-        <span>Preparation: {{ recipe.prep_time }}</span><br>
-        <span>Cooking: {{ recipe.cook_time }}</span>
-      </div>
-      <ul class="collapsible">
-        <li>
-          <div class="collapsible-header purple darken-4">
-            <i class="fa-solid fa-basket-shopping"></i> Ingredients</div>
-          <div class="collapsible-body white black-text"><span>{{ recipe.ingredients }}</span></div>
-        </li>
-        <li>
-          <div class="collapsible-header purple darken-4">
-            <i class="fa-solid fa-clipboard-list"></i> Steps</div>
-          <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
-        </li>
-      </ul>
-      <div class="chip">
-        <span><em>Recipe by:
-            {% if session.user_session|lower == recipe.created_by|lower %}
-          </em>You<em>
-            {% else %}
-          </em>{{ recipe.created_by }}<em></em>
-          {% endif %}
-          on: {{ recipe.upload_date }}</em></span>
-      </div>
-      {% if session.user_session|lower == recipe.created_by|lower %}
-      <div class="col s12 right-align">       
-        <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}" class="btn-small green">Edit</a>
-        <a href="#modal-{{ recipe._id }}" class="btn-small red modal-trigger">Remove</a>     
-      </div>
-      {% endif %}
-    </div>
-  </div>
 
-  <!-- Modal Structure -->
-  <div id="modal-{{ recipe._id }}" class="modal purple darken-4">
-    <div class="modal-content white-text">
-      <h4>Confirm Deletion</h4>
-      <p>Are you sure you want to permanently delete your recipe?</p>
+        <!-- Recipe info injected from recipes object -->
+        <div class="center-align recipe-info">
+          <h5>{{ recipe.recipe_name }}</h5>
+          <h6>{{ recipe.cuisine_name }} Cuisine</h6>
+          <span>Preparation: {{ recipe.prep_time }}</span><br>
+          <span>Cooking: {{ recipe.cook_time }}</span>
+        </div>
+
+        <!-- Unordered collapsible list for ingredients and steps -->
+        <ul class="collapsible">
+          <!-- Ingredients collapsible -->
+          <li>
+            <div class="collapsible-header">
+              <i class="fa-solid fa-basket-shopping"></i> Ingredients</div>
+            <!-- Inject ingredients from recipes object -->
+            <div class="collapsible-body white black-text"><span>{{ recipe.ingredients }}</span></div>
+          </li>
+          <!-- Steps collapsible -->
+          <li>
+            <div class="collapsible-header">
+              <i class="fa-solid fa-clipboard-list"></i> Steps</div>
+            <!-- Inject steps from recipes object -->
+            <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
+          </li>
+        </ul>
+        <!-- Styled div to display recipe creator by using created_by from recipes object -->
+        <div class="chip">
+          <span><em>Recipe by:
+              <!-- Conditional to check if current user session matches created_by value from recipes object -->
+              {% if session.user_session|lower == recipe.created_by|lower %}
+            </em>You<em>
+              <!-- Otherwise inject created_by value from recipes object -->
+              {% else %}
+            </em>{{ recipe.created_by }}<em></em>
+            {% endif %}
+            <!-- Value of upload_date injected from recipes object -->
+            on: {{ recipe.upload_date }}</em></span>
+        </div>
+
+        <!-- Conditional to check if current user session matches created_by value from recipes object -->
+        {% if session.user_session|lower == recipe.created_by|lower %}
+        <!-- Buttons for edit and remove -->
+        <div class="col s12 right-align recipe-buttons">
+            <!-- Pass back the associated recipe._id within the expected recipe_id parameter -->
+            <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}" class="btn-small green">Edit</a>
+            <!-- Modal trigger when clicking remove button -->
+            <a href="#modal-{{ recipe._id }}" class="btn-small red modal-trigger">Remove</a>
+        </div>
+        {% endif %}
+      </div>
     </div>
-    <div class="modal-footer grey lighten-2">
-      <a href="{{ url_for('recipes') }}" class="btn-small green">Return</a>
-      <a href="{{ url_for('remove_recipe', recipe_id = recipe._id) }}" class="modal-close btn-small red">Confirm
-        Delete</a>
-    </div>
+
+
+    <!-- Modal with a unique id created by adding the associated recipe._id -->
+    <div id="modal-{{ recipe._id }}" class="modal purple darken-4">
+      <div class="modal-content white-text">
+          <h4>Confirm Deletion</h4>
+          <p>Are you sure you want to permanently delete your recipe?</p>
+      </div>
+      <div class="modal-footer grey lighten-2">
+          <!-- Return to home page -->
+          <a href="{{ url_for('recipes') }}" class="btn-small green">Return</a>
+          <!-- Trigger the remove_recipe function by passing the associated recipe._id in the expected param -->
+          <a href="{{ url_for('remove_recipe', recipe_id = recipe._id) }}"
+              class="modal-close btn-small red">Confirm
+              Delete</a>
+      </div>
   </div>
   {% endfor %}
-</div>
+  </div>
+</section>
 
+<!-- Bottom button section -->
+<section>
 <div class="row card-panel purple darken-4">
   <h5 class="white-text center-align">Share your own recipes with the community!</h5>
   <div class="col s12 center-align">
+    <!-- Conditional to check if a session exists -->
     {% if session.user_session %}
     <p class="center-align">
+      <!-- Anchor link for add_recipe route -->
       <a href="{{ url_for('add_recipe') }}" class="col s12 btn-small purple darken-1">Add Recipe</a>
     </p>
+    <!-- Otherwise if session doesn't exist -->
     {% else %}
     <p class="center-align">
+      <!-- Anchor link for register route -->
       <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Now</a>
     </p>
     {% endif %}
   </div>
 </div>
+</section>
 
 {% endblock %}
