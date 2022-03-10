@@ -367,7 +367,11 @@ def users(username):
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
     users = mongo.db.users.find().sort("username", 1)
-    return render_template("users.html", username=username, users=users)
+
+    if username == list(mongo.db.users.find({"is_superuser":{"$exists":True}}))[0]:
+        return render_template("users.html", username=username, users=users)
+    else:
+        return redirect(url_for("home"))
 
 
 @app.route("/edit_admin/<user_id>", methods=['GET', 'POST'])
