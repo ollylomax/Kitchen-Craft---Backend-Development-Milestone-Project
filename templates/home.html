@@ -1,121 +1,173 @@
 {% extends 'base.html' %}
+
+<!-- Content to be injected into respective base.html block when home view is accessed -->
 {% block content %}
 
-<div class="row intro">
+<!-- Website intro section -->
+<section>
+    <div class="row intro">
+        <div class="col s12 white-text intro-header center-align">
+            <h2>Welcome to the Kitchen Craft website!</h2>
 
-    <div class="col s12 white-text intro-header center-align">
-        <h2>Welcome to the Kitchen Craft website!</h2>
-
-        <p>We specialise in, and are passionate about our kitchenware. Visit our shop in York or head on over to our
-            products page to take a look at our new kitchen utensils and appliances, or browse our community shared
-            recipes including cuisines from all around the world. Feel free to register with us and share your own great
-            recipes and don’t forget to check us out on social media.</p>
+            <p>We specialise in, and are passionate about our kitchenware. Visit our shop in York or head on over to our
+                products page to take a look at our new kitchen utensils and appliances, or browse our community shared
+                recipes including cuisines from all around the world. Feel free to register with us and share your own
+                great
+                recipes and don’t forget to check us out on social media.</p>
+        </div>
     </div>
-</div>
+</section>
 
-<div class="row">
-    <div class="col s12 center-align">
-        <h4>Cuisine of the Week:</h4>
+<!-- Cuisine of the week announcement section -->
+<section>
+    <div class="row">
+        <div class="col s12 center-align">
+            <h4>Cuisine of the Week:</h4>
+            <!-- Iterate over the filtered cuisines object being passed from home function -->
             {% for cuisine in cuisines %}
+            <!-- Conditional statement to check if the iteration is the cuisine of the week -->
             {% if cuisine.cuisine_of_week == 'yes' %}
-            <h4><img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
-                ><br>
-            {{ cuisine.cuisine_name}}</h4>
+            <h4><img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"><br>
+                {{ cuisine.cuisine_name}}</h4>
             <h5>Check out the latest recipes with {{ cuisine.cuisine_name}} origins below!</h2>
-            {% endif %}
-            {% endfor %}
-            
-          
-    </div>
-</div>
-
-
-<div class="row">
-
-    {% for recipe in recipes %}
-
-    <div class=" col s12 m6 l4">
-        <div class="card-panel purple darken-4 white-text">
-            {% if recipe.hot == 'checked' %}
-            <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
-            {% endif %}
-            {% if recipe.vegetarian == 'checked' %}
-            <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
-            {% endif %}
-            {% if recipe.vegan == 'checked' %}
-            <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
-            {% endif %}
-
-            {% for cuisine in cuisines %}
-            {% if recipe.cuisine_name == cuisine.cuisine_name %}
-            <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
-                class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine"
-                width="32px" height="32px">
-            {% endif %}
-            {% endfor %}
-
-            <div class="center-align recipe-info">
-                <h5>{{ recipe.recipe_name }}</h5>
-                <h6>{{ recipe.cuisine_name }} Cuisine</h6>
-                <span>Preparation: {{ recipe.prep_time }}</span><br>
-                <span>Cooking: {{ recipe.cook_time }}</span>
-            </div>
-            <ul class="collapsible">
-                <li>
-                    <div class="collapsible-header">
-                        <i class="fa-solid fa-basket-shopping"></i> Ingredients</div>
-                    <div class="collapsible-body white black-text"><span>{{ recipe.ingredients }}</span></div>
-                </li>
-                <li>
-                    <div class="collapsible-header">
-                        <i class="fa-solid fa-clipboard-list"></i> Steps</div>
-                    <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
-                </li>
-            </ul>
-            <div class="chip">
-                <span><em>Recipe by:
-                        {% if session.user_session|lower == recipe.created_by|lower %}
-                    </em>You<em>
-                        {% else %}
-                    </em>{{ recipe.created_by }}<em></em>
-                    {% endif %}
-                    on: {{ recipe.upload_date }}</em></span>
-            </div>
-            {% if session.user_session|lower == recipe.created_by|lower %}
-            <div class="col s12 right-align recipe-buttons">
-                <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}" class="btn-small green">Edit</a>
-                <a href="#modal-{{ recipe._id }}" class="btn-small red modal-trigger">Remove</a>
-            </div>
-            {% endif %}
+                {% endif %}
+                {% endfor %}
         </div>
     </div>
+</section>
 
-    <!-- Modal Structure -->
-    <div id="modal-{{ recipe._id }}" class="modal purple darken-4">
-        <div class="modal-content white-text">
-            <h4>Confirm Deletion</h4>
-            <p>Are you sure you want to permanently delete your recipe?</p>
-        </div>
-        <div class="modal-footer grey lighten-2">
-            <a href="{{ url_for('home') }}" class="btn-small green">Return</a>
-            <a href="{{ url_for('remove_recipe', recipe_id = recipe._id) }}" class="modal-close btn-small red">Confirm
-                Delete</a>
-        </div>
-    </div>
-    {% endfor %}
-</div>
+<!-- Cuisine of the week recipes section -->
+<section>
+    <div class="row">
+        <!-- Iterate over the recipes object being passed from the home function -->
+        {% for recipe in recipes %}
+        <div class=" col s12 m6 l4">
+            <!-- Recipe card -->
+            <div class="card-panel purple darken-4 white-text">
+                <!-- Conditional to check if Hot! checkbox is checked for each iteration-->
+                {% if recipe.hot == 'checked' %}
+                <!-- Insertion of Hot! icon -->
+                <i class="right fa-solid fa-pepper-hot tooltipped" style="color: red" data-tooltip="Hot!"></i>
+                {% endif %}
+                <!-- Conditional to check if Vegetarian checkbox is checked for each iteration-->
+                {% if recipe.vegetarian == 'checked' %}
+                <!-- Insertion of Vegetarian icon -->
+                <i class="right fa-solid fa-carrot tooltipped" style="color: yellow" data-tooltip="Vegetarian"></i>
+                {% endif %}
+                <!-- Conditional to check if Vegan checkbox is checked for each iteration-->
+                {% if recipe.vegan == 'checked' %}
+                <!-- Insertion of Vegan icon -->
+                <i class="right fa-solid fa-leaf tooltipped" style="color: lightgreen" data-tooltip="Vegan"></i>
+                {% endif %}
 
-<div class="row card-panel purple darken-4 home-footer-panel">
-    <h5 class="white-text center-align">Check out our full list of community shared recipes or register and share your
-        own!!</h5>
-    <div class="col s12 center-align">
-        <p class="center-align">
-            <a href="{{ url_for('recipes') }}" class="col s12 btn-small purple darken-1">Recipes</a>
-        </p>
-        <p class="center-align">
-            <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Now</a>
-        </p>
+                <!-- Iterate over the filtered cuisines object being passed from home function -->
+                {% for cuisine in cuisines %}
+                <!-- Conditional to check if the cuisine name of the recipe matches that of the filtered object-->
+                {% if recipe.cuisine_name == cuisine.cuisine_name %}
+                <!-- Convert base64 to image from the injected string -->
+                <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
+                    class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine"
+                    width="32px" height="32px">
+                {% endif %}
+                {% endfor %}
+
+                <!-- Recipe info injected from recipes object -->
+                <div class="center-align recipe-info">
+                    <h5>{{ recipe.recipe_name }}</h5>
+                    <h6>{{ recipe.cuisine_name }} Cuisine</h6>
+                    <span>Preparation: {{ recipe.prep_time }}</span><br>
+                    <span>Cooking: {{ recipe.cook_time }}</span>
+                </div>
+                <!-- Ingredients and steps list injected from recipes object -->
+                <ul class="collapsible">
+                    <!-- Ingredients collapsible -->
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="fa-solid fa-basket-shopping"></i> Ingredients</div>
+                        <div class="collapsible-body white black-text"><span>{{ recipe.ingredients }}</span></div>
+                    </li>
+                    <!-- Steps collapsible -->
+                    <li>
+                        <div class="collapsible-header">
+                            <i class="fa-solid fa-clipboard-list"></i> Steps</div>
+                        <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
+                    </li>
+                </ul>
+                <!-- Created_by styled chip injected from recipes object -->
+                <div class="chip">
+                    <span><em>Recipe by:
+                            <!-- Conditional to check if current user session matches created_by value from recipes object -->
+                            {% if session.user_session|lower == recipe.created_by|lower %}
+                        </em>You<em>
+                            <!-- Otherwise inject created_by value from recipes object -->
+                            {% else %}
+                        </em>{{ recipe.created_by }}<em></em>
+                        {% endif %}
+                        <!-- Value of upload_date injected from recipes object -->
+                        on: {{ recipe.upload_date }}</em></span>
+                </div>
+
+                <!-- Conditional to check if current user session matches created_by value from recipes object -->
+                {% if session.user_session|lower == recipe.created_by|lower %}
+                <!-- Buttons for edit and remove -->
+                <div class="col s12 right-align recipe-buttons">
+                    <!-- Pass back the associated recipe._id within the expected recipe_id parameter -->
+                    <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}" class="btn-small green">Edit</a>
+                    <!-- Modal trigger when clicking remove button -->
+                    <a href="#modal-{{ recipe._id }}" class="btn-small red modal-trigger">Remove</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Modal with a unique id created by adding the associated recipe._id -->
+        <div id="modal-{{ recipe._id }}" class="modal purple darken-4">
+            <div class="modal-content white-text">
+                <h4>Confirm Deletion</h4>
+                <p>Are you sure you want to permanently delete your recipe?</p>
+            </div>
+            <div class="modal-footer grey lighten-2">
+                <!-- Return to home page -->
+                <a href="{{ url_for('home') }}" class="btn-small green">Return</a>
+                <!-- Trigger the remove_recipe function by passing the associated recipe._id in the expected param -->
+                <a href="{{ url_for('remove_recipe', recipe_id = recipe._id) }}"
+                    class="modal-close btn-small red">Confirm
+                    Delete</a>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-</div>
+</section>
+
+<!-- Bottom button section -->
+<section>
+    <div class="row card-panel purple darken-4 home-footer-panel">
+        <!-- Conditional to check if a session exists -->
+        {% if session.user_session %}
+        <h5 class="white-text center-align">Check out our full list of community shared recipes!</h5>
+        <div class="col s12 center-align">
+            <p class="center-align">
+                <!-- Anchor link for recipes page -->
+                <a href="{{ url_for('recipes') }}" class="col s12 btn-small purple darken-1">Recipes</a>
+            </p>
+        </div>
+        <!-- Otherwise if session doesn't exist -->
+        {% else %}
+        <h5 class="white-text center-align">Check out our full list of community shared recipes or register and share
+            your
+            own!!</h5>
+        <div class="col s12 center-align">
+            <p class="center-align">
+                <!-- Anchor link for recipes page -->
+                <a href="{{ url_for('recipes') }}" class="col s12 btn-small purple darken-1">Recipes</a>
+            </p>
+            <p class="center-align">
+                <!-- Anchor link for register page -->
+                <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Now</a>
+            </p>
+        </div>
+        {% endif %}
+    </div>
+</section>
 
 {% endblock %}
