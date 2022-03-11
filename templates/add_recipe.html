@@ -1,123 +1,127 @@
 {% extends 'base.html' %}
 
+<!-- Content to be injected into respective base.html block when add_recipe view is accessed -->
 {% block content %}
 
-<div class="row register-panel">
-  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
-    <div class="card purple darken-4">
-      <!-- Title block -->
-      <div class="card-content white-text">
-        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
-        <span class="card-title">Add Recipe</span>
-        <p>Share your favourite recipes with the rest of our commmunity!</p>
-      </div>
-      <!-- Flash block -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      {% for message in messages %}
-      <div class="card-content white-text red darken-4 form-flash">
-        <span class="center-align white-text">{{ message }}</span>
-      </div>
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
-      <!-- Form block -->
-      <div class="row register-form">
-        <form class="col s12" method="POST" action="{{ url_for('add_recipe') }}">
-          <!-- Select block -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <select id="cuisine_name" name="cuisine_name" class="validate" required>
-                <option value="" disabled selected>Choose Cuisine</option>
-                {% for cuisine in cuisines %}
-                <option value="{{ cuisine.cuisine_name }}">{{ cuisine.cuisine_name }}</option>
-                {% endfor %}
-              </select>
-              <label for="cuisine_name">Cuisine</label>
+<!-- Add recipe block -->
+<main>
+  <div class="row register-panel">
+    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+      <div class="card purple darken-4">
+        <!-- Title -->
+        <div class="card-content white-text">
+          <!-- Kitchen Craft logo sourced from directed images dir -->
+          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+          <span class="card-title">Add Recipe</span>
+          <p>Share your favourite recipes with the rest of our commmunity!</p>
+        </div>
+        <!-- Add recipe form with post directing to add_recipe route -->
+        <div class="row register-form">
+          <form class="col s12" method="POST" action="{{ url_for('add_recipe') }}">
+            <!-- Select -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <select id="cuisine_name" name="cuisine_name" class="validate" required>
+                  <option value="" disabled selected>Choose Cuisine</option>
+                  <!-- Iterate over the passed cuisines object -->
+                  {% for cuisine in cuisines %}
+                  <!-- Insert a cuisine_name select option for each iteration -->
+                  <option value="{{ cuisine.cuisine_name }}">{{ cuisine.cuisine_name }}</option>
+                  {% endfor %}
+                </select>
+                <label for="cuisine_name">Cuisine</label>
+              </div>
             </div>
-          </div>
-          <!-- Recipe name input -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <input id="recipe_name" name="recipe_name" type="text" class="validate" minlength="5" maxlength="20"
-                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" required>
-              <label for="recipe_name">Recipe Name</label>
-              <span class="white-text left pattern"><em>No more than 20 letters</em></span>
+            <!-- Recipe name -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Recipe name input with regex accepting characters a-z, A-Z and single spaces between words -->
+                <input id="recipe_name" name="recipe_name" type="text" class="validate" minlength="5" maxlength="20"
+                  pattern="^[a-zA-Z_]+( [a-zA-Z_]+)*$" required>
+                <label for="recipe_name">Recipe Name</label>
+                <!-- Inform user how to pass validation -->
+                <span class="white-text left pattern"><em>Between 5 and 20 characters only</em></span>
+              </div>
             </div>
-          </div>
-
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <input id="prep_time" name="prep_time" type="text" class="validate" minlength="5" maxlength="20"
-                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" required>
-              <label for="prep_time">Preparation Time</label>
+            <!-- Preparation time -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Preparation time input with regex accepting characters a-z, A-Z, 0-9 and single spaces between words -->
+                <input id="prep_time" name="prep_time" type="text" class="validate" minlength="5" maxlength="20"
+                  pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" required>
+                <label for="prep_time">Preparation Time</label>
+              </div>
             </div>
-          </div>
-
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <input id="cook_time" name="cook_time" type="text" class="validate" minlength="5" maxlength="20"
-                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" required>
-              <label for="cook_time">Cooking Time</label>
+            <!-- Cooking time -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Cooking time input with regex accepting characters a-z, A-Z, 0-9 and single spaces between words -->
+                <input id="cook_time" name="cook_time" type="text" class="validate" minlength="5" maxlength="20"
+                  pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" required>
+                <label for="cook_time">Cooking Time</label>
+              </div>
             </div>
-          </div>
-
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <textarea id="ingredients" name="ingredients" minlength="5" maxlength="200"
-                class="materialize-textarea validate" data-length="200" required></textarea>
-              <label for="ingredients">Ingredients</label>
+            <!-- Ingredients -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Ingredients text area with minimum of 10 and maximum of 200 characters -->
+                <textarea id="ingredients" name="ingredients" minlength="5" maxlength="200"
+                  class="materialize-textarea validate" data-length="200" required></textarea>
+                <label for="ingredients">Ingredients</label>
+              </div>
             </div>
-          </div>
-
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <textarea id="steps" name="steps" minlength="5" maxlength="200" class="materialize-textarea validate"
-                data-length="200" required></textarea>
-              <label for="steps">Steps</label>
+            <!-- Steps -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Steps text area with minimum of 10 and maximum of 200 characters -->
+                <textarea id="steps" name="steps" minlength="10" maxlength="200" class="materialize-textarea validate"
+                  data-length="200" required></textarea>
+                <label for="steps">Steps</label>
+              </div>
             </div>
-          </div>
-
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <p><span class="white-text form-checkboxes">This dish is: </span>
-
-                <label for="vegetarian" class="form-checkboxes">
-                  <input id="vegetarian" name="vegetarian" type="checkbox" />
-                  <span>Vegetarian</span>
-                </label>
-                <label for="vegan" class="form-checkboxes">
-                  <input id="vegan" name="vegan" type="checkbox" />
-                  <span>Vegan</span>
-                </label>
-                <label for="hot" class="form-checkboxes">
-                  <input id="hot" name="hot" type="checkbox" />
-                  <span>Hot</span>
-                </label>
-              </p>
+            <!-- Recipe optional checkboxes -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <p><span class="white-text form-checkboxes">This dish is: </span>
+                  <!-- Checkbox for vegetarian option -->
+                  <label for="vegetarian" class="form-checkboxes">
+                    <input id="vegetarian" name="vegetarian" type="checkbox" />
+                    <span>Vegetarian</span>
+                  </label>
+                  <!-- Checkbox for vegan option -->
+                  <label for="vegan" class="form-checkboxes">
+                    <input id="vegan" name="vegan" type="checkbox" />
+                    <span>Vegan</span>
+                  </label>
+                  <!-- Checkbox for hot option -->
+                  <label for="hot" class="form-checkboxes">
+                    <input id="hot" name="hot" type="checkbox" />
+                    <span>Hot</span>
+                  </label>
+                </p>
+              </div>
             </div>
-          </div>
-
-          <!-- Submit block -->
-          <div class="card-action">
-            <div class="row">
-              <!-- Submit button -->
-              <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
-                Add Recipe
-              </button>
+            <!-- Submit -->
+            <div class="card-action">
+              <div class="row">
+                <!-- Submit button -->
+                <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
+                  Add Recipe
+                </button>
+              </div>
+              <!-- Cancel anchor link directing to profile route and passing the expected username param in route -->
+              <div class="row">
+                <p class="center-align">
+                  <a href="{{ url_for('profile', username=session['user_session']) }}"
+                    class="col s12 btn-small purple darken-1">Cancel</a>
+                </p>
+              </div>
             </div>
-            <!-- Sign in page link -->
-            <div class="row">
-              <p class="center-align">
-                <a href="{{ url_for('profile', username=session['user_session']) }}"
-                  class="col s12 btn-small purple darken-1">Cancel</a>
-              </p>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</main>
 
 {% endblock %}
