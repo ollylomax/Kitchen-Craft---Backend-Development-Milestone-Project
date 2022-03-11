@@ -1,99 +1,111 @@
 {% extends 'base.html' %}
 
-<!-- Content to be injected into respective base.html block when register page
-     is rendered by register function -->
+<!-- Content to be injected into respective base.html block when register view is accessed -->
 {% block content %}
 <!-- Register block -->
-<div class="row register-panel">
-  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
-    <div class="card purple darken-4">
-      <!-- Title block -->
-      <div class="card-content white-text">
-        <span class="card-title">Register</span>
-        <p>Register to share your own great recipes with our community.
-          It's simple, just fill in the short form below.</p>
-      </div>
-      <!-- Flash block -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
+<main>
+  <div class="row register-panel">
+    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+      <div class="card purple darken-4">
+        <!-- Title -->
+        <div class="card-content white-text">
+          <span class="card-title">Register</span>
+          <p>Register to share your own great recipes with our community.
+            It's simple, just fill in the short form below.</p>
+        </div>
+        <!-- Flashed messages section -->
+        <section>
+          <!-- In-built flask method to pull all flashed messages from the session and return them -->
+          {% with messages = get_flashed_messages() %}
+          <!-- Conditional to check for flashed messages -->
+          {% if messages %}
+          <!-- Iterate through flashed messages -->
           {% for message in messages %}
           <div class="card-content white-text red darken-4 form-flash">
-                  <span class="center-align white-text">{{ message }}</span>
-              </div>
+            <!-- Inject message -->
+            <span class="center-align white-text">{{ message }}</span>
+          </div>
           {% endfor %}
-      {% endif %}
-  {% endwith %}
-      <!-- Form block -->
-      <div class="row register-form">
-        <form class="col s12" method="POST" action="{{ url_for('register') }}">
-          <!-- Username block -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <!-- Username input -->
-              <input id="username" name="username" type="text" class="validate" pattern="^[a-zA-Z0-9]{5,15}$" required>
-              <label for="username">Username</label>
-              <span class="white-text left pattern"><em>Username must be between 5 and 15 characters long</em></span>
+          {% endif %}
+          {% endwith %}
+        </section>
+        <!-- Register form with post directing to register route -->
+        <div class="row register-form">
+          <form class="col s12" method="POST" action="{{ url_for('register') }}">
+            <!-- Username -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Username input with regex accepting characters a-z, A-Z, 0-9 and between 5 and 15 in length-->
+                <input id="username" name="username" type="text" class="validate" pattern="^[a-zA-Z0-9]{5,15}$"
+                  required>
+                <label for="username">Username</label>
+                <!-- Tell user how to pass validation -->
+                <span class="white-text left pattern"><em>Username must be between 5 and 15 characters long</em></span>
+              </div>
             </div>
-          </div>
-          <!-- Name block -->
-          <div class="row register-input">
-            <div class="input-field col s6 white-text">
-              <!-- First name input -->
-              <input id="fname" name="fname" type="text" class="validate" required>
-              <label for="fname">First Name</label>
+            <!-- Name -->
+            <div class="row register-input">
+              <div class="input-field col s6 white-text">
+                <!-- First name input with regex accepting characters a-z, A-Z, and between 2 and 15 in length-->
+                <input id="fname" name="fname" type="text" class="validate" pattern="^[a-zA-Z]{2,15}$" required>
+                <label for="fname">First Name</label>
+              </div>
+              <div class="input-field col s6 white-text">
+                <!-- Last name input with regex accepting characters a-z, A-Z, and between 2 and 15 in length-->
+                <input id="lname" name="lname" type="text" class="validate" pattern="^[a-zA-Z]{2,15}$" required>
+                <label for="lname">Last Name</label>
+              </div>
             </div>
-            <div class="input-field col s6 white-text">
-              <!-- Last name input -->
-              <input id="lname" name="lname" type="text" class="validate" required>
-              <label for="lname">Last Name</label>
+            <!-- Password -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Password input with regex requiring at least one each of a-z, A-Z, 0-9 and a special,
+                  and between 8 and 64 in length-->
+                <input id="password" name="password" type="password" class="validate"
+                  pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})" required>
+                <label for="password">Password</label>
+                <!-- Tell user how to pass validation -->
+                <span class="white-text left pattern"><em>Password must contain both uppercase and
+                    lowercase letters as well as at least one number and special character</em></span>
+              </div>
             </div>
-          </div>
-          <!-- Password block -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <!-- Password input -->
-              <input id="password" name="password" type="password" class="validate"
-                pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})" required>
-              <label for="password">Password</label>
-              <span class="white-text left pattern"><em>Password must contain both uppercase and
-                  lowercase letters as well as at least one number and special character</em></span>
+            <!-- Confirm password -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Password input with regex requiring at least one each of a-z, A-Z, 0-9 and a special,
+                  and between 8 and 64 in length-->
+                <input id="pconfirm" name="password" type="password" class="validate"
+                  pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})" required>
+                <label for="pconfirm">Confirm Password</label>
+              </div>
             </div>
-          </div>
-          <!-- Confirm password block -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <!-- Password input -->
-              <input id="pconfirm" name="password" type="password" class="validate"
-                pattern="((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,64})" required>
-              <label for="pconfirm">Confirm Password</label>
+            <!-- Email -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Email input -->
+                <input id="email" name="email" type="email" class="validate" required>
+                <label for="email">Email</label>
+              </div>
             </div>
-          </div>
-          <!-- Email block -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <!-- Email input -->
-              <input id="email" name="email" type="email" class="validate" required>
-              <label for="email">Email</label>
+            <!-- Submit -->
+            <div class="card-action">
+              <div class="row">
+                <!-- Submit button -->
+                <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
+                  Register Now
+                </button>
+              </div>
+              <!-- Anchor with link to login route -->
+              <div class="row">
+                <p class="center-align">
+                  <a href="{{ url_for('login') }}" class="col s12 btn-small purple darken-1">Sign In</a>
+                </p>
+              </div>
             </div>
-          </div>
-          <!-- Submit block -->
-          <div class="card-action">
-            <div class="row">
-              <!-- Submit button -->
-              <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
-                Register Now
-              </button>
-            </div>
-            <!-- Sign in page link -->
-            <div class="row">
-              <p class="center-align">
-                <a href="{{ url_for('login') }}" class="col s12 btn-small purple darken-1">Sign In</a>
-              </p>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</main>
 {% endblock %}

@@ -1,64 +1,71 @@
 {% extends 'base.html' %}
 
-<!-- Content to be injected into respective base.html block when login page
-     is rendered by login function -->
+<!-- Content to be injected into respective base.html block when login view is accessed -->
 {% block content %}
-<!-- Sign in block -->
-<div class="row login-panel">
-  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
-    <div class="card purple darken-4">
-      <!-- Title block -->
-      <div class="card-content white-text">
-        <span class="card-title">Sign In</span>
-        <p>Sign In using your Username and Password below</p>
-      </div>
-      <!-- Flash block -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
+<!-- Sign in block-->
+<main>
+  <div class="row login-panel">
+    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+      <div class="card purple darken-4">
+        <!-- Title -->
+        <div class="card-content white-text">
+          <span class="card-title">Sign In</span>
+          <p>Sign In using your Username and Password below</p>
+        </div>
+        <!-- Flashed messages section -->
+        <section>
+          <!-- In-built flask method to pull all flashed messages from the session and return them -->
+          {% with messages = get_flashed_messages() %}
+          <!-- Conditional to check for flashed messages -->
+          {% if messages %}
+          <!-- Iterate through flashed messages -->
           {% for message in messages %}
           <div class="card-content white-text red darken-4 form-flash">
-                  <span class="center-align white-text">{{ message }}</span>
-              </div>
+            <!-- Inject message -->
+            <span class="center-align white-text">{{ message }}</span>
+          </div>
           {% endfor %}
-      {% endif %}
-  {% endwith %}
-      <!-- Form block -->
-      <div class="row register-form">
-        <form class="col s12" method="POST" action="{{ url_for('login') }}">
-          <!-- Username block -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <!-- Username input -->
-              <input id="username" name="username" type="text" class="validate" required>
-              <label for="username">Username</label>
+          {% endif %}
+          {% endwith %}
+        </section>
+        <!-- Login form with post directing to login route -->
+        <div class="row register-form">
+          <form class="col s12" method="POST" action="{{ url_for('login') }}">
+            <!-- Username -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Username input -->
+                <input id="username" name="username" type="text" class="validate" required>
+                <label for="username">Username</label>
+              </div>
             </div>
-          </div>
-          <!-- Password block -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <!-- Password input -->
-              <input id="password" name="password" type="password" class="validate" required>
-              <label for="password">Password</label>
+            <!-- Password -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Password input -->
+                <input id="password" name="password" type="password" class="validate" required>
+                <label for="password">Password</label>
+              </div>
             </div>
-          </div>
-          <!-- Submit block -->
-          <div class="card-action">
-            <div class="row">
-              <!-- Submit button -->
-              <button type="submit" class="col s12 btn-small purple darken-1">
-                Sign In
-              </button>
+            <!-- Submit -->
+            <div class="card-action">
+              <div class="row">
+                <!-- Submit button -->
+                <button type="submit" class="col s12 btn-small purple darken-1">
+                  Sign In
+                </button>
+              </div>
+              <!-- Anchor with link to register route -->
+              <div class="row">
+                <p class="center-align">
+                  <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Account</a>
+                </p>
+              </div>
             </div>
-            <!-- Register page link -->
-            <div class="row">
-              <p class="center-align">
-                <a href="{{ url_for('register') }}" class="col s12 btn-small purple darken-1">Register Account</a>
-              </p>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</main>
 {% endblock %}
