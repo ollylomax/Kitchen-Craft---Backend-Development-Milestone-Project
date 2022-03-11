@@ -1,38 +1,38 @@
 {% extends 'base.html' %}
 
+<!-- Content to be injected into respective base.html block when edit_recipe view is accessed -->
 {% block content %}
 
+<!-- Edit recipe block -->
+<main>
 <div class="row register-panel">
   <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
     <div class="card purple darken-4">
-      <!-- Title block -->
+      <!-- Title -->
       <div class="card-content white-text">
+        <!-- Kitchen Craft logo sourced from directed images dir -->
         <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
         <span class="card-title">Edit Recipe</span>
         <p>Edit your recipe below</p>
       </div>
-      <!-- Flash block -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      {% for message in messages %}
-      <div class="card-content white-text red darken-4 form-flash">
-        <span class="center-align white-text">{{ message }}</span>
-      </div>
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
-      <!-- Form block -->
+      <!-- Edit recipe form with post directing to edit_recipe route passing the expected recipe_id as param -->
       <div class="row register-form">
         <form class="col s12" method="POST" action="{{ url_for('edit_recipe', recipe_id = recipe._id) }}">
-          <!-- Select block -->
+          <!-- Select -->
           <div class="row register-input">
             <div class="input-field col s12">
               <select id="cuisine_name" name="cuisine_name" class="validate" required>
+                <!-- Remove selected as default value -->
                 <option value="" disabled>Choose Cuisine</option>
+                <!-- Iterate over the passed cuisines object -->
                 {% for cuisine in cuisines %}
+                <!-- Conditional to check cuisine_name in cuisine iteration matches that of recipe iteration-->
                 {% if cuisine.cuisine_name == recipe.cuisine_name %}
+                <!-- Apply selected -->
                 <option value="{{ cuisine.cuisine_name }}" selected>{{ cuisine.cuisine_name }}</option>
+                <!-- For all other cuisine names -->
                 {% else %}
+                <!-- Not selected -->
                 <option value="{{ cuisine.cuisine_name }}">{{ cuisine.cuisine_name }}</option>
                 {% endif %}
                 {% endfor %}
@@ -43,57 +43,70 @@
           <!-- Recipe name input -->
           <div class="row register-input">
             <div class="input-field col s12">
+              <!-- Recipe name input with value set to existing recipe_name value from passed recipes object,
+                with regex accepting characters a-z, A-Z and single spaces between words -->
               <input id="recipe_name" name="recipe_name" type="text" class="validate" minlength="5" maxlength="20"
-              pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ recipe.recipe_name }}" required>
+              pattern="^[a-zA-Z_]+( [a-zA-Z_]+)*$" value="{{ recipe.recipe_name }}" required>
               <label for="recipe_name">Recipe Name</label>
+              <!-- Inform user how to pass validation -->
               <span class="white-text left pattern"><em>No more than 20 letters</em></span>
             </div>
           </div>
-
+          <!-- Preparation time -->
           <div class="row register-input">
             <div class="input-field col s12">
+              <!-- Preparation time input with value set to existing prep_time value from passed recipes object,
+                with regex accepting characters a-z, A-Z, 0-9 and single spaces between words -->
               <input id="prep_time" name="prep_time" type="text" class="validate" minlength="5" maxlength="20"
                 pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ recipe.prep_time }}" required>
               <label for="prep_time">Preparation Time</label>
             </div>
           </div>
-
+          <!-- Cooking time -->
           <div class="row register-input">
             <div class="input-field col s12">
+              <!-- Cooking time input with value set to existing cook_time value from passed recipes object,
+                with regex accepting characters a-z, A-Z, 0-9 and single spaces between words -->
               <input id="cook_time" name="cook_time" type="text" class="validate" minlength="5" maxlength="20"
                 pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ recipe.cook_time }}" required>
               <label for="cook_time">Cooking Time</label>
             </div>
           </div>
-
+          <!-- Ingredients -->
           <div class="row register-input">
             <div class="input-field col s12">
+              <!-- Ingredients text area with value set to existing ingredients value from passed recipes object,
+                with a minimum of 10 and maximum of 200 characters -->
               <textarea id="ingredients" name="ingredients" minlength="5" maxlength="200"
                 class="materialize-textarea validate" data-length="200" required>{{ recipe.ingredients }}</textarea>
               <label for="ingredients">Ingredients</label>
             </div>
           </div>
-
+          <!-- Steps -->
           <div class="row register-input">
             <div class="input-field col s12">
+              <!-- Steps text area with value set to existing steps value from passed recipes object,
+                with a minimum of 10 and maximum of 200 characters -->
               <textarea id="steps" name="steps" minlength="5" maxlength="200" class="materialize-textarea validate"
                 data-length="200" value="{{ recipe.steps }}" required>{{ recipe.steps }}</textarea>
               <label for="steps">Steps</label>
             </div>
           </div>
-
+          <!-- Recipe optional checkboxes -->
           <div class="row register-input">
             <div class="input-field col s12">
               <p><span class="white-text form-checkboxes">This dish is: </span>
-
+                <!-- Checkbox for vegetarian option with checked or unchecked inserted from value in recipes object -->
                 <label for="vegetarian" class="form-checkboxes">
                   <input id="vegetarian" name="vegetarian" type="checkbox" {{ recipe.vegetarian }} />
                   <span>Vegetarian</span>
                 </label>
+                <!-- Checkbox for vegan option with checked or unchecked attribute inserted from value in recipes object -->
                 <label for="vegan" class="form-checkboxes">
                   <input id="vegan" name="vegan" type="checkbox" {{ recipe.vegan }} />
                   <span>Vegan</span>
                 </label>
+                <!-- Checkbox for hot option with checked or unchecked attribute inserted from value in recipes object -->
                 <label for="hot" class="form-checkboxes">
                   <input id="hot" name="hot" type="checkbox" {{ recipe.hot }} />
                   <span>Hot</span>
@@ -101,8 +114,7 @@
               </p>
             </div>
           </div>
-
-          <!-- Submit block -->
+          <!-- Submit -->
           <div class="card-action">
             <div class="row">
               <!-- Submit button -->
@@ -110,14 +122,14 @@
                 Confirm Edit
               </button>
             </div>
-            <!-- Sign in page link -->
+            <!-- Reset button anchor directing to edit_recipe route passing the expected recipe_id param -->
             <div class="row">
               <p class="center-align">
                 <a href="{{ url_for('edit_recipe', recipe_id = recipe._id) }}"
                   class="col s12 btn-small purple darken-1">Reset Changes</a>
               </p>
             </div>
-            <!-- Sign in page link -->
+            <!-- Cancel button anchor directing to recipes route -->
             <div class="row">
               <p class="center-align">
                 <a href="{{ url_for('recipes') }}"
@@ -130,5 +142,6 @@
     </div>
   </div>
 </div>
+</main>
 
 {% endblock %}
