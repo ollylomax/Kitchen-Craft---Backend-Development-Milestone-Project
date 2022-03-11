@@ -1,104 +1,128 @@
 {% extends 'base.html' %}
 
+<!-- Content to be injected into respective base.html block when edit_cuisine view is accessed -->
 {% block content %}
 
-<div class="row register-panel">
-  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
-    <div class="card purple darken-4">
-      <!-- Title block -->
-      <div class="card-content white-text">
-        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
-        <span class="card-title">Edit Cuisine</span>
-        <p>Don't forget to add a flag and description</p>
-      </div>
-
-      <!-- Flash block -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      {% for message in messages %}
-      <div class="card-content white-text red darken-4 form-flash">
-        <span class="center-align white-text">{{ message }}</span>
-      </div>
-      {% endfor %}
-      {% endif %}
-      {% endwith %}
-
-      <!-- Form block -->
-      <div class="row register-form">
-        <form enctype="multipart/form-data" class="col s12" method="POST"
-          action="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}">
-
-          <!-- Recipe name input -->
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <input id="cuisine_name" name="cuisine_name" type="text" class="validate" minlength="4" maxlength="20"
-                pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ cuisine.cuisine_name }}" required>
-              <label for="cuisine_name">Cuisine Name</label>
-              <span class="white-text left pattern"><em>No more than 20 letters</em></span>
-            </div>
+<!-- Edit cuisine block -->
+<main>
+  <div class="row register-panel">
+    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+      <div class="card purple darken-4">
+        <!-- Title -->
+        <div class="card-content white-text">
+          <!-- Kitchen Craft logo sourced from directed images dir -->
+          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+          <span class="card-title">Edit Cuisine</span>
+          <p>Don't forget to add a flag and description</p>
+        </div>
+        <!-- Flashed messages section -->
+        <section>
+          <!-- In-built flask method to pull all flashed messages from the session and return them -->
+          {% with messages = get_flashed_messages() %}
+          <!-- Conditional to check for flashed messages -->
+          {% if messages %}
+          <!-- Iterate through flashed messages -->
+          {% for message in messages %}
+          <div class="card-content white-text red darken-4 form-flash">
+            <!-- Inject message -->
+            <span class="center-align white-text">{{ message }}</span>
           </div>
-
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <input id="flag" name="flag" type="text" class="validate" value="{{ cuisine.flag }}" required>
-              <label for="flag">Flag (Base64)</label>
-              <span class="white-text left pattern"><em>Please input Base64 string</em></span>
-            </div>
-          </div>
-
-          <div class="row register-input">
-            <div class="input-field col s12">
-              <textarea id="description" name="description" minlength="5" maxlength="200"
-                class="materialize-textarea validate" data-length="200" required>
-                  {{- cuisine.description -}}</textarea>
-              <label for="description">Description</label>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="input-field col s12">
-              <div class="switch">
-                <i class="purple darken-4"></i>
-                <label for="cuisine_of_week">
-                  {% if cuisine.cuisine_of_week == 'yes'%}
-                  <input type="checkbox" id="cuisine_of_week" name="cuisine_of_week" checked>
-                  {% else %}
-                  <input type="checkbox" id="cuisine_of_week" name="cuisine_of_week">
-                  {% endif %}
-                  <span class="lever"></span>
-                  Cuisine of the Week?
-                </label>
+          {% endfor %}
+          {% endif %}
+          {% endwith %}
+        </section>
+        <!-- Edit cuisine form with post directing to edit_cuisine route passing the expected username 
+            and cuisine_id as params -->
+        <div class="row register-form">
+          <form enctype="multipart/form-data" class="col s12" method="POST"
+            action="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}">
+            <!-- Cuisine name -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Cuisine name input with value set to existing cuisine_name value from passed cuisines object,
+                   and regex accepting characters a-z, A-Z and single spaces between words -->
+                <input id="cuisine_name" name="cuisine_name" type="text" class="validate" minlength="5" maxlength="20"
+                  pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" value="{{ cuisine.cuisine_name }}" required>
+                <label for="cuisine_name">Cuisine Name</label>
+                <!-- Inform admin how to pass validation -->
+                <span class="white-text left pattern"><em>Between 5 and 20 characters only</em></span>
               </div>
             </div>
-          </div>
-
-          <!-- Submit block -->
-          <div class="card-action">
-            <div class="row">
-              <!-- Submit button -->
-              <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
-                Confirm Edit
-              </button>
+            <!-- Flag -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Flag input with value set to existing flag value from passed cuisines object,
+                    and regex to validate the string is base64, which I sourced from the following stackoverflow questions:
+                    https://stackoverflow.com/questions/8571501/how-to-check-whether-a-string-is-base64-encoded-or-not -->
+                <input id="flag" name="flag" type="text" class="validate" minlength="5"
+                  pattern="^([A-Za-z0-9+/]{4})*([A-Za-z0-9+/]{3}=|[A-Za-z0-9+/]{2}==)?$" value="{{ cuisine.flag }}"
+                  required>
+                <label for="flag">Flag (Base64)</label>
+                <!-- Inform admin how to pass validation -->
+                <span class="white-text left pattern"><em>Please enter valid Base64 string</em></span>
+              </div>
             </div>
-            <!-- Sign in page link -->
-            <div class="row">
-              <p class="center-align">
-                <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}"
-                  class="col s12 btn-small purple darken-1">Reset Changes</a>
-              </p>
+            <!-- Description -->
+            <div class="row register-input">
+              <div class="input-field col s12">
+                <!-- Description text area with minimum of 10 and maximum of 200 characters -->
+                <textarea id="description" name="description" minlength="10" maxlength="200"
+                  class="materialize-textarea validate" data-length="200" required>
+                  {{- cuisine.description -}}</textarea>
+                <label for="description">Description</label>
+              </div>
             </div>
-            <!-- Sign in page link -->
+            <!-- Cuisine of the week -->
             <div class="row">
-              <p class="center-align">
-                <a href="{{ url_for('cuisines', username=session['user_session']) }}"
-                  class="col s12 btn-small purple darken-1">Cancel</a>
-              </p>
+              <div class="input-field col s12">
+                <!-- Materialize checkbox switch -->
+                <div class="switch">
+                  <i class="purple darken-4"></i>
+                  <label for="cuisine_of_week">
+                    <!-- Conditional to check if existing value of cuisine_of_week is set to 'yes;'-->
+                    {% if cuisine.cuisine_of_week == 'yes'%}
+                    <!-- Checked box/switch -->
+                    <input type="checkbox" id="cuisine_of_week" name="cuisine_of_week" checked>
+                    <!-- Otherwise if value is anything else -->
+                    {% else %}
+                    <!-- Unchecked box/switch -->
+                    <input type="checkbox" id="cuisine_of_week" name="cuisine_of_week">
+                    {% endif %}
+                    <span class="lever"></span>
+                    Cuisine of the Week?
+                  </label>
+                </div>
+              </div>
             </div>
-          </div>
-        </form>
+            <!-- Submit -->
+            <div class="card-action">
+              <div class="row">
+                <!-- Submit button -->
+                <button type="submit" class="col s12 btn-small purple darken-1 text-shadow">
+                  Confirm Edit
+                </button>
+              </div>
+              <!-- Reset button anchor directing to edit_cuisine route passing the expected username and
+                cuisine_id params -->
+              <div class="row">
+                <p class="center-align">
+                  <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}"
+                    class="col s12 btn-small purple darken-1">Reset Changes</a>
+                </p>
+              </div>
+              <!-- Cancel anchor button directing to cuisines route passing the expected username as param -->
+              <div class="row">
+                <p class="center-align">
+                  <a href="{{ url_for('cuisines', username=session['user_session']) }}"
+                    class="col s12 btn-small purple darken-1">Cancel</a>
+                </p>
+              </div>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</main>
 
 {% endblock %}
