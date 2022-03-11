@@ -1,55 +1,76 @@
 {% extends 'base.html' %}
 
+<!-- Content to be injected into respective base.html block when users view is accessed -->
 {% block content %}
 
-
-
-<ul class="collection users">
-  <!-- Flash block -->
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<div class="card-content white-text green darken-4 users-form-flash ">
-  <span class="center-align white-text">{{ message }}</span>
-</div>
-{% endfor %}
-{% endif %}
-{% endwith %}
-  <li class="collection-item"><em>Username</em>
-    <div class="right">
-      <em>Is Admin?</em>
-    </div>
-  </li>
-  {% for user in users %}
-  <li class="collection-item">{{ user.username }}<br> {{ user.fname.capitalize() }} {{ user.lname.capitalize() }}
-    <form class="admin-form" method="POST" action="{{ url_for('edit_admin', user_id = user._id) }}">
-      <a href="#modal-{{ user._id }}" class="btn-small red modal-trigger">Remove User</a>  
-      <div class="switch right-align">
-        <label for="is_admin-{{ user.username }}">
-          {% if user.is_admin == 'yes'%}
-          <input class="right" type="checkbox" id="is_admin-{{ user.username }}" name="is_admin" checked onchange="this.form.submit()">
-          {% else %}
-          <input type="checkbox" id="is_admin-{{ user.username }}" name="is_admin" onchange="this.form.submit()">
-          {% endif %}
-          <span class="lever"></span>
-        </label>
+<!-- Users block -->
+<main>
+  <!-- Unordered list materialize collection -->
+  <ul class="collection users">
+    <!-- Flashed messages section -->
+    <section>
+      <!-- In-built flask method to pull all flashed messages from the session and return them -->
+      {% with messages = get_flashed_messages() %}
+      <!-- Conditional to check for flashed messages -->
+      {% if messages %}
+      <!-- Iterate through flashed messages -->
+      {% for message in messages %}
+      <div class="card-content white-text green darken-4 form-flash">
+        <!-- Inject message -->
+        <span class="center-align white-text">{{ message }}</span>
       </div>
-    
-    </form>
-  </li>
+      {% endfor %}
+      {% endif %}
+      {% endwith %}
+    </section>
+    <!-- Title list item -->
+    <li class="collection-item"><em>Username</em>
+      <div class="right">
+        <em>Is Admin?</em>
+      </div>
+    </li>
+    <!-- Iterate over the passed users collection -->
+    {% for user in users %}
+    <!-- Iteration list item with username, fname and lname values injected from passed users collection -->
+    <li class="collection-item">{{ user.username }}<br> {{ user.fname.capitalize() }} {{ user.lname.capitalize() }}
+      <!-- Edit admin form with post directing to edit_admin route passing the expected user_id as param -->
+      <form class="admin-form" method="POST" action="{{ url_for('edit_admin', user_id = user._id) }}">
+        <!-- Remove user anchor triggering modal -->
+        <a href="#modal-{{ user._id }}" class="btn-small red modal-trigger">Remove User</a>
+        <!-- Materialize checkbox switch -->
+        <div class="switch right-align">
+          <label for="is_admin-{{ user.username }}">
+            <!-- Conditional to check if user from passed users collection has an is_admin value of 'yes' -->
+            {% if user.is_admin == 'yes'%}
+            <!-- Checked box with an onchange event trigger to submit form -->
+            <input class="right" type="checkbox" id="is_admin-{{ user.username }}" name="is_admin" checked
+              onchange="this.form.submit()">
+            <!-- Otherwise if value of is_admin is anything else -->
+            {% else %}
+            <!-- Unchecked box with an onchange event trigger to submit form -->
+            <input type="checkbox" id="is_admin-{{ user.username }}" name="is_admin" onchange="this.form.submit()">
+            {% endif %}
+            <span class="lever"></span>
+          </label>
+        </div>
 
-  <div id="modal-{{ user._id }}" class="modal purple darken-4">
-    <div class="modal-content white-text">
-      <h4>Confirm Deletion</h4>
-      <p>Are you sure you want to permanently delete this User from the database?</p>
+      </form>
+    </li>
+    <!-- Modal with a unique id created by adding the associated user._id -->
+    <div id="modal-{{ user._id }}" class="modal purple darken-4">
+      <div class="modal-content white-text">
+        <h4>Confirm Deletion</h4>
+        <p>Are you sure you want to permanently delete this User from the database?</p>
+      </div>
+      <div class="modal-footer grey lighten-2">
+        <!-- Return anchor link directing to users route passing the expected username param -->
+        <a href="{{ url_for('users', username=session['user_session']) }}" class="btn-small green">Return</a>
+        <!-- Trigger the remove_user function by passing the associated user._id in the expected param -->
+        <a href="{{ url_for('remove_user', user_id = user._id) }}" class="modal-close btn-small red">Confirm
+          Delete</a>
+      </div>
     </div>
-    <div class="modal-footer grey lighten-2">
-      <a href="{{ url_for('users', username=session['user_session']) }}" class="btn-small green">Return</a>
-      <a href="{{ url_for('remove_user', user_id = user._id) }}" class="modal-close btn-small red">Confirm
-        Delete</a>
-    </div>
-  </div>
-  {% endfor %}
-</ul>
-
+    {% endfor %}
+  </ul>
+</main>
 {% endblock %}

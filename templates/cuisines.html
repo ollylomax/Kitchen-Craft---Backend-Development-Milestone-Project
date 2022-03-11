@@ -1,85 +1,117 @@
 {% extends 'base.html' %}
+
+<!-- Content to be injected into respective base.html block when cuisines view is accessed -->
 {% block content %}
 
+<!-- Flashed messages section-->
 <section>
-
-  <!-- Flash messages -->
+  <!-- In-built flask method to pull all flashed messages from the session and return them -->
   {% with messages = get_flashed_messages() %}
+  <!-- Conditional to check for flashed messages -->
   {% if messages %}
+  <!-- Iterate through flashed messages -->
   {% for message in messages %}
   <div class="row flash-panel green">
+    <!-- Inject message -->
     <h2 class="white-text center-align"><i class="fa-solid fa-check"></i><br>{{ message }}</h2>
   </div>
   {% endfor %}
   {% endif %}
   {% endwith %}
-
 </section>
 
-<div class="row">
-  <div class="col s12 center-align title-footer">
-    <h1>Read about all the cuisines of the world below</h1>
-    {% if session.user_session %}
-    {% if username.is_admin == 'yes' %}
-    <p class="center-align">
-      <a href="{{ url_for('add_cuisine', username=session['user_session']) }}"
-        class="col s12 btn-small purple darken-1">Add Cuisine</a>
-    </p>
-    {% endif %}
-    {% endif %}
-  </div>
-</div>
-
-<ul class="collection cuisines">
-  {% for cuisine in cuisines %}
-  <li class="collection-item avatar">
-    <img src="data:image/png;base64,{{ cuisine.flag }}" alt="flag for {{ cuisine.cuisine_name }}" 
-    class="circle tooltipped" data-tooltip="{{ cuisine.cuisine_name }}">
-    {% if cuisine.cuisine_of_week == 'yes' %}
-    <i class="fa-solid fa-star right tooltipped" data-tooltip="Cuisine of the Week"></i>
-    {% endif %}
-    <span class="title">{{ cuisine.cuisine_name }}</span>
-    <p>{{ cuisine.description }}
-    </p>
-
-    {% if session.user_session %}
-    {% if username.is_admin == 'yes' %}
-    <div class="col s12 right-align">
-      <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}"
-        class="btn-small green">Edit</a>
-      <a href="#modal-{{ cuisine._id }}" class="btn-small red modal-trigger">Remove</a>
-    </div>
-    {% endif %}
-    {% endif %}
-  </li>
-
-  <!-- Modal Structure -->
-  <div id="modal-{{ cuisine._id }}" class="modal purple darken-4">
-    <div class="modal-content white-text">
-      <h4>Confirm Deletion</h4>
-      <p>Are you sure you want to permanently delete this cuisine?</p>
-    </div>
-    <div class="modal-footer grey lighten-2">
-      <a href="{{ url_for('cuisines', username=session['user_session']) }}" class="btn-small green">Return</a>
-      <a href="{{ url_for('remove_cuisine', cuisine_id=cuisine._id) }}" class="modal-close btn-small red">Confirm
-        Delete</a>
+<!-- Title and button section -->
+<section>
+  <div class="row">
+    <div class="col s12 center-align title-footer">
+      <h1>Read about all the cuisines of the world below</h1>
+      <!-- Conditional to check if a session exists -->
+      {% if session.user_session %}
+      <!-- Conditional to check for an is_admin value of yes in passed username object -->
+      {% if username.is_admin == 'yes' %}
+      <p class="center-align">
+        <!-- Add cuisine anchor button directing to add_cuisine route passing the expected username param -->
+        <a href="{{ url_for('add_cuisine', username=session['user_session']) }}"
+          class="col s12 btn-small purple darken-1">Add Cuisine</a>
+      </p>
+      {% endif %}
+      {% endif %}
     </div>
   </div>
-  </div>
+</section>
 
-  {% endfor %}
-</ul>
-{% if session.user_session %}
-{% if username.is_admin == 'yes' %}
-<div class="row">
-  <div class="col s12 center-align">
-    <p class="center-align">
-      <a href="{{ url_for('add_cuisine', username=session['user_session']) }}"
-        class="col s12 btn-small purple darken-1">Add Cuisine</a>
-    </p>
+<!-- Cuisines section -->
+<section>
+  <ul class="collection cuisines">
+    <!-- Iterate over the passed cuisines object -->
+    {% for cuisine in cuisines %}
+    <li class="collection-item avatar">
+      <!-- Insert image by converting base64 from injected flag string -->
+      <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} flag"
+        class="circle tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine">
+      <!-- Conditional to check if iteration is cuisine of the week -->
+      {% if cuisine.cuisine_of_week == 'yes' %}
+      <!-- Insert font awesome star icon with tooltip -->
+      <i class="fa-solid fa-star right tooltipped" data-tooltip="Cuisine of the Week"></i>
+      {% endif %}
+      <!-- Inject cuisine name from passed cuisines object -->
+      <span class="title">{{ cuisine.cuisine_name }}</span>
+      <!-- Inject cuisine description from passed cuisines object -->
+      <p>{{ cuisine.description }}
+      </p>
+
+      <!-- Conditional to check if user session exists -->
+      {% if session.user_session %}
+      <!-- Conditional to check for an is_admin value of yes in passed username object -->
+      {% if username.is_admin == 'yes' %}
+      <div class="col s12 right-align">
+        <!-- Edit anchor link directing to edit_cuisine route passing the expected cuisine_id param -->
+        <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}"
+          class="btn-small green">Edit</a>
+        <!-- Remove button anchor link triggering modal -->
+        <a href="#modal-{{ cuisine._id }}" class="btn-small red modal-trigger">Remove</a>
+      </div>
+      {% endif %}
+      {% endif %}
+    </li>
+
+    <!-- Modal with a unique id created by adding the associated cuisine._id -->
+    <div id="modal-{{ cuisine._id }}" class="modal purple darken-4">
+      <div class="modal-content white-text">
+        <h4>Confirm Deletion</h4>
+        <p>Are you sure you want to permanently delete this cuisine?</p>
+      </div>
+      <div class="modal-footer grey lighten-2">
+        <!-- Return anchor link directing to cuisines route passing the expected username param -->
+        <a href="{{ url_for('cuisines', username=session['user_session']) }}" class="btn-small green">Return</a>
+        <!-- Trigger the remove_cuisine function by passing the associated cuisine._id in the expected param -->
+        <a href="{{ url_for('remove_cuisine', cuisine_id=cuisine._id) }}" class="modal-close btn-small red">Confirm
+          Delete</a>
+      </div>
+    </div>
+    </div>
+
+    {% endfor %}
+  </ul>
+</section>
+
+<!-- Lower button section -->
+<section>
+  <!-- Conditional to check if a user exists -->
+  {% if session.user_session %}
+  <!-- Conditional to check for an is_admin value of yes in passed username object -->
+  {% if username.is_admin == 'yes' %}
+  <div class="row">
+    <div class="col s12 center-align">
+      <p class="center-align">
+        <!-- Add cuisine anchor link directing to add_cuisine route passing the expected username param -->
+        <a href="{{ url_for('add_cuisine', username=session['user_session']) }}"
+          class="col s12 btn-small purple darken-1">Add Cuisine</a>
+      </p>
+    </div>
   </div>
-</div>
-{% endif %}
-{% endif %}
+  {% endif %}
+  {% endif %}
+</section>
 
 {% endblock %}
