@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
-<!-- Content to be injected into respective base.html block when edit_profile page
-     is rendered by edit_profile function -->
+<!-- Content to be injected into respective base.html block when edit_profile view is accessed -->
 {% block content %}
 <!-- Register block -->
 <div class="row register-panel">
@@ -9,44 +8,40 @@
     <div class="card purple darken-4">
       <!-- Title block -->
       <div class="card-content white-text">
-        <span class="card-title">Edit Profile</span>
+        <!-- Kitchen Craft logo sourced from directed images dir -->
+        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+        <span class="card-title">Edit Profile for {{ username.username }}</span>
         <p>Update your details below</p>
       </div>
-      <!-- Flash block -->
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
-          {% for message in messages %}
-          <div class="card-content white-text green darken-4 form-flash">
-                  <span class="center-align white-text">{{ message }}</span>
-              </div>
-          {% endfor %}
-      {% endif %}
-  {% endwith %}
-      <!-- Form block -->
+      <!-- Edit profile form with post directing to edit_profile route passing the expected username param in route -->
       <div class="row register-form">
         <form class="col s12" method="POST" action="{{ url_for('edit_profile', username=session['user_session']) }}">
-          <!-- Name block -->
+          <!-- Name -->
           <div class="row register-input">
             <div class="input-field col s6 white-text">
-              <!-- First name input -->
-              <input id="fname" name="fname" value= "{{ username.fname.capitalize() }}" type="text" class="validate" required>
+              <!-- First name input with value set to existing fname value from passed username object, and regex 
+                accepting characters a-z, A-Z, and between 2 and 15 in length -->
+              <input id="fname" name="fname" value="{{ username.fname.capitalize() }}" type="text" class="validate"
+                pattern="^[a-zA-Z]{2,15}$" required>
               <label for="fname">First Name</label>
             </div>
             <div class="input-field col s6 white-text">
-              <!-- Last name input -->
-              <input id="lname" name="lname"  value= "{{ username.lname.capitalize() }}"type="text" class="validate" required>
+              <!-- Last name input with value set to existing lname value from passed username object, and regex 
+                accepting characters a-z, A-Z, and between 2 and 15 in length -->
+              <input id="lname" name="lname" value="{{ username.lname.capitalize() }}" type="text" class="validate"
+                pattern="^[a-zA-Z]{2,15}$" required>
               <label for="lname">Last Name</label>
             </div>
           </div>
-          <!-- Email block -->
+          <!-- Email -->
           <div class="row register-input">
             <div class="input-field col s12">
-              <!-- Email input -->
-              <input id="email" name="email" type="email"  value= "{{ username.email }}"class="validate" required>
+              <!-- Email input with value set to existing email value from passed username object -->
+              <input id="email" name="email" type="email" value="{{ username.email }}" class="validate" required>
               <label for="email">Email</label>
             </div>
           </div>
-          <!-- Submit block -->
+          <!-- Submit -->
           <div class="card-action">
             <div class="row">
               <!-- Submit button -->
@@ -54,10 +49,11 @@
                 Submit Changes
               </button>
             </div>
-            <!-- Sign in page link -->
+            <!-- Cancel anchor link directing to profile route and passing the expected username param in route -->
             <div class="row">
               <p class="center-align">
-                <a href="{{ url_for('profile', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Cancel</a>
+                <a href="{{ url_for('profile', username=session['user_session']) }}"
+                  class="col s12 btn-small purple darken-1">Cancel</a>
               </p>
             </div>
           </div>

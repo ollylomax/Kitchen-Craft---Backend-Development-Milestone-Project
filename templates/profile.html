@@ -1,47 +1,74 @@
 {% extends 'base.html' %}
 
-<!-- Content to be injected into respective base.html block when profile page
-     is rendered by profile function -->
+<!-- Content to be injected into respective base.html block when profile view is accessed -->
 {% block content %}
 <!-- Profile block -->
-<div class="row profile-panel">
-  <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
-    <div class="card purple darken-4">
-      <!-- Title block -->
-      <div class="card-content white-text">
-        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
-        <span class="card-title">{{ username.username }}</span>
-        <p>Are all your details up to date {{ username.fname.capitalize() }}?</p>
-      </div>
-      <!-- Flash block -->
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
+<main>
+  <div class="row profile-panel">
+    <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
+      <div class="card purple darken-4">
+        <!-- Title -->
+        <div class="card-content white-text">
+          <!-- Kitchen Craft logo sourced from directed images dir -->
+          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+          <!-- Show current Username by injecting username from passed username object -->
+          <span class="card-title">{{ username.username }}</span>
+          <!-- Show current First name by injecting fname from passed username object -->
+          <p>Are all your details up to date {{ username.fname.capitalize() }}?</p>
+        </div>
+        <!-- Flashed messages section -->
+        <section>
+          <!-- In-built flask method to pull all flashed messages from the session and return them -->
+          {% with messages = get_flashed_messages() %}
+          <!-- Conditional to check for flashed messages -->
+          {% if messages %}
+          <!-- Iterate through flashed messages -->
           {% for message in messages %}
           <div class="card-content white-text green darken-4 form-flash">
-                  <span class="center-align white-text">{{ message }}</span>
-              </div>
+            <!-- Inject message -->
+            <span class="center-align white-text">{{ message }}</span>
+          </div>
           {% endfor %}
-        {% endif %}
-      {% endwith %}
-      <!-- User details block -->
-      <div class="row user-details">
-        <ul class="collection with-header">
-          <li class="collection-header"><h4>Your Details</h4></li>
-          <li class="collection-item"><div>{{ username.fname.capitalize() }}</div></li>
-          <li class="collection-item"><div>{{ username.lname.capitalize() }}</div></li>
-          <li class="collection-item"><div>{{ username.email }}</div></li>
-        </ul>
-      </div>
-      <div class="card-action">
-      <div class="row profile-buttons">
-        <p class="center-align">
-          <a href="{{ url_for('edit_profile', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Edit Profile</a>
-          <a href="{{ url_for('change_password', username=session['user_session']) }}" class="col s12 btn-small purple darken-1">Change Password</a>
-          <a href="{{ url_for('logout') }}" class="col s12 btn-small purple darken-1">Sign Out</a>
-        </p>
-      </div>
+          {% endif %}
+          {% endwith %}
+        </section>
+        <!-- User details -->
+        <div class="row user-details">
+          <ul class="collection with-header">
+            <li class="collection-header">
+              <h4>Your Details</h4>
+            </li>
+            <li class="collection-item">
+              <!-- Show current First name by injecting fname from passed username object -->
+              <div>{{ username.fname.capitalize() }}</div>
+            </li>
+            <li class="collection-item">
+              <!-- Show current Last name by injecting fname from passed username object -->
+              <div>{{ username.lname.capitalize() }}</div>
+            </li>
+            <li class="collection-item">
+              <!-- Show current Email by injecting fname from passed username object -->
+              <div>{{ username.email }}</div>
+            </li>
+          </ul>
+        </div>
+        <!-- Profile buttons -->
+        <div class="card-action">
+          <div class="row profile-buttons">
+            <p class="center-align">
+              <!-- Anchor link directing to edit_profile route passing the expected username param in route -->
+              <a href="{{ url_for('edit_profile', username=session['user_session']) }}"
+                class="col s12 btn-small purple darken-1">Edit Profile</a>
+              <!-- Anchor link directing to change_password route passing the expected username param in route -->
+              <a href="{{ url_for('change_password', username=session['user_session']) }}"
+                class="col s12 btn-small purple darken-1">Change Password</a>
+              <!-- Anchor link directing to logout route -->
+              <a href="{{ url_for('logout') }}" class="col s12 btn-small purple darken-1">Sign Out</a>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</main>
 {% endblock %}
