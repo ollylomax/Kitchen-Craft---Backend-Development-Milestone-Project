@@ -28,98 +28,138 @@
 <body>
 
     <header>
-        <!-- Dropdown Structure -->
+        <!-- Nav dropdown structure -->
         <ul id="dropdown1" class="dropdown-content">
+            <!-- Conditional to check if user session exists -->
             {% if session.user_session %}
+            <!-- Nav link directing to profile route passing the expected username param -->
             <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
-            <li><a href="{{ url_for('add_recipe', username=session['user_session']) }}">Add Recipe</a></li>
+            <!-- Nav link directing to add_recipe route -->
+            <li><a href="{{ url_for('add_recipe') }}">Add Recipe</a></li>
             <li class="divider"></li>
+            <!-- Nav link directing to logout route -->
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
             {% endif %}
         </ul>
+        <!-- Navbar -->
         <nav>
             <div class="nav-wrapper">
+                <!-- Kitchen Craft logo sourced from directed images dir -->
                 <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+                <!-- Kitchen Craft logo home link directing to home route -->
                 <a href="{{ url_for('home') }}" class="brand-logo left">Kitchen Craft</a>
-                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i
+                <!-- Mobile sidenav trigger with custom fontawesome bars icon -->
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i
                         class="material-icons fas fa-bars"></i></a>
+                <!-- Navbar links which are hidden on small devices -->
                 <ul class="right hide-on-med-and-down">
+                    <!-- Nav link directing to home route -->
                     <li><a href="{{ url_for('home') }}">Home</a></li>
-                    <li><a href="">Tools</a></li>
+                    <!-- Nav link directing to products route -->
+                    <li><a href="">Products</a></li>
+                    <!-- Nav link directing to recipes route -->
+                    <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
+                    <!-- Nav link directing to cuisines route passing the optional username param -->
+                    <li><a href="{{ url_for('cuisines', username=session['user_session']) }}">Cuisines</a></li>
+                    <!-- Conditional to check if current user session is superuser -->
                     {% if session.user_session == 'superuser' %}
+                    <!-- Nav link directing to users route passing the expected username param -->
                     <li><a href="{{ url_for('users', username=session['user_session']) }}">Users</a></li>
                     {% endif %}
-                    <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
-                    <li><a href="{{ url_for('cuisines', username=session['user_session']) }}">Cuisines</a></li>
 
-            <!-- Dropdown Trigger -->
-            {% if session.user_session %}
-            <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ session.user_session }}<i
-                        class="fa-solid fa-caret-down right"></i></a></li>
-            {% else %}
-            <li><a href="{{ url_for('register') }}">Register</a></li>
-            <li><a href="{{ url_for('login') }}">Log In</a></li>
-            {% endif %}
 
-            </ul>
-        </div>
-    </nav>
+                    <!-- Conditional to check if user session exists -->
+                    {% if session.user_session %}
+                    <!-- Dropdown toggler with name of user session inserted -->
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ session.user_session }}<i
+                                class="fa-solid fa-caret-down right"></i></a></li>
+                    <!-- Otherwise if no user session found -->
+                    {% else %}
+                    <!-- Nav link directing to register route -->
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <!-- Nav link directing to login route -->
+                    <li><a href="{{ url_for('login') }}">Log In</a></li>
+                    {% endif %}
 
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Mobile nav -->
         <ul class="sidenav right" id="mobile-demo">
+            <!-- Kitchen Craft logo sourced from directed images dir -->
             <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
-
-            <li><a href="{{ url_for('home', username=session['user_session']) }}">Home</a></li>
-            <li><a href="">Tools</a></li>
+            <!-- Nav link directing to home route -->
+            <li><a href="{{ url_for('home') }}">Home</a></li>
+            <!-- Nav link directing to products route -->
+            <li><a href="">Products</a></li>
+            <!-- Nav link directing to recipes route -->
             <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
+            <!-- Nav link directing to cuisines route passing the optional username param -->
             <li><a href="{{ url_for('cuisines', username=session['user_session']) }}">Cuisines</a></li>
+            <!-- Conditional to check if user session exists -->
+            {% if session.user_session %}
+            <!-- Nav link directing to profile route passing the expected username param -->
+            <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
+            <!-- Nav link directing to add_recipe route -->
+            <li><a href="{{ url_for('add_recipe') }}">Add Recipe</a></li>
+            <!-- Conditional to check if current user session is superuser -->
             {% if session.user_session == 'superuser' %}
+            <!-- Nav link directing to users route passing the expected username param -->
             <li><a href="{{ url_for('users', username=session['user_session']) }}">Users</a></li>
             {% endif %}
-            {% if session.user_session %}
-            <li><a href="{{ url_for('profile', username=session['user_session']) }}">Profile</a></li>
-            <li><a href="{{ url_for('add_recipe') }}">Add Recipe</a></li>
+            <!-- Nav link directing to logout route -->
             <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+            <!-- Otherwise if no session found -->
             {% else %}
+            <!-- Nav link directing to register route -->
             <li><a href="{{ url_for('register') }}">Register</a></li>
+            <!-- Nav link directing to login route -->
             <li><a href="{{ url_for('login') }}">Log In</a></li>
             {% endif %}
         </ul>
 
     </header>
 
-
-
     <main>
 
+        <!-- Content to be injected into this block from accessed route -->
         {% block content %}
         {% endblock %}
 
     </main>
 
+    <!-- Footer for desktop -->
     <footer class="page-footer purple lighten-2">
         <div class="footer-copyright purple darken-1">
             <div class="container">
+                <!-- Copywright span with innerHTML current year injected from javascript by id -->
                 © <span id="year"></span> Kitchen Craft All rights reserved
+                <!-- List item for twitter icon anchor hidden on small devices, with link opening in new window -->
                 <li class="social right hide-on-small-only">
                     <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
                         <i class="fa-brands fa-twitter"></i>
                     </a>
                 </li>
+                <!-- List item for instagram icon anchor hidden on small devices, with link opening in new window -->
                 <li class="social right hide-on-small-only">
                     <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram link">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
                 </li>
+                <!-- List item for youtube icon anchor hidden on small devices, with link opening in new window -->
                 <li class="social right hide-on-small-only">
                     <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Youtube link">
                         <i class="fa-brands fa-youtube"></i>
                     </a>
                 </li>
+                <!-- List item for pinterest icon anchor hidden on small devices, with link opening in new window -->
                 <li class="social right hide-on-small-only">
                     <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest link">
                         <i class="fa-brands fa-pinterest"></i>
                     </a>
                 </li>
+                <!-- List item for facebook icon anchor hidden on small devices, with link opening in new window -->
                 <li class="social right hide-on-small-only">
                     <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook link">
                         <i class="fa-brands fa-facebook"></i>
@@ -128,33 +168,41 @@
             </div>
         </div>
 
+        <!-- Footer for mobile hidden on medium and larger devices -->
         <div class="footer-copyright purple darken-1 hide-on-med-and-up" style="padding-bottom:20px;padding-top:0">
             <div class="container" id="mobile-socials">
-                <li class="social">
-                    <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
-                        <i class="fa-brands fa-twitter"></i>
-                    </a>
-                </li>
-                <li class="social">
-                    <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram link">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                </li>
-                <li class="social">
-                    <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Youtube link">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
-                </li>
-                <li class="social">
-                    <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest link">
-                        <i class="fa-brands fa-pinterest"></i>
-                    </a>
-                </li>
-                <li class="social">
-                    <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook link">
-                        <i class="fa-brands fa-facebook"></i>
-                    </a>
-                </li>
+                <ul>
+                    <!-- List item for twitter icon anchor, with link opening in new window -->
+                    <li class="social">
+                        <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                    </li>
+                    <!-- List item for instagram icon anchor, with link opening in new window -->
+                    <li class="social">
+                        <a href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram link">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                    </li>
+                    <!-- List item for youtube icon anchor, with link opening in new window -->
+                    <li class="social">
+                        <a href="https://youtube.com" target="_blank" rel="noopener" aria-label="Youtube link">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </li>
+                    <!-- List item for pinterest icon anchor, with link opening in new window -->
+                    <li class="social">
+                        <a href="https://pinterest.com" target="_blank" rel="noopener" aria-label="Pinterest link">
+                            <i class="fa-brands fa-pinterest"></i>
+                        </a>
+                    </li>
+                    <!-- List item for facebook icon anchor, with link opening in new window -->
+                    <li class="social">
+                        <a href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook link">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </div>
     </footer>

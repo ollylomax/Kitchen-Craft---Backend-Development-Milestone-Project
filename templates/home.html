@@ -74,7 +74,7 @@
 
                 <!-- Recipe info injected from recipes object -->
                 <div class="center-align recipe-info">
-                    <h5>{{ recipe.recipe_name }}</h5>
+                    <h5>{{ recipe.recipe_name.title() }}</h5>
                     <h6>{{ recipe.cuisine_name }} Cuisine</h6>
                     <span>Preparation: {{ recipe.prep_time }}</span><br>
                     <span>Cooking: {{ recipe.cook_time }}</span>
