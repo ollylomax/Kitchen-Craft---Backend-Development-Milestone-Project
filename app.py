@@ -155,7 +155,7 @@ def login():
     return render_template('login.html')
 
 
-# Profile page route decorator
+# Profile page route decorator with username expected in route
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
     """ Function requiring username param passed through from route. Check
@@ -189,7 +189,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-# Edit profile page route decorator
+# Edit profile page route decorator with username expected in route
 @app.route("/edit_profile/<username>", methods=['GET', 'POST'])
 def edit_profile(username):
     """ Function with GET method of rendering edit_profile html page passing
@@ -220,7 +220,7 @@ def edit_profile(username):
     return render_template("edit_profile.html", username=username)
 
 
-# Change password page route decorator
+# Change password page route decorator with username expected in route
 @app.route("/change_password/<username>", methods=['GET', 'POST'])
 def change_password(username):
     """ Function with GET method of rendering change_password html page passing
@@ -252,26 +252,57 @@ def change_password(username):
 # Recipes page route decorator
 @app.route('/recipes')
 def recipes():
+    """ Function with GET method of rendering recipes html page passing
+    through two variables; the recipes variable assigned to all recipes
+    with the latest insertions shown first, and the cuisines variable
+    assigned to all cuisines in ascending order.
+    """
+    # Assign variable to a find on all recipes with the latest 
+    #   insertions shown first using the parameter $natural sort order
     recipes = mongo.db.recipes.find().sort('$natural', -1)
+    # Assign variable to a find on all cuisines sorted by ascending order
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
+    # Render the recipes.html page passing both recipes and cuisines variables
     return render_template('recipes.html', recipes=recipes, cuisines=cuisines)
 
 
+# Search route decorator
 @app.route("/search", methods=["GET", "POST"])
 def search():
+    """ Function to get the user index query from the form input and assign to
+    variable. Then perform a find on the recipes collection using that variable
+    and assign to a new variable to be passed through to the rendered page.
+    """
+    # Assign variable to the user index query from form input
     index_query = request.form.get("index_query")
+    # Find recipes in the recipes collection using an index text search on the
+    #   index query variable and assign to new variable
     recipes = list(mongo.db.recipes.find({"$text": {"$search": index_query}}))
+    # Render the recipes.html page passing though the recipes variable
     return render_template("recipes.html", recipes=recipes)
 
 
+# Add recipe page route decorator
 @app.route("/add_recipe", methods=['GET', 'POST'])
 def add_recipe():
+    """ Function with GET method of rendering add_recipe html page passing
+        through the cuisines variable. If method is POST then insert built
+        dictionary as a new doc in recipes collection, flash success message
+        and redirect to recipes route.
+    """
+    # Conditional to check if request method is POST
     if request.method == "POST":
-        vegetarian = "checked" if request.form.get("vegetarian") else "unchecked"
+        # Conditional expressions to assign variables to either checked or
+        #   unchecked depending on user checkbox inputs on form
+        vegetarian = "checked" if request.form.get(
+            "vegetarian") else "unchecked"
         vegan = "checked" if request.form.get("vegan") else "unchecked"
         hot = "checked" if request.form.get("hot") else "unchecked"
-
+        # Return the current local date from the date object imported from
+        #   datetime module
         now = date.today()
+        # Build dictionary with inputted form fields ready to upload to
+        #   collection
         recipe = {
             "cuisine_name": request.form.get("cuisine_name"),
             "recipe_name": request.form.get("recipe_name"),
@@ -283,27 +314,47 @@ def add_recipe():
             "vegetarian": vegetarian,
             "vegan": vegan,
             "hot": hot,
+            # Convert date from now variable to specified string format
             "upload_date": now.strftime("%d/%m/%Y")
         }
+        # Insert the built dictionary as a doc into the recipes collection
         mongo.db.recipes.insert_one(recipe)
+        # Flash success message to user
         flash("You have successfully shared your recipe with our community!")
+        # Redirect to recipes route
         return redirect(url_for("recipes"))
-
-    username = mongo.db.users.find_one(
-        {'username': session['user_session']})
+    # Assign variable to a find on all cuisines sorted by ascending order
     cuisines = mongo.db.cuisines.find().sort("cuisine_name", 1)
-    return render_template("add_recipe.html", cuisines=cuisines, username=username)
+    # Render add_recipe.html page passing through the cuisines variable
+    return render_template("add_recipe.html", cuisines=cuisines)
 
 
+# Edit recipe page route decorator with recipe_id expected in route
 @app.route("/edit_recipe/<recipe_id>", methods=['GET', 'POST'])
 def edit_recipe(recipe_id):
-
+    """ Function with GET method of rendering edit_recipe html page passing
+        through both the recipe and cuisines variables. Assign the recipe
+        variable to a search on recipes collection by _id using the recipe_id
+        passed through the route. If method is POST then update the doc
+        assigned to the recipe variable by inserting built dictionary, flash
+        success message and redirect to recipes route.
+    """
+    # Search recipes collection by _id using the object id from the parameter
+    #   passed through the route and assign to variable
+    recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    # Conditional to check if request method is POST
     if request.method == "POST":
-        vegetarian = "checked" if request.form.get("vegetarian") else "unchecked"
+        # Conditional expressions to assign variables to either checked or
+        #   unchecked depending on user checkbox inputs on form
+        vegetarian = "checked" if request.form.get(
+            "vegetarian") else "unchecked"
         vegan = "checked" if request.form.get("vegan") else "unchecked"
         hot = "checked" if request.form.get("hot") else "unchecked"
-
+        # Return the current local date from the date object imported from
+        #   datetime module
         now = date.today()
+        # Build dictionary with inputted form fields ready to upload to
+        #   collection
         upload = {
             "cuisine_name": request.form.get("cuisine_name"),
             "recipe_name": request.form.get("recipe_name"),
@@ -317,38 +368,66 @@ def edit_recipe(recipe_id):
             "hot": hot,
             "upload_date": now.strftime("%d/%m/%Y")
         }
-        mongo.db.recipes.update_one({"_id": ObjectId(recipe_id)}, {"$set": upload})
+        # Update the doc assigned to recipe variable with the insertion of
+        #   the built dictionary
+        mongo.db.recipes.update_one(recipe, {"$set": upload})
+        # Flash success message
         flash("Your Recipe has been successfully updated")
+        # Redirect to recipes route
         return redirect(url_for("recipes"))
-
-    recipe = mongo.db.recipes.find_one({"_id": ObjectId(recipe_id)})
+    # Assign variable to a find on all cuisines sorted by ascending order
     cuisines = mongo.db.cuisines.find().sort("cuisine_name", 1)
-    return render_template("edit_recipe.html", recipe=recipe, cuisines=cuisines)
+    # Render edit_recipe.html page passing through both the recipe and 
+    #   cuisines variables
+    return render_template(
+        "edit_recipe.html", recipe=recipe, cuisines=cuisines)
 
 
+# Remove recipe route decorator with recipe_id expected in route
 @app.route("/remove_recipe/<recipe_id>")
 def remove_recipe(recipe_id):
+    """ Function to delete the recipe by _id using the object id from
+    the parameter passed through the route, flash success message and
+    redirect to recipes route.
+    """
+    # Delete the recipe in recipes collection by _id using the object id from
+    #   the recipe_id parameter passed through the route
     mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
+    # Flash success message
     flash("Your recipe has been successfully removed")
+    # Redirect to recipes route
     return redirect(url_for("recipes"))
 
 
+# Cuisines page route decorator with default set a None username
 @app.route("/cuisines/", defaults={'username': None})
+# Cuisines page route decorator with username expected in route
 @app.route("/cuisines/<username>")
 def cuisines(username):
-
+    """ Function which sets a variable to a search on cuisines collection
+    sorted by cuisine_of_week in descending order to display as the top
+    iteration on rendered page. If user session is not set to None then
+    username variable is set to current session and cuisines html page
+    is rendered passing through both cuisines and username variables.
+    If user session is set to None then render cuisines html page
+    passing through just the cuisines variable.
+    """
+    # Variable set to all cuisines in cuisines collection sorted by
+    #   cuisine_of_week in descending order
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_of_week", -1))
-
+    # Conditional to check if user session is not set to None from route
     if session.get('user_session') is not None:
+        # Search users collection by username from session and assign to
+        #   variable
         username = mongo.db.users.find_one(
             {'username': session['user_session']})
-
-        # if username['is_admin'] == 'yes':
-        #     return render_template('cuisines.html', username=username)
-        # else:
-        #     return redirect(url_for('home'))
-        return render_template("cuisines.html", cuisines=cuisines, username=username)
+        # Render cuisines.html page passing through both cuisines and
+        #   username variables
+        return render_template(
+            "cuisines.html", cuisines=cuisines, username=username)
+        # Otherwise if session is set to None
     else:
+        # Render cuisines.html page passing through cuisines variable
         return render_template("cuisines.html", cuisines=cuisines)
 
 
