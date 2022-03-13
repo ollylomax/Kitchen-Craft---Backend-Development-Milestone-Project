@@ -1,11 +1,12 @@
 import os
 
-import base64
-
+# Import date from datetime module
 from datetime import date
 
 # Import flask
-from flask import Flask, render_template, url_for, redirect, session, request, flash
+from flask import (
+    Flask, render_template, url_for, redirect, session, request, flash
+)
 
 # Wire up flask with mongodb
 from flask_pymongo import PyMongo
@@ -33,108 +34,154 @@ app.secret_key = os.environ.get('SECRET_KEY')
 # Create instance of pymongo and pass in flask app object
 mongo = PyMongo(app)
 
+
 # Default route decorator
 @app.route('/')
 # Home page route decorator
 @app.route('/home')
-# Find all docs from recipes collection on mongodb and assign to recipes variable
-# Render home.html template and pass through recipes variable to access on page
 def home():
-    find_cuisine_of_week = list(mongo.db.cuisines.find({"cuisine_of_week": "yes"}))
+    """ Function with GET method of rendering home html page. Locate the
+        cuisine doc with the cuisine_of_week value of 'yes', target the
+        cuisine_name of that doc and use it to filter all recipes. Pass the
+        filtered results through to the rendered home page within a variable.
+        Also pass through variable for an unfiltered findon cuisines
+        collection.
+    """
+    # Convert cuisines collection to list, find object with the value of
+    #   cuisine_of_week set to 'yes' and assign to variable
+    find_cuisine_of_week = list(mongo.db.cuisines.find(
+        {"cuisine_of_week": "yes"}))
+    # Find the cuisine name within above variable by first index and assign to
+    #   new variable.
     cuisine_of_week = find_cuisine_of_week[0]['cuisine_name']
+    # Find all docs in recipes collection with value of above variable and
+    #   assign to recipes variable.
     recipes = mongo.db.recipes.find({"cuisine_name": cuisine_of_week})
+    # Find all docs in cuisines collection, sort by cuisines_name 
+    #   alphabetically and assign to cuisines variable.
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
+
+    # Render the home.html template and pass through the recipes and cuisines
+    #   variables
     return render_template('home.html', recipes=recipes, cuisines=cuisines)
 
 
 # Register page route decorator
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    """ Function with GET method of rendering register html page. If method is
+        POST then check if the username is already taken. If so, redirect to
+        register page with flash, if not then insert doc into users collection,
+        flash message, initiate a user session and direct to profile page.
+    """
+    # Conditional to check if request method is POST
     if request.method == 'POST':
-        # check if username already exists in db
+        # Check if username already exists in users collection
         existing_user = mongo.db.users.find_one(
             {'username': request.form.get('username').lower()})
+        # If username already exists
         if existing_user:
+            # Flash message telling user why registration failed
             flash("Sorry, that Username is already taken")
+            # Redirect to register route
             return redirect(url_for('register'))
-        register = {
+        # Build dictionary with inputted form fields ready to upload to
+        #   collection
+        upload = {
             'username': request.form.get('username').lower(),
             'fname': request.form.get('fname').lower(),
             'lname': request.form.get('lname').lower(),
             'email': request.form.get('email').lower(),
+            # Use werkzeug hashing function on password input
             'password': generate_password_hash(request.form.get('password')),
             'is_admin': 'no'
         }
-        mongo.db.users.insert_one(register)
-
+        # Insert the built dictionary as a doc into the users collection
+        mongo.db.users.insert_one(upload)
         # Initiate session cookie
         session['user_session'] = request.form.get('username').lower()
         # Flash message to welcome user
         flash('Welcome to Kitchen Craft!')
-        # Redirect user to profile page
+        # Redirect user to profile page passing username as param
         return redirect(url_for(
             'profile', username=session['user_session']))
-    # Render register page from html template
+
+    # Render the register.html template
     return render_template('register.html')
 
 
 # Login page route decorator
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """ Function with GET method of rendering login html page. If method is
+        POST then check if the username input exists in users collection. If
+        not, flash message and redirect to login page. If so, check if hashed
+        password of existing user matches that of the password input. If not,
+        flash message and redirect to login page. If correct, flash message,
+        initiate user session and redirect to profile page.
+    """
     if request.method == 'POST':
-        # Assign username input to variable if it exists in users collection
+        # Search users collection by username input and assign to variable
         existing_user = mongo.db.users.find_one(
             {'username': request.form.get('username').lower()})
-        # Conditional to check if new variable is truthy
+        # Conditional to check if username variable is truthy
         if existing_user:
-            # Conditional to ensure password input matches that stored in users collection
-            # using werkzeug hashing function
-            if check_password_hash(existing_user['password'], request.form.get('password')):
+            # Conditional to ensure password input matches that stored in
+            #   users collection using werkzeug hashing function
+            if check_password_hash(
+                    existing_user['password'], request.form.get('password')):
                 # Initiate user session
                 session['user_session'] = request.form.get('username').lower()
                 # Flash message to welcome user
-                flash('Welcome, {}'.format(request.form.get('username')))
-                # Redirect user to profile page
+                flash(f"Welcome, {request.form.get('username')}")
+                # Redirect user to profile page passing the username param
                 return redirect(url_for(
                     'profile', username=session['user_session']))
 
             # If password doesn't match that stored in users collection
             else:
-                # Flash message to tell user that either username or password are incorrect
+                # Flash message to tell user why login failed
                 flash("Incorrect Username and/or Password")
                 # Redirect to login page
                 return redirect(url_for('login'))
         # If username doesn't exist
         else:
-            # Flash message to tell user that either username or password are incorrect
+            # Flash message to tell user why login failed
             flash("Incorrect Username and/or Password")
             # Redirect to login page
             return redirect(url_for('login'))
 
-    # Render login page from html template
+    # Render the login.html template
     return render_template('login.html')
 
 
 # Profile page route decorator
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
-    # Get username from current session
+    """ Function requiring username param passed through from route. Check
+    for current user session and if one does not exist then redirect to logn
+    page. If session exists then render template for profile page.
+    """
+    # Search users collection by username from session and assign to variable
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
     # If a valid session exists
     if session['user_session']:
-        # Render profile page from html template
+        # Render the profile.html page and pass through username variable
         return render_template('profile.html', username=username)
     # If session does not exist
     else:
         # Redirect user to login page
         return redirect(url_for('login'))
-        
+
 
 # Logout route decorator
 @app.route('/logout')
 def logout():
-    # Flash message to alert user ot successful log out
+    """ Function to remove current user session, inform user that they have
+    logged out then redirect to login page.
+    """
+    # Flash message to tell user of successful log out
     flash('You have been Logged Out')
     # Specify which session cookie to remove
     session.pop('user_session')
@@ -142,38 +189,63 @@ def logout():
     return redirect(url_for('login'))
 
 
+# Edit profile page route decorator
 @app.route("/edit_profile/<username>", methods=['GET', 'POST'])
 def edit_profile(username):
+    """ Function with GET method of rendering edit_profile html page passing
+        through the username variable. If method is POST then update the doc
+        found by searching for username in users collection by inserting built
+        dictionary, flash success message and direct to profile page.
+    """
+    # Search users collection by username from session and assign to variable
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
+    # Conditional to check if request method is POST
     if request.method == "POST":
-
+        # Build dictionary with inputted form fields ready to upload to
+        #   collection
         upload = {
             "fname": request.form.get("fname"),
             "lname": request.form.get("lname"),
             "email": request.form.get("email")
         }
-        mongo.db.users.update_one({'username': session['user_session']}, {"$set": upload})
+        # Update the doc assigned to username variable with the insertion of
+        #   the built dictionary
+        mongo.db.users.update_one(username, {"$set": upload})
+        # Flash message telling user of successful update
         flash("Profile Updated")
+        # Redirect to profile page passing through the username variable
         return redirect(url_for('profile', username=session['user_session']))
-
-    
+    # Render the edit_profile.html page and pass through username variable
     return render_template("edit_profile.html", username=username)
 
 
-
+# Change password page route decorator
 @app.route("/change_password/<username>", methods=['GET', 'POST'])
 def change_password(username):
+    """ Function with GET method of rendering change_password html page passing
+        through the username variable. If method is POST then update the doc
+        assigned to username variable with the new password assigned to
+        new password variable, flash successful change message and direct to
+        profile page.
+    """
+    # Search users collection by username from session and assign to variable
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
+    # Conditional to check if request method is POST
     if request.method == "POST":
-        upload = {
-            'password': generate_password_hash(request.form.get('password'))
-        }
-        mongo.db.users.update_one({'username': session['user_session']}, {"$set": upload})
+        # Use werkzeug hashing function on password input and assign to
+        #   variable
+        new_password = generate_password_hash(request.form.get('password'))
+        # Update the doc assigned to username variable with the insertion of
+        #   vew password variable
+        mongo.db.users.update_one(
+            username, {"$set": {'password': new_password}})
+        # Flash message telling user of successful password change
         flash("Your Password has been changed")
+        # Redirect to profile page passing through the username variable
         return redirect(url_for('profile', username=session['user_session']))
-
+    # Render the change_password.html page and pass through username variable
     return render_template("change_password.html", username=username)
 
 
@@ -254,13 +326,12 @@ def edit_recipe(recipe_id):
     return render_template("edit_recipe.html", recipe=recipe, cuisines=cuisines)
 
 
-
 @app.route("/remove_recipe/<recipe_id>")
 def remove_recipe(recipe_id):
     mongo.db.recipes.delete_one({"_id": ObjectId(recipe_id)})
     flash("Your recipe has been successfully removed")
     return redirect(url_for("recipes"))
-    
+
 
 @app.route("/cuisines/", defaults={'username': None})
 @app.route("/cuisines/<username>")
@@ -271,7 +342,7 @@ def cuisines(username):
     if session.get('user_session') is not None:
         username = mongo.db.users.find_one(
             {'username': session['user_session']})
-        
+
         # if username['is_admin'] == 'yes':
         #     return render_template('cuisines.html', username=username)
         # else:
@@ -346,7 +417,7 @@ def edit_cuisine(username, cuisine_id):
         mongo.db.cuisines.update_one({"_id": ObjectId(cuisine_id)}, {"$set": upload})
         flash("You have Successfully Updated the Cuisine")
         return redirect(url_for('cuisines', username=session['user_session']))
-    
+
     if username['is_admin'] == 'yes':
         return render_template("edit_cuisine.html", cuisine=cuisine, username=username)
     else:
@@ -357,7 +428,7 @@ def edit_cuisine(username, cuisine_id):
 @app.route("/remove_cuisine/<cuisine_id>")
 def remove_cuisine(cuisine_id):
     mongo.db.cuisines.delete_one({"_id": ObjectId(cuisine_id)})
-    flash("You have Successfully Removed this Category")
+    flash("Cuisine removed successfully")
     return redirect(url_for("cuisines"))
 
 
@@ -368,7 +439,7 @@ def users(username):
         {'username': session['user_session']})
     users = mongo.db.users.find().sort("username", 1)
 
-    if username == list(mongo.db.users.find({"is_superuser":{"$exists":True}}))[0]:
+    if username == list(mongo.db.users.find({"is_superuser": {"$exists": True}}))[0]:
         return render_template("users.html", username=username, users=users)
     else:
         return redirect(url_for("home"))
@@ -380,11 +451,11 @@ def edit_admin(user_id):
     if request.method == "POST":
 
         is_admin = "yes" if request.form.get('is_admin') else "no"
-        
+
         upload = {
             "is_admin": is_admin
         }
-        
+
         mongo.db.users.update_one({"_id": ObjectId(user_id)}, {"$set": upload})
         flash("Admins Updated")
         return redirect(url_for('users', username=session['user_session']))
