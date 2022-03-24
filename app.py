@@ -171,16 +171,26 @@ def login():
 @app.route('/profile/<username>', methods=['GET', 'POST'])
 def profile(username):
     """ Function requiring username param passed through from route. Check
-    for current user session and if one does not exist then redirect to logn
-    page. If session exists then render template for profile page.
+    for current user session and if one does not exist then redirect to login
+    page. If session exists then render template for profile page passing 
+    through username, recipes and cuisines variables.
     """
     # Search users collection by username from session and assign to variable
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
+    # Find all docs in recipes collection with the created_by key equal to
+    #   the username variable
+    recipes = mongo.db.recipes.find({"created_by": username['username']})
+    # Find all docs in cuisines collection, sort by cuisines_name
+    #   alphabetically and assign to cuisines variable.
+    cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
     # If a valid session exists
     if session['user_session']:
-        # Render the profile.html page and pass through username variable
-        return render_template('profile.html', username=username)
+        # Render the profile.html page and pass through username, recipes and
+        #   cuisines variables
+        return render_template(
+            'profile.html', username=username, recipes=recipes,
+            cuisines=cuisines)
     # If session does not exist
     else:
         # Redirect user to login page
