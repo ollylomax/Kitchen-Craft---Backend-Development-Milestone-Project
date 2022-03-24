@@ -34,7 +34,6 @@ app.secret_key = os.environ.get('SECRET_KEY')
 # Create instance of pymongo and pass in flask app object
 mongo = PyMongo(app)
 
-
 # Default route decorator
 @app.route('/')
 # Home page route decorator
@@ -757,6 +756,24 @@ def remove_user(user_id):
         flash("You cannot delete the Superuser account")
         # Redirect to users route passing username variable
         return redirect(url_for('users', username=session['user_session']))
+
+
+# Error handler for 404 error
+@app.errorhandler(404)
+def not_found(error):
+    """ Function to handle 404 error and render 404.html template passing
+    the error as variable from the route
+    """
+    return render_template('404.html', error=error), 404
+
+
+# Error handler for 500 error
+@app.errorhandler(500)
+def internal(error):
+    """ Function to handle 500 error and render 500.html template passing
+    the error as variable from the route
+    """
+    return render_template('500.html', error=error), 500
 
 
 # Where and how to run app

@@ -27,8 +27,8 @@
     <div class="col s12 center-align title-footer">
       <div class="row card-panel purple darken-4">
         <h1 class="white-text">Search our recipes or share your own recipes with the community!</h1>
-        <!-- Search form with post directing to search route -->
-        <form action="{{ url_for('search') }}" method="post" class="col s12">
+        <!-- Search form with post directing to recipe_search route -->
+        <form action="{{ url_for('recipe_search') }}" method="POST" class="col s12">
           <div class="center-align">
             <div class="input-field col s12">
               <!-- Search input field with validators -->

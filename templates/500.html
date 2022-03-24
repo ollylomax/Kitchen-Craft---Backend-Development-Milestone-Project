@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Custom styling -->
+    <style type=text/css>
+        @import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+
+
+        body {
+            font-family: "Roboto", sans-serif;
+            background-color: #8e24aa;
+            text-align: center;
+            color: black;
+            position:absolute;
+            width: 80%;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        .turtle-logo {
+            width: 100px;
+            height: 100px;
+            margin-top: 30px;
+        }
+
+        h1 {
+            margin-top: 15px;
+            font-size: 2em;
+        }
+
+        a {
+            color: white;
+            font-size: 15px;
+        }
+        
+    </style>
+
+</head>
+
+<body>
+    <div class="col-12 text-center">
+        <!-- Kitchen Craft logo sourced from directed images dir -->
+        <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+    </div>
+    <h1>ERROR 500</h1>
+    <h2>Uh Oh - Way too much heat in this kitchen!</h2>
+    <!-- Error message passed through from internal function -->
+    <p>{{ error }}</p>
+    <p>Click below to get back to go back to the Home Page!</p>
+    <!-- Anchor directing to home page -->
+    <a href="{{ url_for('home') }}">Home</a>
+
+</body>
+
+</html>
