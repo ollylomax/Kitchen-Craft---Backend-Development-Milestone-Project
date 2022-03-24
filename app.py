@@ -266,9 +266,9 @@ def recipes():
     return render_template('recipes.html', recipes=recipes, cuisines=cuisines)
 
 
-# Search route decorator
-@app.route("/search", methods=["GET", "POST"])
-def search():
+# Recipe search route decorator
+@app.route("/recipe_search", methods=["GET", "POST"])
+def recipe_search():
     """ Function to get the user index query from the form input and assign to
     variable. Then perform a find on the recipes collection using that variable
     and assign to a new variable to be passed through to the rendered page.
@@ -641,6 +641,22 @@ def users(username):
         # Redirect to home route
         return redirect(url_for("home"))
 
+
+# User search route decorator
+@app.route("/user_search", methods=["GET", "POST"])
+def user_search():
+    """ Function to get the user index query from the form input and assign to
+    variable. Then perform a find on the users collection using that variable
+    and assign to a new variable to be passed through to the rendered page.
+    """
+    # Assign variable to the user index query from form input
+    index_query = request.form.get("index_query")
+    # Find users in the users collection using an index text search on the
+    #   index query variable and assign to new variable
+    users = list(mongo.db.users.find({"$text": {"$search": index_query}}))
+    # Render the users.html page passing though the users variable
+    return render_template("users.html", users=users)
+    
 
 # Edit admin route decorator with user_id expected in route
 @app.route("/edit_admin/<user_id>", methods=['GET', 'POST'])
