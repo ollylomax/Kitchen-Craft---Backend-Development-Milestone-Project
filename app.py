@@ -65,6 +65,16 @@ def home():
     return render_template('home.html', recipes=recipes, cuisines=cuisines)
 
 
+# Products page route decorator
+@app.route('/products')
+def products():
+    """ Function with GET method of rendering products html page.
+    """
+    products = list(mongo.db.products.find().sort("name", 1))
+    # Render the products.html page
+    return render_template('products.html', products=products)
+
+
 # Register page route decorator
 @app.route('/register', methods=['GET', 'POST'])
 def register():
