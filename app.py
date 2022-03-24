@@ -57,7 +57,7 @@ def home():
     # Find all docs in recipes collection with value of above variable and
     #   assign to recipes variable.
     recipes = mongo.db.recipes.find({"cuisine_name": cuisine_of_week})
-    # Find all docs in cuisines collection, sort by cuisines_name 
+    # Find all docs in cuisines collection, sort by cuisines_name
     #   alphabetically and assign to cuisines variable.
     cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
 
@@ -257,7 +257,7 @@ def recipes():
     with the latest insertions shown first, and the cuisines variable
     assigned to all cuisines in ascending order.
     """
-    # Assign variable to a find on all recipes with the latest 
+    # Assign variable to a find on all recipes with the latest
     #   insertions shown first using the parameter $natural sort order
     recipes = mongo.db.recipes.find().sort('$natural', -1)
     # Assign variable to a find on all cuisines sorted by ascending order
@@ -310,9 +310,13 @@ def add_recipe():
             "cook_time": request.form.get("cook_time"),
             "ingredients": request.form.get("ingredients"),
             "steps": request.form.get("steps"),
+            # Set to name of user session
             "created_by": session["user_session"],
+            # Set to vegetarian variable
             "vegetarian": vegetarian,
+            # Set to vegan variable
             "vegan": vegan,
+            # Set to hot variable
             "hot": hot,
             # Convert date from now variable to specified string format
             "upload_date": now.strftime("%d/%m/%Y")
@@ -362,10 +366,15 @@ def edit_recipe(recipe_id):
             "cook_time": request.form.get("cook_time"),
             "ingredients": request.form.get("ingredients"),
             "steps": request.form.get("steps"),
+            # Set to name of user session
             "created_by": session["user_session"],
+            # Set to vegetarian variable
             "vegetarian": vegetarian,
+            # Set to vegan variable
             "vegan": vegan,
+            # Set to hot variable
             "hot": hot,
+            # Convert date from now variable to specified string format
             "upload_date": now.strftime("%d/%m/%Y")
         }
         # Update the doc assigned to recipe variable with the insertion of
@@ -377,7 +386,7 @@ def edit_recipe(recipe_id):
         return redirect(url_for("recipes"))
     # Assign variable to a find on all cuisines sorted by ascending order
     cuisines = mongo.db.cuisines.find().sort("cuisine_name", 1)
-    # Render edit_recipe.html page passing through both the recipe and 
+    # Render edit_recipe.html page passing through both the recipe and
     #   cuisines variables
     return render_template(
         "edit_recipe.html", recipe=recipe, cuisines=cuisines)
@@ -404,13 +413,13 @@ def remove_recipe(recipe_id):
 # Cuisines page route decorator with username expected in route
 @app.route("/cuisines/<username>")
 def cuisines(username):
-    """ Function which sets a variable to a search on cuisines collection
-    sorted by cuisine_of_week in descending order to display as the top
-    iteration on rendered page. If user session is not set to None then
-    username variable is set to current session and cuisines html page
-    is rendered passing through both cuisines and username variables.
-    If user session is set to None then render cuisines html page
-    passing through just the cuisines variable.
+    """ Function with cuisines variable set to a search on cuisines
+    collection sorted by cuisine_of_week in descending order to display
+    as the top iteration on rendered page. If user session is not set to
+    None then username variable is set to current session and cuisines html
+    page is rendered passing through both cuisines and username variables.
+    If user session is set to None then render cuisines html page passing
+    through just the cuisines variable.
     """
     # Variable set to all cuisines in cuisines collection sorted by
     #   cuisine_of_week in descending order
@@ -431,121 +440,247 @@ def cuisines(username):
         return render_template("cuisines.html", cuisines=cuisines)
 
 
+# Add cuisine page route decorator with username expected in route
 @app.route("/add_cuisine/<username>", methods=["GET", "POST"])
 def add_cuisine(username):
-
+    """ Function with GET method of searching the users collection by current
+        session and assigning to username variable, then conditionally checking
+        if the username is an admin. If so, then the add_cuisine page is
+        rendered, otherwise user is redirected to home page. If method is POST
+        then conditionally check if cuisine_of_week form checkbox is truthy. If
+        so, iterate through the cuisines collection setting each iteration's
+        cuisine_of_week to 'no' then set cuisine_of_week variable to 'yes'. If
+        checkbox is unchecked then set to 'no'. Then insert built dictionary as
+        a new doc in cuisines collection, flash success message and redirect to
+        cuisines route passing the username variable.
+    """
+    # Conditional to check if request method is POST
     if request.method == "POST":
-        # with open(request.form.get('flag'), "rb") as img_file:
-        #     my_string = base64.b64encode(img_file.read())
-
+        # Assign variable to a list of all cuisines in cuisines collection
         cuisines = list(mongo.db.cuisines.find())
+        # Conditional to check if form input is truthy for cuisine_of_week
+        #   checkbox
         if request.form.get('cuisine_of_week'):
+            # Iterate through the cuisines collection
             for cuisine in cuisines:
-                mongo.db.cuisines.update_one(cuisine, {"$set": {'cuisine_of_week': 'no'}})
-
-        cuisine_of_week = "yes" if request.form.get("cuisine_of_week") else "no"
-
+                # For each iteration, update cuisine_of_week to 'no'
+                mongo.db.cuisines.update_one(
+                    cuisine, {"$set": {'cuisine_of_week': 'no'}})
+            # Assign cuisine_of_week variable to 'yes'
+            cuisine_of_week = "yes"
+        # Otherwise if form input for cuisine_of_week checkbox is not truthy
+        else:
+            # Assign cuisine_of_week to 'no'
+            cuisine_of_week = "no"
+        # Build dictionary with inputted form fields ready to upload to
+        #   collection
         upload = {
             'cuisine_name': request.form.get('cuisine_name'),
             'flag': request.form.get('flag'),
             'description': request.form.get('description'),
+            # Set to cuisine_of_week variable
             'cuisine_of_week': cuisine_of_week
         }
+        # Insert the built dictionary as a doc into the cuisines collection
         mongo.db.cuisines.insert_one(upload)
+        # Flash success message
         flash("Your New Cuisine has been Successfully Added to the Database")
+        # Redirect to cuisines route passing username variable
         return redirect(url_for('cuisines', username=session['user_session']))
 
+    # Search users collection by username from session and assign to
+    #   variable
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
-
+    # Conditional to check if doc assigned to username variable has is_admin
+    #   set to 'yes'
     if username['is_admin'] == 'yes':
+        # If so, render add_cuisine.html page
         return render_template("add_cuisine.html")
+        # Otherwise, if set to anything else
     else:
+        # Redirect to home route
         return redirect(url_for("home"))
 
 
+# Edit cuisine page route decorator with username and cuisine_id expected in
+#   route
 @app.route("/edit_cuisine/<username>/<cuisine_id>", methods=["GET", "POST"])
 def edit_cuisine(username, cuisine_id):
-
+    """ Function with GET method of searching the users collection by current
+        session and assigning to username variable, then conditionally checking
+        if the username is an admin. If so, then the edit_cuisine page is
+        rendered, otherwise user is redirected to home page. Assign the cuisine
+        variable to a search on cuisines collection by _id using the cuisine_id
+        passed through the route. If method is POST then conditionally check if
+        cuisine_of_week form checkbox is truthy. If so, iterate through the
+        cuisines collection setting each iteration's cuisine_of_week to 'no'.
+        If checkbox is falsy and cuisine object has cuisine_of_week set to yes'
+        then flash error message and redirect to edit_cuisine page passing
+        through both username and cuisine_id. If checkbox is unchecked then set
+        to 'no'. Update the doc assigned to the cuisine variable by inserting
+        built dictionary, flash success message and redirect to cuisines route
+        passing the username variable.
+    """
+    # Search users collection by username from session and assign to
+    #   variable
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
+    # Search cuisines collection by _id using the object id from the parameter
+    #   passed through the route and assign to variable
     cuisine = mongo.db.cuisines.find_one({"_id": ObjectId(cuisine_id)})
-
+    # Conditional to check if request method is POST
     if request.method == "POST":
-
+        # Assign variable to a list of all cuisines in cuisines collection
         cuisines = list(mongo.db.cuisines.find())
-        dict = list(mongo.db.cuisines.find({"_id": ObjectId(cuisine_id)}))[0]
-
+        # Conditional to check if form input is truthy for cuisine_of_week
+        #   checkbox
         if request.form.get('cuisine_of_week'):
+            # Iterate through the cuisines collection
             for cuisine in cuisines:
-                mongo.db.cuisines.update_one(cuisine, {"$set": {'cuisine_of_week': 'no'}})
-
-        if not request.form.get('cuisine_of_week') and dict['cuisine_of_week'] == 'yes':
+                # For each iteration, update cuisine_of_week to 'no'
+                mongo.db.cuisines.update_one(
+                    cuisine, {"$set": {'cuisine_of_week': 'no'}})
+        # Conditional to check if form input is not truthy and object from
+        #   cuisine variable has cuisine_of_week set to 'yes'
+        if not request.form.get(
+                'cuisine_of_week') and cuisine['cuisine_of_week'] == 'yes':
+            # Flash error message
             flash('There must always be a Cuisine of the Week')
-            return render_template("edit_cuisine.html", cuisine=cuisine, username=username)
+            # Render edit_cuisine.html page passing both cuisine and username
+            #   variables
+            return render_template(
+                "edit_cuisine.html", cuisine=cuisine, username=username)
         else:
-            cuisine_of_week = "yes" if request.form.get("cuisine_of_week") else "no"
-
+            # Conditional expression to assign variable to either yes or no
+            #   depending on user cuisine_of_week form input
+            cuisine_of_week = "yes" if request.form.get(
+                "cuisine_of_week") else "no"
+        # Build dictionary with inputted form fields ready to upload to
+        #   collection
         upload = {
             'cuisine_name': request.form.get('cuisine_name'),
             'flag': request.form.get('flag'),
             'description': request.form.get('description'),
+            # Set to cuisine_of_week variable
             'cuisine_of_week': cuisine_of_week
         }
-
-        mongo.db.cuisines.update_one({"_id": ObjectId(cuisine_id)}, {"$set": upload})
+        # Update doc with the insertion of the built dictionary
+        mongo.db.cuisines.update_one(
+            {"_id": ObjectId(cuisine_id)}, {"$set": upload})
+        # Flash success message
         flash("You have Successfully Updated the Cuisine")
+        # Redirect to cuisines route passing username variable
         return redirect(url_for('cuisines', username=session['user_session']))
-
+    # Conditional to check if doc assigned to username variable has is_admin
+    #   set to 'yes'
     if username['is_admin'] == 'yes':
-        return render_template("edit_cuisine.html", cuisine=cuisine, username=username)
+        # Render edit_cuisine.html page passing both cuisine and username
+        #   variables
+        return render_template(
+            "edit_cuisine.html", cuisine=cuisine, username=username)
+        # Otherwise, if set to anything else
     else:
+        # Redirect to home route
         return redirect(url_for("home"))
 
 
-# Route to remove cuisine from collection
+# Remove cuisine route decorator with cuisine_id expected in route
 @app.route("/remove_cuisine/<cuisine_id>")
 def remove_cuisine(cuisine_id):
-    mongo.db.cuisines.delete_one({"_id": ObjectId(cuisine_id)})
-    flash("Cuisine removed successfully")
-    return redirect(url_for("cuisines"))
+    """ Function to check if current cuisine object has cuisine_of_week set to 'no'
+    and if so delete the cuisine by _id using the object id from the parameter
+    passed through the route, flash success message and redirect to cuisines
+    route. If set to 'yes' then flash error message and redirect to cuisines
+    route.
+    """
+    # Search cuisines collection by _id using the object id from the parameter
+    #   passed through the route and assign to variable
+    cuisine = mongo.db.cuisines.find_one({"_id": ObjectId(cuisine_id)})
+    # Conditional to check if object assigned to variable has cuisine_of_week
+    #   set to 'no'
+    if cuisine['cuisine_of_week'] == 'no':
+        # Delete the cuisine in cuisines collection by _id using the object id
+        # from the cuisine_id parameter passed through the route
+        mongo.db.cuisines.delete_one({"_id": ObjectId(cuisine_id)})
+        # Flash success message
+        flash("Cuisine removed successfully")
+        # Redirect to cuisines route
+        return redirect(url_for("cuisines"))
+    else:
+        # Flash error message
+        flash('Unable to remove: There must always be a Cuisine of the Week')
+        # Redirect to cuisines route
+        return redirect(url_for("cuisines"))
 
 
+# Users page route decorator with username expected in route
 @app.route("/users/<username>")
 def users(username):
-
+    """ Function with users variable set to a search on users collection sorted
+    alphabetically by username. Search users collection for the record where
+    is_superuser value exists and if that is equal to the username variable
+    then render users html page passing through both username and users
+    variables. If not then redirect to home page.
+    """
+    # Search users collection by username from session and assign to
+    #   variable
     username = mongo.db.users.find_one(
         {'username': session['user_session']})
+    # Assign variable to a list of all users in users collection sorted
+    #   alphabetically by username
     users = mongo.db.users.find().sort("username", 1)
-
-    if username == list(mongo.db.users.find({"is_superuser": {"$exists": True}}))[0]:
+    # Conditional to check if username variable is equal to a search on users
+    #   collection for existence of is_superuser key
+    if username == mongo.db.users.find_one(
+            {"is_superuser": {"$exists": True}}):
+        # Render users.html page passing username and users variables
         return render_template("users.html", username=username, users=users)
+    # Otherwise if username is not equal
     else:
+        # Redirect to home route
         return redirect(url_for("home"))
 
 
+# Edit admin route decorator with user_id expected in route
 @app.route("/edit_admin/<user_id>", methods=['GET', 'POST'])
 def edit_admin(user_id):
-
-    if request.method == "POST":
-
-        is_admin = "yes" if request.form.get('is_admin') else "no"
-
-        upload = {
-            "is_admin": is_admin
-        }
-
-        mongo.db.users.update_one({"_id": ObjectId(user_id)}, {"$set": upload})
-        flash("Admins Updated")
-        return redirect(url_for('users', username=session['user_session']))
-
+    """ Function to check whether the is_admin box is checked or unchecked
+    for each user in the iterated list, then upload changes to the users
+    collection with a conditional flash message depending if admin access
+    has been granted or revoked, then redirect to users route passing
+    username variable.
+    """
+    # Conditional expression to assign variable to either yes or no
+    #   depending on user is_admin form input
+    is_admin = "yes" if request.form.get('is_admin') else "no"
+    # Assign variable to a search on users collection by _id using the user_id
+    #   passed through route
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    # Update the is_admin value for the object assigned to user variable
+    mongo.db.users.update_one(user, {"$set": {"is_admin": is_admin}})
+    # Conditional expression to assign variable to status change depending
+    #   on whether is_admin box has been checked or unchecked
+    status = 'granted' if request.form.get('is_admin') else 'revoked'
+    # Flash success message to user inserting status text from status variable
+    flash(f"Admin status {status} for user: {user['username']}")
+    # Redirect to users route passing through username variable
     return redirect(url_for('users', username=session['user_session']))
 
 
+# Remove user route decorator with user_id expected in route
 @app.route("/remove_user/<user_id>")
 def remove_user(user_id):
+    """ Function to delete the user by _id using the object id from
+    the parameter passed through the route, flash success message and
+    redirect to users route.
+    """
+    # Delete the user in users collection by _id using the object id from
+    #   the user_id parameter passed through the route
     mongo.db.users.delete_one({"_id": ObjectId(user_id)})
+    # Flash success message
     flash("User has been permanently removed from the Database")
+    # Redirect to users route passing username variable
     return redirect(url_for('users', username=session['user_session']))
 
 
@@ -553,4 +688,5 @@ def remove_user(user_id):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
+            # Change to False before submission/live
             debug=True)
