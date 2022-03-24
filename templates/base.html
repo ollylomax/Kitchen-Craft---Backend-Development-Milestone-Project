@@ -52,7 +52,7 @@
         <nav>
             <div class="nav-wrapper">
                 <!-- Kitchen Craft logo sourced from directed images dir -->
-                <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+                <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}" alt="Kitchen Craft logo">
                 <!-- Kitchen Craft logo home link directing to home route -->
                 <a href="{{ url_for('home') }}" class="brand-logo left">Kitchen Craft</a>
                 <!-- Mobile sidenav trigger with custom fontawesome bars icon -->
@@ -63,7 +63,7 @@
                     <!-- Nav link directing to home route -->
                     <li><a href="{{ url_for('home') }}">Home</a></li>
                     <!-- Nav link directing to products route -->
-                    <li><a href="">Products</a></li>
+                    <li><a href="{{ url_for('products') }}">Products</a></li>
                     <!-- Nav link directing to recipes route -->
                     <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
                     <!-- Nav link directing to cuisines route passing the optional username param -->
@@ -95,11 +95,11 @@
         <!-- Mobile nav -->
         <ul class="sidenav right" id="mobile-demo">
             <!-- Kitchen Craft logo sourced from directed images dir -->
-            <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+            <div><img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}" alt="Kitchen Craft logo"></div>
             <!-- Nav link directing to home route -->
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <!-- Nav link directing to products route -->
-            <li><a href="">Products</a></li>
+            <li><a href="{{ url_for('products') }}">Products</a></li>
             <!-- Nav link directing to recipes route -->
             <li><a href="{{ url_for('recipes') }}">Recipes</a></li>
             <!-- Nav link directing to cuisines route passing the optional username param -->
