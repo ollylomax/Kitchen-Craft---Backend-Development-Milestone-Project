@@ -34,7 +34,7 @@
       {% if messages %}
       <!-- Iterate through flashed messages -->
       {% for message in messages %}
-      <div class="card-content white-text green darken-4 form-flash">
+      <div class="card-content white-text center-align purple darken-4">
         <!-- Inject message -->
         <span class="center-align white-text">{{ message }}</span>
       </div>
@@ -54,8 +54,6 @@
     <li class="collection-item">{{ user.username }}<br> {{ user.fname.capitalize() }} {{ user.lname.capitalize() }}
       <!-- Edit admin form with post directing to edit_admin route passing the expected user_id as param -->
       <form class="admin-form" method="POST" action="{{ url_for('edit_admin', user_id = user._id) }}">
-        <!-- Remove user anchor triggering modal -->
-        <a href="#modal-{{ user._id }}" class="btn-small red modal-trigger">Remove User</a>
         <!-- Materialize checkbox switch -->
         <div class="switch right-align">
           <label for="is_admin-{{ user.username }}">
@@ -72,8 +70,33 @@
             <span class="lever"></span>
           </label>
         </div>
+        
 
       </form>
+      <!-- Conditional to show is_banned checkbox for all users except superuser -->
+      {% if user.username != 'superuser' %}
+      <form class="banned-form" method="POST" action="{{ url_for('edit_bans', user_id = user._id) }}">
+        <!-- Materialize checkbox switch -->
+        <div class="switch">
+          <label for="is_banned-{{ user.username }}">
+            Ban User?
+            <!-- Conditional to check if user from passed users collection has an is_banned value of 'yes' -->
+            {% if user.is_banned == 'yes' %}
+            <!-- Checked box with an onchange event trigger to submit form -->
+            <input class="right" type="checkbox" id="is_banned-{{ user.username }}" name="is_banned" checked
+              onchange="this.form.submit()">
+            <!-- Otherwise if value of is_banned is anything else -->
+            {% else %}
+            <!-- Unchecked box with an onchange event trigger to submit form -->
+            <input type="checkbox" id="is_banned-{{ user.username }}" name="is_banned" onchange="this.form.submit()">
+            {% endif %}
+            <span class="lever"></span>
+          </label>
+        </div>
+      </form>
+      {% endif %}
+      <!-- Remove user anchor triggering modal -->
+      <a href="#modal-{{ user._id }}" class="btn-small red modal-trigger">Remove</a>
     </li>
     <!-- Modal with a unique id created by adding the associated user._id -->
     <div id="modal-{{ user._id }}" class="modal purple darken-4">

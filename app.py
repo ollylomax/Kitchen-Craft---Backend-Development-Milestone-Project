@@ -94,6 +94,8 @@ def register():
             'email': request.form.get('email').lower(),
             # Use werkzeug hashing function on password input
             'password': generate_password_hash(request.form.get('password')),
+            # Additional key/values unknown to user
+            'is_banned': 'no',
             'is_admin': 'no'
         }
         # Insert the built dictionary as a doc into the users collection
@@ -117,8 +119,10 @@ def login():
         POST then check if the username input exists in users collection. If
         not, flash message and redirect to login page. If so, check if hashed
         password of existing user matches that of the password input. If not,
-        flash message and redirect to login page. If correct, flash message,
-        initiate user session and redirect to profile page.
+        flash message and redirect to login page. If correct but user has been
+        banned then flash message and redirect to login page. Otherwise if
+        correct then flash message, initiate user session and redirect to
+        profile page.
     """
     if request.method == 'POST':
         # Search users collection by username input and assign to variable
@@ -127,8 +131,17 @@ def login():
         # Conditional to check if username variable is truthy
         if existing_user:
             # Conditional to ensure password input matches that stored in
+            #   users collection using werkzeug hashing function and check
+            #       to see if user is banned
+            if check_password_hash(existing_user['password'], request.form.get(
+                    'password')) and existing_user['is_banned'] == 'yes':
+                # Flash message to tell user why login failed
+                flash("Your account has been banned")
+                # Redirect to login page
+                return redirect(url_for('login'))
+            # Conditional to ensure password input matches that stored in
             #   users collection using werkzeug hashing function
-            if check_password_hash(
+            elif check_password_hash(
                     existing_user['password'], request.form.get('password')):
                 # Initiate user session
                 session['user_session'] = request.form.get('username').lower()
@@ -137,7 +150,6 @@ def login():
                 # Redirect user to profile page passing the username param
                 return redirect(url_for(
                     'profile', username=session['user_session']))
-
             # If password doesn't match that stored in users collection
             else:
                 # Flash message to tell user why login failed
@@ -684,20 +696,57 @@ def edit_admin(user_id):
     return redirect(url_for('users', username=session['user_session']))
 
 
+# Edit bans route decorator with user_id expected in route
+@app.route("/edit_bans/<user_id>", methods=['GET', 'POST'])
+def edit_bans(user_id):
+    """ Function to check whether the is_banned box is checked or unchecked
+    for each user in the iterated list, then upload changes to the users
+    collection with a conditional flash message depending on whether user
+    has been banned or unbanned, then redirect to users route passing
+    username variable.
+    """
+    # Conditional expression to assign variable to either yes or no
+    #   depending on user is_banned form input
+    is_banned = "yes" if request.form.get('is_banned') else "no"
+    # Assign variable to a search on users collection by _id using the user_id
+    #   passed through route
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    # Update the is_banned value for the object assigned to user variable
+    mongo.db.users.update_one(user, {"$set": {"is_banned": is_banned}})
+    # Conditional expression to assign variable to status change depending
+    #   on whether is_banned box has been checked or unchecked
+    status = 'banned' if request.form.get('is_banned') else 'unbanned'
+    # Flash success message to user inserting status text from status variable
+    flash(f"User: {user['username']} has been {status}")
+    # Redirect to users route passing through username variable
+    return redirect(url_for('users', username=session['user_session']))
+    
+    
 # Remove user route decorator with user_id expected in route
 @app.route("/remove_user/<user_id>")
 def remove_user(user_id):
-    """ Function to delete the user by _id using the object id from
-    the parameter passed through the route, flash success message and
-    redirect to users route.
+    """ Function to delete any user with the exception of the 'superuser'
+    by _id using the object id from the parameter passed through the route,
+    flash success message and redirect to users route.
     """
-    # Delete the user in users collection by _id using the object id from
-    #   the user_id parameter passed through the route
-    mongo.db.users.delete_one({"_id": ObjectId(user_id)})
-    # Flash success message
-    flash("User has been permanently removed from the Database")
-    # Redirect to users route passing username variable
-    return redirect(url_for('users', username=session['user_session']))
+    # Assign variable to a search on users collection by _id using the user_id
+    #   passed through route
+    user = mongo.db.users.find_one({"_id": ObjectId(user_id)})
+    # Conditional to make sure the user is not the superuser
+    if user['username'] != 'superuser':
+        # Delete the user in users collection by _id using the object id from
+        #   the user_id parameter passed through the route
+        mongo.db.users.delete_one({"_id": ObjectId(user_id)})
+        # Flash success message
+        flash("User has been permanently removed from the Database")
+        # Redirect to users route passing username variable
+        return redirect(url_for('users', username=session['user_session']))
+    # Otherwise if the user is the superuser
+    else:
+        # Flash error message
+        flash("You cannot delete the Superuser account")
+        # Redirect to users route passing username variable
+        return redirect(url_for('users', username=session['user_session']))
 
 
 # Where and how to run app
