@@ -7,6 +7,25 @@
 <main>
   <!-- Unordered list materialize collection -->
   <ul class="collection users">
+    <!-- Search users section -->
+    <section>
+      <!-- Search form with post directing to user_search route -->
+      <form class="users-search" action="{{ url_for('user_search') }}" method="POST">
+        <!-- Search input field with validators -->
+        <input type="text" id="index_query" name="index_query" placeholder="Search Users" minlength="2" class="validate"
+          required>
+        <!-- Cancel button with tooltip within anchor to users route passing username as variable -->
+        <a href="{{ url_for('users', username=session['user_session']) }}"><button type="button" class="tooltipped"
+            data-tooltip="Cancel">
+            <!-- Font awesome X icon -->
+            <i class="fa fa-x"></i></button></a>
+        <!-- Search button to submit form with tooltip-->
+        <button type="submit" class="tooltipped" data-tooltip="Search">
+          <!-- Font awesome search icon -->
+          <i class="fa fa-search"></i>
+        </button>
+      </form>
+    </section>
     <!-- Flashed messages section -->
     <section>
       <!-- In-built flask method to pull all flashed messages from the session and return them -->
