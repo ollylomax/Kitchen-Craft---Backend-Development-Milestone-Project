@@ -109,3 +109,7 @@
   </div>
 </main>
 {% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/pwvalidator.js') }}"></script>
+{% endblock %}
