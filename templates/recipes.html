@@ -61,6 +61,7 @@
 
 <!-- Recipes section -->
 <section>
+  <h4 class="center-align">Check out our many community shared recipes below!</h4>
   <div class="row">
     <!-- Iterate over the recipes object being passed from the recipes function -->
     {% for recipe in recipes %}
@@ -89,8 +90,8 @@
         {% if recipe.cuisine_name == cuisine.cuisine_name %}
         <!-- Insert image by converting base64 from injected flag string -->
         <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
-          class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine" width="32px"
-          height="32px">
+          class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine" width="32"
+          height="32">
         {% endif %}
         {% endfor %}
 
