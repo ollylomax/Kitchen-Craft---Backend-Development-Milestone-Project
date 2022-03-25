@@ -1,27 +1,45 @@
 {% extends 'base.html' %}
 
+<!-- Content to be injected into respective base.html block when products view is accessed -->
 {% block content %}
+<!-- Products section -->
+<section>
+    <div class="row products">
+        <!-- Titles -->
+        <h1>Products - Kitchen Craft Certified</h1>
+        <h2>Have a look at some of our quality, sustainably sourced kitchen products made to the
+            highest standard!</h2>
+        <!-- Iterate over the mongodb products collection -->
+        {% for product in products %}
+        <div class="col s12 m6">
+            <!-- Materialize card component -->
+            <div class="card">
+                <div class="card-image">
+                    <!-- Insert image for each iteration by converting base64 from injected image string -->
+                    <img src="data:image/png;base64,{{ product.image }}" alt="Picture of {{ product.name }}">
+                    <!-- Insert product name and brand for each iteration -->
+                    <p class="card-title black"><span style="font-weight: 700">{{ product.name }}</span><em> by
+                            {{ product.brand}}</em></p>
+                </div>
+                <div class="card-content">
+                    <!-- Insert product description for each iteration -->
+                    <p>{{ product.description }}</p>
+                </div>
+                <div class="card-action">
+                    <!-- Insert product price and useful_for for each iteration -->
+                    <p class="right product-price">{{ product.price }}</p>
+                    <p class="chip">{{ product.useful_for }}</p>
+                </div>
+            </div>
 
-<div class="row">
-    {% for product in products %}
-    <div class="col s6">
-
-        <div class="card">
-            <div class="card-image">
-                <img src="data:image/png;base64,{{ product.image }}" alt="Picture of {{ product.name }}">
-                <span class="card-title black">{{ product.name }}<em> by {{ product.brand}}</em></span>
-            </div>
-            <div class="card-content">
-                <p>{{ product.description }}</p>
-            </div>
-            <div class="card-action">
-                <p>{{ product.price }}</p>
-                <p>{{ product.useful_for }}</p>
-            </div>
         </div>
-
+        {% endfor %}
+        <h3>Or why not browse through some of our community shared recipes for inspiration!</h3>
+        <p class="center-align bottom-button">
+            <!-- Recipes anchor button directing to recipes route -->
+            <a href="{{ url_for('recipes') }}" class="col s12 btn-small purple darken-1">Recipes</a>
+        </p>
     </div>
-    {% endfor %}
-</div>
+</section>
 
 {% endblock %}
