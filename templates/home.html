@@ -102,13 +102,13 @@
                     <span><em>Recipe by:
                             <!-- Conditional to check if current user session matches created_by value from recipes object -->
                             {% if session.user_session|lower == recipe.created_by|lower %}
-                        </em>You
-                        <!-- Otherwise inject created_by value from recipes object -->
-                        {% else %}
-                        {{ recipe.created_by }}
+                        </em>You<em>
+                            <!-- Otherwise inject created_by value from recipes object -->
+                            {% else %}
+                        </em>{{ recipe.created_by }}<em></em>
                         {% endif %}
                         <!-- Value of upload_date injected from recipes object -->
-                        <em>on:</em> {{ recipe.upload_date }}</span>
+                        on: {{ recipe.upload_date }}</em></span>
                 </div>
 
                 <!-- Conditional to check if current user session matches created_by value from recipes object -->
