@@ -30,9 +30,9 @@
             <!-- Inject cuisine name and convert base64 to image from the injected string -->
             <h4><img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"><br>
                 {{ cuisine.cuisine_name}}</h4>
-            <h5>Check out the latest recipes with {{ cuisine.cuisine_name}} origins below!</h2>
-                {% endif %}
-                {% endfor %}
+            <h5>Check out the latest recipes with {{ cuisine.cuisine_name}} origins below!</h5>
+            {% endif %}
+            {% endfor %}
         </div>
     </div>
 </section>
@@ -68,7 +68,7 @@
                 <!-- Insert image by converting base64 from injected flag string -->
                 <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
                     class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine"
-                    width="32px" height="32px">
+                    width="32" height="32">
                 {% endif %}
                 {% endfor %}
 
@@ -93,7 +93,7 @@
                     <li>
                         <div class="collapsible-header">
                             <i class="fa-solid fa-clipboard-list"></i> Steps</div>
-                            <!-- Inject steps from recipes object -->
+                        <!-- Inject steps from recipes object -->
                         <div class="collapsible-body white black-text"><span>{{ recipe.steps }}</span></div>
                     </li>
                 </ul>
@@ -102,13 +102,13 @@
                     <span><em>Recipe by:
                             <!-- Conditional to check if current user session matches created_by value from recipes object -->
                             {% if session.user_session|lower == recipe.created_by|lower %}
-                        </em>You<em>
-                            <!-- Otherwise inject created_by value from recipes object -->
-                            {% else %}
-                        </em>{{ recipe.created_by }}<em></em>
+                        </em>You
+                        <!-- Otherwise inject created_by value from recipes object -->
+                        {% else %}
+                        {{ recipe.created_by }}
                         {% endif %}
                         <!-- Value of upload_date injected from recipes object -->
-                        on: {{ recipe.upload_date }}</em></span>
+                        <em>on:</em> {{ recipe.upload_date }}</span>
                 </div>
 
                 <!-- Conditional to check if current user session matches created_by value from recipes object -->

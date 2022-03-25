@@ -95,7 +95,7 @@
         <!-- Mobile nav -->
         <ul class="sidenav right" id="mobile-demo">
             <!-- Kitchen Craft logo sourced from directed images dir -->
-            <div><img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}" alt="Kitchen Craft logo"></div>
+            <li><img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}" alt="Kitchen Craft logo"></li>
             <!-- Nav link directing to home route -->
             <li><a href="{{ url_for('home') }}">Home</a></li>
             <!-- Nav link directing to products route -->
@@ -142,6 +142,7 @@
             <div class="container">
                 <!-- Copywright span with innerHTML current year injected from javascript by id -->
                 © <span id="year"></span> Kitchen Craft All rights reserved
+                <ul>
                 <!-- List item for twitter icon anchor hidden on small devices, with link opening in new window -->
                 <li class="social right hide-on-small-only">
                     <a href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter link">
@@ -172,6 +173,7 @@
                         <i class="fa-brands fa-facebook"></i>
                     </a>
                 </li>
+            </ul>
             </div>
         </div>
 
