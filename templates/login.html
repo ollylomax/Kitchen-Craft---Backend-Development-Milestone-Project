@@ -3,7 +3,6 @@
 <!-- Content to be injected into respective base.html block when login view is accessed -->
 {% block content %}
 <!-- Sign in block-->
-<main>
   <div class="row login-panel">
     <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
       <div class="card purple darken-4">
@@ -14,6 +13,7 @@
         </div>
         <!-- Flashed messages section -->
         <section>
+          <h1 style="display: none">Flashed Messages</h1>
           <!-- In-built flask method to pull all flashed messages from the session and return them -->
           {% with messages = get_flashed_messages() %}
           <!-- Conditional to check for flashed messages -->
@@ -67,5 +67,4 @@
       </div>
     </div>
   </div>
-</main>
 {% endblock %}

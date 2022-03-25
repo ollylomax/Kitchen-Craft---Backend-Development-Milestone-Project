@@ -4,14 +4,13 @@
 {% block content %}
 
 <!-- Add cuisine block -->
-<main>
   <div class="row panel">
     <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
       <div class="card purple darken-4">
         <!-- Title -->
         <div class="card-content white-text">
           <!-- Kitchen Craft logo sourced from directed images dir -->
-          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}" alt="Kitchen Craft logo">
           <span class="card-title">Add Cuisine</span>
           <p>Don't forget to add a flag and description</p>
         </div>
@@ -23,11 +22,11 @@
             <div class="row register-input">
               <div class="input-field col s12">
                 <!-- Cuisine name input with regex accepting characters a-z, A-Z and single spaces between words -->
-                <input id="cuisine_name" name="cuisine_name" type="text" class="validate" minlength="5" maxlength="20"
+                <input id="cuisine_name" name="cuisine_name" type="text" class="validate" minlength="3" maxlength="20"
                   pattern="^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$" required>
                 <label for="cuisine_name">Cuisine Name</label>
                 <!-- Inform admin how to pass validation -->
-                <span class="white-text left pattern"><em>Between 5 and 20 characters only</em></span>
+                <span class="white-text left pattern"><em>Between 3 and 20 characters only</em></span>
               </div>
             </div>
             <!-- Flag -->
@@ -47,8 +46,8 @@
             <div class="row register-input">
               <div class="input-field col s12">
                 <!-- Description text area with minimum of 10 and maximum of 200 characters -->
-                <textarea id="description" name="description" minlength="10" maxlength="200"
-                  class="materialize-textarea validate" data-length="200" required></textarea>
+                <textarea id="description" name="description" minlength="10" maxlength="500"
+                  class="materialize-textarea validate" data-length="500" required></textarea>
                 <label for="description">Description</label>
               </div>
             </div>
@@ -87,5 +86,4 @@
       </div>
     </div>
   </div>
-</main>
 {% endblock %}

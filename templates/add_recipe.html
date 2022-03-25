@@ -4,14 +4,13 @@
 {% block content %}
 
 <!-- Add recipe block -->
-<main>
   <div class="row register-panel">
     <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
       <div class="card purple darken-4">
         <!-- Title -->
         <div class="card-content white-text">
           <!-- Kitchen Craft logo sourced from directed images dir -->
-          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}" alt="Kitchen Craft logo">
           <span class="card-title">Add Recipe</span>
           <p>Share your favourite recipes with the rest of our commmunity!</p>
         </div>
@@ -122,6 +121,5 @@
       </div>
     </div>
   </div>
-</main>
 
 {% endblock %}

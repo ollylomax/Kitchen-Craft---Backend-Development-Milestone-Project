@@ -5,6 +5,7 @@
 
 <!-- Flashed messages section-->
 <section>
+  <h1 style="display: none">Flashed Messages</h1>
   <!-- In-built flask method to pull all flashed messages from the session and return them -->
   {% with messages = get_flashed_messages() %}
   <!-- Conditional to check for flashed messages -->
@@ -61,7 +62,6 @@
 
 <!-- Recipes section -->
 <section>
-  <h4 class="center-align">Check out our many community shared recipes below!</h4>
   <div class="row">
     <!-- Iterate over the recipes object being passed from the recipes function -->
     {% for recipe in recipes %}
