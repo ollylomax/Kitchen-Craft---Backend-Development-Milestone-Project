@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Odibee+Sans&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 
 /* Misc */
+
 body {
     font-family: 'Roboto', sans-serif;
     display: flex;
@@ -11,7 +12,7 @@ body {
 
 h1 {
     font-size: 2.5rem;
-    color: purple;
+    color: #800080;
 }
 
 h5 {
@@ -45,8 +46,9 @@ main {
 }
 
 /* Navbar */
+
 nav {
-    background-color: purple;
+    background-color: #800080;
 }
 
 nav .brand-logo {
@@ -56,7 +58,7 @@ nav .brand-logo {
 }
 
 .dropdown-content li a {
-    color: purple;
+    color: #800080;
 }
 
 .dropdown-content {
@@ -119,7 +121,7 @@ span.character-counter {
 
 .intro-header {
     height: 625px;
-    border-bottom: 2px solid purple;
+    border-bottom: 2px solid #800080;
 }
 
 .intro-header h2 {
@@ -185,7 +187,7 @@ span.character-counter {
     margin: 0 10.5px;
 }
 
-/* Register page */
+/* Register */
 
 .register-input {
     padding: 0 30px;
@@ -211,7 +213,7 @@ span.character-counter {
     margin: 0 30px;
 }
 
-/* Profile Page */
+/* Profile */
 
 .profile-panel .user-details {
     margin: 0;
@@ -277,7 +279,7 @@ span.character-counter {
 
 .cuisines .collection-item {
     margin: 10px 0 !important;
-    border: 1px solid purple;
+    border: 1px solid #800080;
 }
 
 .cuisines:not(.browser-default) {
@@ -331,7 +333,7 @@ span.character-counter {
     height:44px;
     border: none;
     border-left: 1px solid black;
-    background: purple;
+    background: #800080;
     text-align: center;
     color: #fff;
     cursor: pointer;
@@ -359,6 +361,7 @@ span.character-counter {
 }
 
 /* Media Queries */
+
 @media(min-width: 300px) {
 
     nav {
