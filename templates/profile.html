@@ -3,14 +3,13 @@
 <!-- Content to be injected into respective base.html block when profile view is accessed -->
 {% block content %}
 <!-- Profile block -->
-<main>
   <div class="row profile-panel">
     <div class="col s12 m10 offset-m1 l8 offset-l2 center-align">
       <div class="card purple darken-4">
         <!-- Title -->
         <div class="card-content white-text">
           <!-- Kitchen Craft logo sourced from directed images dir -->
-          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}">
+          <img src="{{ url_for('static', filename='images/kitchencraft-logo.png') }}" alt="Kitchen Craft logo">
           <!-- Show current Username by injecting username from passed username object -->
           <span class="card-title">{{ username.username }}</span>
           <!-- Show current First name by injecting fname from passed username object -->
@@ -18,6 +17,7 @@
         </div>
         <!-- Flashed messages section -->
         <section>
+          <h1 style="display: none">Flashed Messages</h1>
           <!-- In-built flask method to pull all flashed messages from the session and return them -->
           {% with messages = get_flashed_messages() %}
           <!-- Conditional to check for flashed messages -->
@@ -104,8 +104,8 @@
           {% if recipe.cuisine_name == cuisine.cuisine_name %}
           <!-- Insert image by converting base64 from injected flag string -->
           <img src="data:image/png;base64,{{ cuisine.flag }}" alt="{{ cuisine.cuisine_name }} Flag"
-            class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine" width="32px"
-            height="32px">
+            class="circle left recipe-flags tooltipped" data-tooltip="{{ cuisine.cuisine_name }} Cuisine" width="32"
+            height="32">
           {% endif %}
           {% endfor %}
 
@@ -169,5 +169,4 @@
     </div>
   </section>
 
-</main>
 {% endblock %}

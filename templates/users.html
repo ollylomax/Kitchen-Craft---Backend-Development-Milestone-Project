@@ -4,11 +4,10 @@
 {% block content %}
 
 <!-- Users block -->
-<main>
   <!-- Unordered list materialize collection -->
   <ul class="collection users">
     <!-- Search users section -->
-    <section>
+    <li>
       <!-- Search form with post directing to user_search route -->
       <form class="users-search" action="{{ url_for('user_search') }}" method="POST">
         <!-- Search input field with validators -->
@@ -25,9 +24,10 @@
           <i class="fa fa-search"></i>
         </button>
       </form>
-    </section>
+    </li>
     <!-- Flashed messages section -->
-    <section>
+    <li>
+      <h1 style="display: none">Flashed Messages</h1>
       <!-- In-built flask method to pull all flashed messages from the session and return them -->
       {% with messages = get_flashed_messages() %}
       <!-- Conditional to check for flashed messages -->
@@ -41,7 +41,7 @@
       {% endfor %}
       {% endif %}
       {% endwith %}
-    </section>
+    </li>
     <!-- Title list item -->
     <li class="collection-item"><em>Username</em>
       <div class="right">
@@ -99,7 +99,7 @@
       <a href="#modal-{{ user._id }}" class="btn-small red modal-trigger">Remove</a>
     </li>
     <!-- Modal with a unique id created by adding the associated user._id -->
-    <div id="modal-{{ user._id }}" class="modal purple darken-4">
+    <li id="modal-{{ user._id }}" class="modal purple darken-4">
       <div class="modal-content white-text">
         <h4>Confirm Deletion</h4>
         <p>Are you sure you want to permanently delete this User from the database?</p>
@@ -111,8 +111,7 @@
         <a href="{{ url_for('remove_user', user_id = user._id) }}" class="modal-close btn-small red">Confirm
           Delete</a>
       </div>
-    </div>
+    </li>
     {% endfor %}
   </ul>
-</main>
 {% endblock %}
