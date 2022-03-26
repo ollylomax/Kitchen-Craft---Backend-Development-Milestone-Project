@@ -49,11 +49,7 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 
     - As a registered user, I want to be able to see all my recipes on my profile page
 
-    - As a registered user, I want to be able to log out of the website
-
     - As an admin user, I want to be able to add, edit and delete cuisines
-
-    - As an admin user, I want to be able to change the Cuisine of the Week
 
     - As the superuser, I want to be able to view and search the users page
 
@@ -166,6 +162,7 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 > As a user, I want to be able to see what kitchen products are for sale and how much they are.
 
 - #### Acceptance Criteria:
+    Products page will be created.
     Products images displayed and scaled to fit all screen sizes with no distortion.
     Product descriptions clearly outlining product benefits
     Product prices stand out
@@ -178,118 +175,153 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 > As a user, I want to be able to see all the community shared recipes
 
 - #### Acceptance Criteria:
-    User will be shown a picture of the turtle, his/her name and betting odds in order for them to be comfortable with their choice.
+    Recipes page will be created.
+    Community recipes will be shown on this page with relevant information
+    Dropdown boxes will extend downwards containing the lengthly information
 
- - #### Description:
-    Turtle portraits and names will be randomly assigned to each name and be clearly displayed alongside their respective odds to win the race.
-
-### User Story:
-> As a user, I want to be able to easily bet on my chosen turtle.
-
-- #### Acceptance Criteria:
-    User able to distinguish between betting boxes relevant to the turtle they wish to bet on and input the tokens they desire.
-
- - #### Description:
-    Input fields will be provided and clearly displayed beneath the portrait, name and odds of the relevant turtle.
+ - #### Implementation:
+    A full list of community recipes will be shown on the recipes page from the mongoDB recipes collection with the cuisine they belong to, recipe name, preparation time, cooking time, a step-by-step guide and whether the recipe is vegetarian, vegan and/or hot. They will also show which user shared the recipes and when.
 
 ### User Story:
-> As a user, I want to be warned if I forgot to input a bid before starting the race.
+> As a user, I want to be able to search the community shared recipes
 
 - #### Acceptance Criteria:
-    User will be alerted if they try to start a race without making a bet on a turtle
+    A search bar will be displayed at the top of the Recipes page
+    A clear header will tell the user that they are able to filter recipes by their query
 
- - #### Description:
-    An alert dialog will pop on screen if the start race button is clicked or if the keyboard Enter key is pressed while in a bet field without a bet entered.
+ - #### Implementation:
+    A database index will be created on the recipes collection in MongoDB, allowing users to search by recipe name and cuisine name. When a user types in search criteria and presses the search button (or presses enter) it will return a filtered list of recipes based upon that criteria.
 
 ### User Story:
-> As a user, I want to be able to see how many tokens I have remaining.
+> As a user, I want to be able to see information about the different cuisines of the world
 
 - #### Acceptance Criteria:
-    User will be shown the total amount of tokens they have at all stages throughout the game.
+    Cuisines page will be created.
+    A list of current cuisines will be displayed
+    Information about the cuisines will be included
 
- - #### Description:
-    A box containing an interactive display of user tokens is displayed underneath the game window in bold.
+ - #### Implementation:
+    Each cuisine will include a country flag and a brief description. The cuisine chosen as the Cuisine of the Week will have a star icon at the top right, with a tooltip to let the user know.
 
 ### User Story:
-> As a user, I want to be able to quickly and easily start the race.
+> As a user, I want to be able to register to the website so that I can share my own recipes
 
 - #### Acceptance Criteria:
-    User can initiate the race to begin.
+    Register page will be created.
+    A username and password will be required on form submission.
+    Additional details such as first and last name as well as email address also required.
+    Confirm password field which must match password field.
 
- - #### Description:
-
-    ’Start Race’ button will be provided underneath the game window and the keyboard Enter key will also initiate the race if a bet has been entered into bet field.
+ - #### Implementation:
+    The Register form will capture the username, first name, last name, password and email which when submitted, will all be stored in a MongoDB database collection called users. Each input field will have its own validation including but not limited to; minimum and maximum character limits, character requirements and regular expressions. There will also be a confirm password field as extra validation for the user's protection. Two 'silent' key/values will also be submitted for banned and admin status set to off. Upon a successful registration a session will be initialised and the user will be directed to their profile page with a flash message informing them of successful registration.
 
 ### User Story:
-> As a user, I want to be able to clearly see where the turtles have finished in each race.
+> As a user, I want to be able to easily return to the website if I encounter a page error
 
 - #### Acceptance Criteria:
-    User can see on the race track where each turtle finished in the race.
+    404 page will be created.
+    500 page will be created.
+    Both pages will provide error information and a way back to the website.
 
- - #### Description:
-    In each lane the turtle icons are displayed in their designated position in which they finished the race, from 1st to 4th.
+ - #### Implementation:
+
+    Error handling will be used to catch both 404 and 500 page errors and direct the user to the respective page. This will inform them in detail of the error in question and a link will be provided directing back to the home page.
 
 ### User Story:
-> As a user, I want to see my tokens update after each race.
+> As a registered user, I want to be able to log in and log out of my account on the website
 
 - #### Acceptance Criteria:
-    User’s attention will be directed towards their tokens value when a race is complete.
+    Login page will be created.
+    Username will be checked against password in a secure way.
 
- - #### Description:
-    User tokens value will shake with a css effect and briefly change colour corresponding to gaining (green) or losing (red) tokens after a race has finished.
+ - #### Implementation:
+    Username and password will be checked against each other from the mongoDB users collection. If the password does not match, the username does not exist or the user is banned then the user will be informed of this with a flash message. When a user has successfully logged in, a session will be initialised and they will be directed to their profile page with a flash message informing them of successful login. A Log Out button will be displayed to users who are logged in. When clicked this will terminate the session, flash a message informing them of successful log out and direct them to the login page.
 
 ### User Story:
-> As a user, I want to be able to see if I win my bet, and how many tokens I won.<br>
-> As a user, I want to be able to see if I lose my bet, and how many tokens I lost.
+> As a registered user, I want to be able to view my profile, edit my details and change my password
 
 - #### Acceptance Criteria:
-    User will be clearly informed of race outcome, including winning turtle, whether their turtle won as well as exact token gains and losses.
+    - Profile page will be created.
+    - Edit profile page will be created.
+    - Change password page will be created.
+    - Buttons on the profile page will be displayed to edit profile and/or change password which will link to their respective pages and a Sign Out button.
 
- - #### Description:
-    A results box is provided for the user which displays:
-
-    - The winning turtle.
-    - Whether the chosen turtle to bet on has won or not.
-    - If their turtle won, the amount of tokens gained is shown.
-    - If their turtle didn’t win, the amount of tokens lost is shown.
+ - #### Implementation:
+    The same information that the user registered with will be displayed on the profile page, with the exception of password. The Edit Profile button will link to the respective page where the user can edit First Name, Last Name and Email Address with the same field validation as the registration page. Username changes are not permitted. The Change Password button will direct to the respective page where the user can edit their password. This will have the same validation and confirmation field as the registration page. Upon successful edits of profile or password, a flash message will let the user know it was successful. A cancel button will also be included on each form to return to the profile page. Finally, a Sign Out button will be displayed on the profile page which will terminate the session and return the user to the login page with a successful log out flash message.
 
 ### User Story:
-> As a user, I want to be able to visually see how many tokens I need to win the game.
+> As a registered user, I want to be able to add, edit and delete my own recipes
 
 - #### Acceptance Criteria:
-    User will be shown current progression towards winning the game both informatively and visually.
+    - Recipe link to be put on navbar dropdown for desktop.
+    - Recipe link to be put on mobile navbar.
+    - Add Recipe page will be created.
+    - Edit Recipe page will be created.
+    - Details will be required and validated on form submission
+    - A Remove button shown on recipes.
 
- - #### Description:
-    Textual values are shown beneath the game window of current tokens compared to the 1000 tokens required to win the game.
 
-    An interactive progression bar is also shown in the same position, giving the user a visual representation of progress towards a winning outcome.
+ - #### Implementation:
+    An Add Recipe page will be built which will be accessible by a navigation link only visible to logged in users. This will be displayed in the dropdown on the desktop navigation and a standard link in the mobile collapsible menu. The Add Recipe page itself will also be restricted to logged in users. The user will be able to create a recipe from this page by filling in all required fields with validation including but not limited to; minimum and maximum character limits, character requirements and regular expressions. The Cuisine Name field will be a select input with a list of all current cuisines available to choose from. The recipe information will be stored in a MongoDB database collection called recipes. When user has successfully created a recipe, a flash message will alert them of the successful submission and direct them to the recipes page. Submission will also commit two 'silent' key/values to the recipes collection called created_by, which will display either 'You' if you created the recipe or the username of the user if not, and upload date which will be the date of creation. These will both be displayed on each recipe.
+
+    An Edit button will be displayed to users only on the recipes which they have themselves created. This will link to the Edit Recipe page which will have the same field validation as adding a recipe. When user has successfully edited a recipe, a flash message will alert them of the successful edit and direct them to the recipes page.
+
+    A Remove button will be displayed to users only on the recipes which they have themselves created. This will trigger a modal dialog to either confirm the deletion of the recipe, or return to the previous page.
 
 ### User Story:
-> As a user, I want to be able to quickly and easily move on to the next race.
+> As a registered user, I want to be able to see all my recipes on my profile page
 
 - #### Acceptance Criteria:
-    User can move onto the next race and decide on their next bet.
+    - Show all recipes created by the user on their Profile page
+    - Permit all CRUD functionality as was available on the recipes page
 
- - #### Description:
-    A ’Next Race’ button replaces the ‘Start Race’ button after it is clicked underneath the game window.
+ - #### Implementation:
+    A 'Your Recipes' section will be created on the Profile page which will be a filtered version of the mongoDB recipes collection. The username will be the criteria to filter by. The same functionality on the recipes page will be available to the user on their profile page for editing and removing their recipes if desired.
 
 ### User Story:
-> As a user, I want to be alerted when I win or lose the game.
+> As an admin user, I want to be able to add, edit and delete cuisines
 
 - #### Acceptance Criteria:
-    User will be alerted upon winnings and losing scenarios.
+    - Buttons to be created for Add, Edit and Remove Cuisine.
+    - Add Cuisine page will be created.
+    - Edit Cuisine page will be created.
+    - Details will be required and validated on form submission
 
- - #### Description:
-    Modal popups are initiated when winning or losing scenarios have been met, informing the user of the outcome.
+ - #### Implementation:
+    Buttons for Add, Edit and Remove Cuisine will be visible only to admin users. Their respective pages will also be restricted to admin users.
+
+    Add Cuisine buttons will direct to Add Cuisine page where the admin user will be able to create a cuisine by filling in all required fields with validation including minimum and maximum character requirements. There will also be a base64 string input for flag images which will require a valid base64 string. On successful creation of a cuisine the admin user will be directed to the cuisines page with a successful flash message.
+    If the admin user selected the Cuisine of the Week box for a new cuisine, then the current Cuisine of the Week will be unselected and replaced with the added cuisine. This will change the Cuisine of the Week recipes listed on the home page.
+
+    The Edit Cuisine buttons will be available for all cuisines irrespective of whether the admin user themselves created them. These will link to the Edit Cuisine page where the admin user will be able to edit the cuisine with the same requirements and validation as creating a cuisine. Upon a successful edit, the admin user will be shown a flash message informing them of successful submission. If the admin user unchecked the current Cuisine of the Week, then the cuisine will not be updated and they will be directed back to the cuisines page with a flash error message informing them of why it failed. If the admin user selected the Cuisine of the Week box during the edit, then the current Cuisine of the Week will be unselected and replaced with the edited cuisine. This will change the Cuisine of the Week recipes listed on the home page.
+
+    The Remove Cuisine buttons will be available for all cuisines irrespective of whether the admin user themselves created them. This will trigger a modal dialog to either confirm the deletion of the cuisine, or return to the cuisines page.
 
 ### User Story:
-> As a user, I want to be able to quickly start a new game.
+> As the superuser, I want to be able to view and search the users page
 
 - #### Acceptance Criteria:
-    After a game as been won or lost, user will easily be able to restart the game to play again.
+    Users page will be created.
+    Index will be created on Users page.
+    A search bar will be displayed at the top of the Users page.
+
+ - #### Implementation:
+    The users page will be restricted specifically to the Superuser only and will show a list of all users from the mongoDB users collection. The information displayed will be username, first name and last name. A database index will be created on the users collection in MongoDB, allowing the Superuser to search by user name, first name, last name and email address. When the Superuser types in search criteria and presses the search button (or presses enter) it will return a filtered list of users based upon that criteria.
+
+### User Story:
+> As the superuser, I want to be able to edit admins, ban and unban users as well as delete them if necessary
+
+- #### Acceptance Criteria:
+    - Admin Yes/No checkbox will be included for each user.
+    - Banned Yes/No checkbox will be included for each user.
+    - Remove button will be displayed for each user.
 
  - #### Description:
-    Restart button provided on modal dialogs which restarts the game completely. Closing the modals using the ‘x’ at the top right has the same effect.
+    Next to the username in the users list there will be an 'Is Admin?' column with a checkbox for each user. Turning the switch on and off will result in an interative update of the is_admin key/value in the mongoDB users collection which was silently submitted on user registration. This will grant or revoke the applicable admin access to the user for whom it was changed.
+
+    Beneath each username in the users list there will be an 'Ban User?' checkbox. Turning the switch on and off will result in an interative update of the is_banned key/value in the mongoDB users collection which was silently submitted on user registration. This will prevent or allow access to the account for whom it was changed.
+
+    Beneath each 'Ban User?' checkbox in the users list is a Remove button. This will trigger a modal dialog to either confirm the deletion of the user, or return to the users page.
 
 ## UX SKELETON
 
@@ -299,42 +331,43 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
     ![Home](docs/wireframes/home.png)
 
     - Recipes (mobile & desktop)
-    ![Home](docs/wireframes/recipes.png)
+    ![Recipes](docs/wireframes/recipes.png)
 
     - Products (mobile & desktop)
-    ![Home](docs/wireframes/products.png)
+    ![Products](docs/wireframes/products.png)
 
     - Cuisines (mobile & desktop)
-    ![Home](docs/wireframes/cuisines.png)
+    ![Cuisines](docs/wireframes/cuisines.png)
 
     - Register (mobile & desktop)
-    ![Home](docs/wireframes/register.png)
+    ![Register](docs/wireframes/register.png)
 
     - Log-In (mobile & desktop)
-    ![Home](docs/wireframes/log-in.png)
+    ![Log In](docs/wireframes/log-in.png)
 
     - Profile (mobile & desktop)
-    ![Home](docs/wireframes/profile.png)
+    ![Profile](docs/wireframes/profile.png)
 
     - Edit Profile (mobile & desktop)
-    ![Home](docs/wireframes/edit-profile.png)
+    ![Edit Profile](docs/wireframes/edit-profile.png)
 
     - Add Recipe (mobile & desktop)
-    ![Home](docs/wireframes/add-recipe.png)
+    ![Add Recipe](docs/wireframes/add-recipe.png)
 
     - Edit Recipe (mobile & desktop)
-    ![Home](docs/wireframes/edit-recipe.png)
+    ![Edit Recipe](docs/wireframes/edit-recipe.png)
 
     - Add Cuisine (mobile & desktop)
-    ![Home](docs/wireframes/add-cuisine.png)
+    ![Add Cuisine](docs/wireframes/add-cuisine.png)
 
     - Edit Cuisine (mobile & desktop)
-    ![Home](docs/wireframes/edit-cuisine.png)
+    ![Edit Cuisine](docs/wireframes/edit-cuisine.png)
 
     - Users (mobile & desktop)
-    ![Home](docs/wireframes/users.png)
+    ![Users](docs/wireframes/users.png)
 
     - 404 (mobile & desktop)
-    ![Home](docs/wireframes/404.png)
+    ![404](docs/wireframes/404.png)
 
 
+![base64-expression](https://stackoverflow.com/questions/8571501/how-to-check-whether-a-string-is-base64-encoded-or-not)
