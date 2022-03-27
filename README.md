@@ -546,14 +546,16 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
         I used custom JavaScript on top of Materialze frameworks.
     - [Python](https://www.python.org)<br>
         The core of this project was built using Python 3.8.11 logic and the means to run/view the website.
-        Python Modules used from the requirements.txt file:
-            click==8.0.4
-            dnspython==2.2.0
-            Flask==2.0.3
-            Flask-PyMongo==2.3.0
-            itsdangerous==2.1.0
-            pymongo==4.0.1
-            Werkzeug==2.0.3
+        Python Modules used from the requirements.txt file:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;click==8.0.4<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;dnspython==2.2.0<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Flask==2.0.3<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Flask-PyMongo==2.3.0<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;itsdangerous==2.1.0<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;pymongo==4.0.1<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Werkzeug==2.0.3<br>
+    - [Flask](https://flask.palletsprojects.com/en/2.0.x/)<br>
+        A lightweight Python web framework with Jinja template engine and the Werkzeug toolkit.
 
 -   ### Frameworks, Libraries & Programs
     - [Materialize v1.0.0](https://materializecss.com/)<br>
@@ -567,14 +569,14 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
     - [Font Awesome](https://fontawesome.com/)<br>
         Used for various icons including the Vegetarian, Vegan and Hot icons shown on recipes.
     - [jQuery](https://jquery.com/)<br>
-        jQuery is used for the following:
-            - Collapsible navigation link on desktop header.
-            - Getting the current year being injected into the copyright footer.
-            - Materialize mobile sidenav.
-            - Materialize tooltips.
-            - Materialize select input.
-            - Materialize textarea character counters.
-            - Materialize modal dialogs.
+        jQuery is used for the following:<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Collapsible navigation link on desktop header.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Getting the current year being injected into the copyright footer.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Materialize mobile sidenav.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Materialize tooltips.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Materialize select input.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Materialize textarea character counters.<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;Materialize modal dialogs.<br>
     - [Git](https://git-scm.com/)<br>
         Used for version control to commit and push code via Gitpod to the GitHub repository where the source code is stored.
     - [Gitpod](https://www.gitpod.io/)<br>
@@ -622,6 +624,68 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
     - [PEP8Online](http://pep8online.com/)<br>
         Python related tool to check for PEP8 compliance.
 
+## Testing
+
+## Deployment
+
+### Project Creation
+    I created this project by first installing the Gitpod [plugin](https://www.gitpod.io/). I then navigated to the Code Institute [gitpod-full-template](https://github.com/Code-Institute-Org/gitpod-full-template) and clicked on the "Use this Template" button. I chose and input my project name (Kitchen-Craft---Backend-Development-Milestone-Project) then created my repositry from the template by clicking the button. After that I simply clicked on the "Gitpod" button from my repositry page to open up my IDE and begin coding.
+
+The following commands were used throughout the development process:
+
+- **git status**<br>
+ Used to show my untracked and staged files.
+- **git add**<br>
+ Used to add files to the staging area before commiting.
+- **git commit -m**<br>
+ Used to commit the changes to my local repository.
+- **git push**<br>
+ Used to push all commited changes to the GitHub repository.
+- **git log**<br>
+ Used to show a list of my previous commits.
+- **git reset --hard**<br>
+ Used with applicable checksum to revert to a previous commit.
+
+### Deployment to Heroku
+
+    - Create application:
+
+        - Navigate to the [Heroku website](https://id.heroku.com/) and login.
+        - Click on the 'New' button
+        - Browse down to 'Create New App' link and click.
+        - Enter the desired name of the App, in this case I called it the same as on Github.
+        - Select the region, in this case Europe.
+
+    - Connect to Github Repository:
+
+        - Click the deploy tab at the top of dashboard.
+        - Select GitHub then Connect to GitHub.
+        - A prompt to find your github repository will then be displayed.
+        - Enter your repository name in the search field and press enter.
+        - Once you have found the desired repo, click the connect button.
+
+    - Set the environment variables:
+
+        - Click the settings tab at the top of the dashboard.
+        - Click the Reveal Config Vars button.
+        - Add the following:
+
+            **IP** : 0.0.0.0
+            **PORT** : 5000
+            **MONGO_DBNAME** : This is the database name you want to connect to
+            **MONGO_URI** : This can be found in MongoDB by going to clusters > connect > connect to your application and substituting the password and dbname that you set up in the link
+            **SECRET_KEY** : This is a custom secret key set up for configuration to keep client-side sessions secure
+
+    - Enable automatic deployment:
+
+        - Click the deploy tab at the top of the dashboard.
+        - Scroll down to the automatic deploys section.
+        - Choose the branch you want to deploy from.
+        - Click on Enable Automatic Deploys.
+    
+    - Website deployed [here](https://kitchen-craft.herokuapp.com/)
+
+ 
 
 
 
