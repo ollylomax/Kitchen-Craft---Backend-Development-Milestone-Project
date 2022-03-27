@@ -629,7 +629,7 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 ## Deployment
 
 ### Project Creation
-    I created this project by first installing the Gitpod [plugin](https://www.gitpod.io/). I then navigated to the Code Institute [gitpod-full-template](https://github.com/Code-Institute-Org/gitpod-full-template) and clicked on the "Use this Template" button. I chose and input my project name (Kitchen-Craft---Backend-Development-Milestone-Project) then created my repositry from the template by clicking the button. After that I simply clicked on the "Gitpod" button from my repositry page to open up my IDE and begin coding.
+I created this project by first installing the Gitpod [plugin](https://www.gitpod.io/). I then navigated to the Code Institute [gitpod-full-template](https://github.com/Code-Institute-Org/gitpod-full-template) and clicked on the "Use this Template" button. I chose and input my project name (Kitchen-Craft---Backend-Development-Milestone-Project) then created my repositry from the template by clicking the button. After that I simply clicked on the "Gitpod" button from my repositry page to open up my IDE and begin coding.
 
 The following commands were used throughout the development process:
 
@@ -648,44 +648,67 @@ The following commands were used throughout the development process:
 
 ### Deployment to Heroku
 
-    - Create application:
+- Create application:
 
-        - Navigate to the [Heroku website](https://id.heroku.com/) and login.
-        - Click on the 'New' button
-        - Browse down to 'Create New App' link and click.
-        - Enter the desired name of the App, in this case I called it the same as on Github.
-        - Select the region, in this case Europe.
+    - Navigate to the [Heroku website](https://id.heroku.com/) and login.
+    - Click on the 'New' button
+    - Browse down to 'Create New App' link and click.
+    - Enter the desired name of the app, in this case I called it the same as on Github.
+    - Select the region, in this case 'Europe'.
 
-    - Connect to Github Repository:
+- Connect to Github Repository:
 
-        - Click the deploy tab at the top of dashboard.
-        - Select GitHub then Connect to GitHub.
-        - A prompt to find your github repository will then be displayed.
-        - Enter your repository name in the search field and press enter.
-        - Once you have found the desired repo, click the connect button.
+    - Click the 'Deploy' tab at the top of dashboard.
+    - Select 'GitHub' then 'Connect to GitHub'.
+    - A prompt to find your github repository will then be displayed.
+    - Enter your repository name in the search field and press enter.
+    - Once you have found the desired repo, click the 'Connect' button.
 
-    - Set the environment variables:
+- Set the environment variables:
 
-        - Click the settings tab at the top of the dashboard.
-        - Click the Reveal Config Vars button.
-        - Add the following:
+    - Click the 'Settings' tab at the top of the dashboard.
+    - Click the 'Reveal Config Vars' button.
+    - Add the following:<br>
 
-            **IP** : 0.0.0.0
-            **PORT** : 5000
-            **MONGO_DBNAME** : This is the database name you want to connect to
-            **MONGO_URI** : This can be found in MongoDB by going to clusters > connect > connect to your application and substituting the password and dbname that you set up in the link
-            **SECRET_KEY** : This is a custom secret key set up for configuration to keep client-side sessions secure
+        **IP** : 0.0.0.0<br>
+        **PORT** : 5000<br>
+        **MONGO_DBNAME** : *This is the database name you want to connect to*<br>
+        **MONGO_URI** : *This can be found in MongoDB by going to clusters > connect > connect to your application and substituting the password and dbname that you set up in the link*<br>
+        **SECRET_KEY** : *This is a custom secret key set up for configuration to keep client-side sessions secure*
 
-    - Enable automatic deployment:
+- Enable automatic deployment:
 
-        - Click the deploy tab at the top of the dashboard.
-        - Scroll down to the automatic deploys section.
-        - Choose the branch you want to deploy from.
-        - Click on Enable Automatic Deploys.
-    
-    - Website deployed [here](https://kitchen-craft.herokuapp.com/)
+    - Click the 'Deploy'' tab at the top of the dashboard.
+    - Scroll down to the automatic deploys section.
+    - Choose the branch you want to deploy from.
+    - Click on 'Enable Automatic Deploys'.
 
- 
+- Website deployed [here](https://kitchen-craft.herokuapp.com/)
+
+### Run Locally
+
+This project will not run locally with database connections unless the [env.py](https://pypi.org/project/env.py/) file is set up configuring the IP, PORT, MONGO_URI, MONGO_DBNAME and SECRET_KEY. These details are required but due to both security and privacy they are not disclosed in this repositry.
+
+- Navigate to my [Github Repository](https://github.com/ollylomax/Kitchen-Craft---Backend-Development-Milestone-Project).
+- Click the 'Code' button for a drop down menu.
+- Download and unpack the ZIP file then and open with the IDE you prefer.
+#### OR
+- Navigate to my [GitHub Repository](https://github.com/ollylomax/Kitchen-Craft---Backend-Development-Milestone-Project).
+- Click the 'Code' button for a drop down menu.- Copy Git URL from the HTTPS dialogue box.
+- Open the IDE you prefer then open a terminal window in a directory of your choice.
+- Use the **git clone** command in the terminal followed by the copied git URL.
+- A clone of the project will be created locally on your machine.
+
+- Once this is done run the following command in the shell to install all the required packages:
+> pip install -r requirements.txt
+
+### Fork Project 
+
+Forks are used to either propose changes to other projects or to use as a starting point to build upon your own development ideas.
+
+- Navigate to my [GitHub Repository](https://github.com/ollylomax/Kitchen-Craft---Backend-Development-Milestone-Project).
+- Click on the 'Fork' button at the very top right of the page.
+- This will create an identical duplicate of gthe project in your own repositry.
 
 
 
