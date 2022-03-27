@@ -708,9 +708,45 @@ Forks are used to either propose changes to other projects or to use as a starti
 
 - Navigate to my [GitHub Repository](https://github.com/ollylomax/Kitchen-Craft---Backend-Development-Milestone-Project).
 - Click on the 'Fork' button at the very top right of the page.
-- This will create an identical duplicate of gthe project in your own repositry.
+- This will create an identical duplicate of the project in your own repositry.
+
+## Credits
+ - ### Code
+
+    Materialize 1.0.0 was used throughout the project to assist in making site responsive using the Materialize grid system, components, forms, javascript and css.
+
+    jQuery library was used in my script files to make document traversal and manipulation easier as well as to make code less verbose. Most of the jQuery code was imported from Materialize framework requirements.
+
+    I used the [Code Institute Materialize Select Validator](https://github.com/Code-Institute-Solutions/TaskManagerAuth/tree/main/04-AddingATask-WritingToTheDatabase/02-materialize-select-validation) from the task manager walkthrough lessons for my recipe forms.
+
+    I referenced the following links to research base64 encoding. In particular how to convert an image to a base64 string in Python, display an image from base64 code in HTML and to source a regular expression that would fit my intended purpose.<br>
+
+    [Link 1](https://stackoverflow.com/questions/8571501/how-to-check-whether-a-string-is-base64-encoded-or-not)<br>
+    [Link 2](https://www.codespeedy.com/convert-image-to-base64-string-in-python/)<br>
+    [Link 3](https://www.codespeedy.com/display-an-image-from-base64-code-in-html/)<br>
+    [Link 4](https://stackoverflow.com/questions/3715493/encoding-an-image-file-with-base64)
 
 
+   I referenced this [stackoverflow link](https://stackoverflow.com/questions/19868016/check-that-field-exists-with-mongodb) to research how I would check to see if a particular key exists in one of my mongoDB collections.
 
-REFERENCES
-[base64-expression](https://stackoverflow.com/questions/8571501/how-to-check-whether-a-string-is-base64-encoded-or-not)
+   I referenced this [stackoverflow link](https://stackoverflow.com/questions/28968660/how-to-convert-a-pymongo-cursor-cursor-into-a-dict) to refresh my memory on how to convert mongoDB cursor objects into Python dictionaries.
+
+   I referenced this [w3schools link](https://www.w3schools.com/jsref/event_onload.asp) to refresh my memory on event listening within HTML and Javascript.
+
+   I referenced this [stackoverflow link](https://stackoverflow.com/questions/21310147/catch-all-path-in-flask-app) to research 'catch-all' route paths which I ended up not using as I opted for error handling instead.
+
+   I referenced this [Tutorials point link](https://www.tutorialspoint.com/How-to-sort-a-Python-date-string-list)
+   to learn how to sort and format a Python date string.
+
+   
+
+ - ### Content
+   All content on this site was created by Olly Lomax.
+
+ - ### Media
+
+   All images on this site were sourced from free stock images on [Shutterstock](https://www.shutterstock.com) free trial, [Flaticon](https://www.flaticon.com/) and [Unsplash](https://unsplash.com/).
+
+ - ### Acknowledgements
+
+    Many thanks to my Code Institute Mentor Daisy McGirr for her insight and advice during development.
