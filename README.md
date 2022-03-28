@@ -626,6 +626,68 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 
 ## Testing
 
+- The W3C Markup Validator Service was used to validate every page in the project to ensure there were no syntax errors or warnings.
+    - Home
+        ![W3C Markup Validation - Home](docs/readmeimages/htmlvalidator-home.png)
+    - Products
+        ![W3C Markup Validation - Products](docs/readmeimages/htmlvalidator-products.png)
+    - Recipes
+        ![W3C Markup Validation - Recipes](docs/readmeimages/htmlvalidator-recipes.png)
+    - Cuisines
+        ![W3C Markup Validation - Cuisines](docs/readmeimages/htmlvalidator-cuisines.png)
+    - Register
+        ![W3C Markup Validation - Register](docs/readmeimages/htmlvalidator-register.png)
+    - Login
+        ![W3C Markup Validation - Log In](docs/readmeimages/htmlvalidator-login.png)
+    - Pages requiring a a login session or admin/superuser status returned no errors or warnings. They were tested by the following approach:
+        - Copy full HTML in developer tools from the desired page.
+        - Go to the [W3C Markup Validator Page](https://validator.w3.org/nu/).
+        - Click on the 'Check by' dropdown option.
+        - Select 'text input'.
+        - Paste HTML into the text area provided.
+- The W3C CSS Validator was used to validate my project css files to ensure there were no errors or warnings. This returned 7 warnings which all came from frameworks or external libraries.
+    - One errors in the materialize.min.css file.
+    - Six errors in the font-awesome/6.0.0/css/all.min.css file.
+    - ![W3C CSS Validation](docs/readmeimages/cssvalidator-allpages.png)
+
+- WAVE, a Web Accessibility Evaluation Tool was used for contrast testing.
+ ![WAVE Web Accessibility Evaluation Tool](docs/readmeimages/WAVE-results.png)
+
+- Lighthouse was used for performance, accessibility and SEO testing.<br>
+    - Each page returned a score of **85-100** for each page.
+    ![Lighthouse Report](docs/readmeimages/lighthouse-report.png)
+    - The reason for the score of 85 on each page was due to the site not using a secure HTTPS connection. This is due to not having uploaded an SSL certificate to Heroku.
+    ![Lighthouse HTTPS](docs/readmeimages/lighthouse-https.png)
+
+- JSHint, a JavaScript Static Code Analysis Tool was used to check both script.js and pwvalidator.js for the coherence and quality of my code, making sure it is error free and that no potential problems exist. Both files were clear of any errors or warnings.
+    - script.js
+    ![JSHint Script](docs/readmeimages/jshint-script.png)
+    - pwvalidator.js
+    ![JSHint Pwvalidator](docs/readmeimages/jshint-pwvalidator.png)
+
+- PEP8 online is a tool to check the conformity of my code to the PEP8 python coding convention.
+    - The check reported one error stating a module level import is not at the top of my app.py file. This is referring to the protected env.py file which is only being loaded if a path exists.
+    ![PEP8 Online](docs/readmeimages/pep8-validator.png)
+
+- I ran the website locally and tested on the deployed version. No differences found.
+
+## Test Strategy
+ - The testing will be 
+
+    This will be done on four web browsers:-
+    - Chrome
+    - Firefox
+    - Safari
+    - Edge
+
+    And on every common breakpoint (Mobile, Tablet, Desktop, XL Desktop).
+
+ - Validation of feature inclusion will be undertaken from the wireframes scoped during the Skeleton stage of UX design.
+ 
+ - Elements should not overlap other container divs and should remain on the screen at all sizes above and including 300px.
+
+The live project is deployed [here](https://kitchen-craft.herokuapp.com/).
+
 ## Deployment
 
 ### Project Creation
