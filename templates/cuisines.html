@@ -68,9 +68,9 @@
       <div class="col s12 right-align">
         <!-- Edit anchor link directing to edit_cuisine route passing the expected cuisine_id param -->
         <a href="{{ url_for('edit_cuisine', username=session['user_session'], cuisine_id=cuisine._id) }}"
-          class="btn-small green">Edit</a>
+          class="btn-small green darken-4">Edit</a>
         <!-- Remove button anchor link triggering modal -->
-        <a href="#modal-{{ cuisine._id }}" class="btn-small red modal-trigger">Remove</a>
+        <a href="#modal-{{ cuisine._id }}" class="btn-small red darken-4 modal-trigger">Remove</a>
       </div>
       {% endif %}
       {% endif %}
