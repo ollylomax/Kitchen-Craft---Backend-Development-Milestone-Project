@@ -645,10 +645,19 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
         - Click on the 'Check by' dropdown option.
         - Select 'text input'.
         - Paste HTML into the text area provided.
-- The W3C CSS Validator was used to validate my project css files to ensure there were no errors or warnings. This returned 7 warnings which all came from frameworks or external libraries.
-    - One errors in the materialize.min.css file.
-    - Six errors in the font-awesome/6.0.0/css/all.min.css file.
-    - ![W3C CSS Validation](docs/readmeimages/cssvalidator-allpages.png)
+- The W3C CSS Validator was used to validate my project css files to ensure there were no errors or warnings.    
+    - This returned 7 warnings which all came from frameworks or external libraries.
+        - One errors in the materialize.min.css file.
+        - Six errors in the font-awesome/6.0.0/css/all.min.css file.
+    ![W3C CSS Validation](docs/readmeimages/cssvalidator-allpages.png)
+- To make sure that my own style.css file is error free, I used the following approach:
+    - Copy my css code from my style.css file.
+    - Go to [W3C CSS Validation Page](https://jigsaw.w3.org/css-validator/).
+    - Click on the 'By direct input' tab at the top of the window.
+    - Paste my css code into the supplied text area.
+    - Click on 'Check'
+    ![W3C CSS Validation Input](docs/readmeimages/cssvalidator-style-01.png)
+    ![W3C CSS Validation Check](docs/readmeimages/cssvalidator-style-02.png)
 
 - WAVE, a Web Accessibility Evaluation Tool was used for contrast testing.
  ![WAVE Web Accessibility Evaluation Tool](docs/readmeimages/WAVE-results.png)
