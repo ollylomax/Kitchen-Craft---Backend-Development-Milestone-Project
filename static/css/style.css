@@ -45,6 +45,10 @@ main {
     padding: 0 20px !important;
 }
 
+.title-footer form label {
+    color: #fff;
+}
+
 /* Navbar */
 
 nav {
@@ -97,8 +101,8 @@ footer .container {
 
 form input,
 textarea {
-    color: white;
-    border-bottom: 1px solid white !important;
+    color: #fff;
+    border-bottom: 1px solid #fff !important;
 }
 
 .dropdown-content li > span{
@@ -106,7 +110,7 @@ textarea {
 }
 
 span.character-counter {
-    color: white;
+    color: #fff;
 }
 
 .form-checkboxes {
@@ -150,7 +154,7 @@ span.character-counter {
 
 .products h1 {
     font-size: 2.3rem;
-    color:white;
+    color:#fff;
     background-color:#4a148c;
     padding: 30px 20px;
 }
@@ -194,7 +198,7 @@ span.character-counter {
 }
 
 .register-input label {
-    color: white;
+    color: #fff;
 }
 
 .pattern {
@@ -259,7 +263,7 @@ span.character-counter {
 
 .collapsible-header:hover {
     color: #4a148c;
-    background-color: white;
+    background-color: #fff;
 }
 
 .chip {
@@ -317,7 +321,7 @@ span.character-counter {
     background-color:#4a148c41;
     border-bottom: 1px solid black;
 }
-  
+
 .users-search input {
     width: 100%;
     padding-left: 15px !important;
