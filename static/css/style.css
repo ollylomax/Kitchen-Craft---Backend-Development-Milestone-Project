@@ -286,6 +286,12 @@ span.character-counter {
     padding-left: 20px;
 }
 
+.cuisines-bottom h5 {
+    font-size: 1.4rem;
+    text-align: center;
+    color: #800080;
+}
+
 /* Add/Edit cuisine */
 
 .panel .switch label input[type=checkbox]:checked+.lever {

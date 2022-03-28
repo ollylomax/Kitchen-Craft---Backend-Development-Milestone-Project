@@ -101,7 +101,8 @@
   {% if session.user_session %}
   <!-- Conditional to check for an is_admin value of yes in passed username object -->
   {% if username.is_admin == 'yes' %}
-  <div class="row">
+  <div class="row cuisines-bottom">
+    <h5>Got a Cuisine in mind? Add to our cuisines database below</h5>
     <div class="col s12 center-align">
       <p class="center-align">
         <!-- Add cuisine anchor link directing to add_cuisine route passing the expected username param -->
