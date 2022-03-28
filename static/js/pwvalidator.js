@@ -1,8 +1,8 @@
 $(document).ready(function () {
     // Assign password id input to variable
-    let password = document.getElementById("password")
+    let password = document.getElementById("password");
     // Assign pconfirm id input to variable
-    let pconfirm = document.getElementById("pconfirm")
+    let pconfirm = document.getElementById("pconfirm");
 
     // Function to check password against pconfirm
     function confirmPassword() {
