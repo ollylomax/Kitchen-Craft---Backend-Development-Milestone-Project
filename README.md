@@ -673,6 +673,8 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
     ![Lighthouse Report](docs/readmeimages/lighthouse-report.png)
     - The reason for the score of 85 on each page was due to the site not using a secure HTTPS connection. This is due to not having uploaded an SSL certificate to Heroku.
     ![Lighthouse HTTPS](docs/readmeimages/lighthouse-https.png)
+    **NOTE** I later realised that this was due to the fact that I was using 'HTTP://' in the browser for my heroku deployment instead of 'HTTPS://'. Once I amended this then each page returned a score of **95-100** for each page.
+    ![Lighthouse Success](docs/readmeimages/lighthouse-reportsuccess.png)
 
 - JSHint, a JavaScript Static Code Analysis Tool was used to check both script.js and pwvalidator.js for the coherence and quality of my code, making sure it is error free and that no potential problems exist. Both files were clear of any errors or warnings.
     - script.js
