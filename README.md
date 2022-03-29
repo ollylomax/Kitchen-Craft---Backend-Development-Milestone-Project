@@ -711,9 +711,7 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
         - Delete User functionality
 
 ## Test Strategy
- - The testing will be 
-
-    This will be done on four web browsers:-
+ - The testing will be done on four web browsers:-
     - Chrome
     - Firefox
     - Safari
@@ -856,7 +854,7 @@ When filling out the "Add Recipe" form, hitting submit will add a new recipe to 
  - Toggling the red ban option 'off' will allow a user to login to the site again.
  
  - Toggling the green admin option 'on' grants user the admin status (permitting Cuisines page CRUD funtionality).
- - Toggling the green admin option 'off' revokes this aforementioned status/permissions.
+ - Toggling the green admin option 'off' revokes this aforementioned status/permission.
 
 > As the superuser, I want to be able to delete users
 
