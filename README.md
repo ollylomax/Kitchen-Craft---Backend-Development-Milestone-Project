@@ -530,7 +530,9 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 - ### Prospective
 
     - Add pagination for Recipes, Products, Cuisines and Users pages for future scoping the website when additions to the respective collections are being submitted from hundreds or more users.
+    - Edit and Delete functionality for all recipes, irrespective of author, will be available to admin users.
     - Add, Edit and Delete functionality on the Products page will be granted for admin users so that the website can expand upon the sale of kitchen related products.
+    - Redundancy resolution will be added to remove all recipes created by a user whom the Superuser has deleted or potentially banned.
     - Products will be linked to recipes via the 'useful_for' product field and the 'ingredients/steps' recipe fields. This will allow users to immediately filter all community recipes which are applicable to the use of that particular product.
     - Rather than using base64 encoding, images will be directory uploadable by admin users for both Products and Cuisines.
     - Contact Us page will be created as well as shop background information.
@@ -813,9 +815,9 @@ When filling out the "Add Recipe" form, hitting submit will add a new recipe to 
 
  - Clicking on the 'Remove' button initiates a popup window confirming deletion.
 
- - Clicking on 'Confirm Delete' deletes that recipe from the database.
+    - Clicking on 'Confirm Delete' deletes that recipe from the database.
 
- - Clicking on 'Return' directs back to the "Recipes" page.
+    - Clicking on 'Return' directs back to the "Recipes" page.
 
 > As a registered user, I want to be able to see all my recipes on my profile page.
 
@@ -831,13 +833,13 @@ When filling out the "Add Recipe" form, hitting submit will add a new recipe to 
 
  - When filling out the "Add Cuisine" form, hitting submit will add a new cuisine to the 'Cuisines' page.
 
- - Clicking on the 'Edit' button directs to the "Edit Cuisine" page where the admin user can fully edit the cuisine.
+ - Clicking on the 'Edit' button directs to the "Edit Cuisine" page where the admin user can fully edit the cuisine. If the user attempts to turn the current 'Cuisine of the Week' toggle from 'on' to 'off', then the cuisine will not be updated due to a Cuisine of the Week being required for home page content. 
 
  - Clicking on the 'Remove' button initiates a popup window confirming deletion.
 
- - Clicking on 'Confirm Delete' deletes that cuisine from the database.
+    - Clicking on 'Confirm Delete' deletes that cuisine from the database.
 
- - Clicking on the 'Return' button directs back to the "Cuisines" page.
+    - Clicking on the 'Return' button directs back to the "Cuisines" page.
 
 > As the superuser, I want to be able to view and search the users page.
 
@@ -854,18 +856,42 @@ When filling out the "Add Recipe" form, hitting submit will add a new recipe to 
  - Toggling the red ban option 'off' will allow a user to login to the site again.
  
  - Toggling the green admin option 'on' grants user the admin status (permitting Cuisines page CRUD funtionality).
-
  - Toggling the green admin option 'off' revokes this aforementioned status/permissions.
 
 > As the superuser, I want to be able to delete users
 
- - On the users page, pressing on the 'Remove' button initiates a popup window confirming deletion of user.
+ - On the 'Users' page, pressing on the 'Remove' button initiates a popup window confirming deletion of user.
  
- - Clicking on 'Confirm Delete' deletes that user from the database.
+    - Clicking on 'Confirm Delete' deletes that user from the database.
 
- - Clicking on 'Return' directs back to the "Users" page.
+    - Clicking on 'Return' directs back to the "Users" page.
 
 The live project is deployed [here](https://kitchen-craft.herokuapp.com/).
+
+## Test Results
+
+Test results can be found below.
+
+ - Link directly to the Google Sheet [here](https://docs.google.com/spreadsheets/d/1aIn2dqtc6cXVij5FZhDcnQ3f86FkiUTQiTZKeaS8SFc/edit#gid=1516599609).
+
+ - Downloadable .pdf format [here](docs/readmeimages/kitchencraft-testcases.pdf).
+
+ - Downloadable .xlsx format [here](docs/readmeimages/kitchencraft-testcases.xlsx).
+
+![Testing](docs/readmeimages/kitchencraft-testcases.png)
+
+## Test Fails and Resolutions
+
+Passed all test scenarios.
+
+## Out of Scope: Additional Feature Backlog
+
+- Update image logo so that it links back to the homepage as well as the Kitchen Craft name.
+- Pre-approval process for new users, so that the user quality increases and likelihood of spam or unpopular recipes decreases.
+- Pre-approval process for new recipes submitted by the user.
+- A "new" tag is added to any newly submitted recipes for a week from their submission date.
+- Add a recipe search option to the 404 page which takes the user back to the recipes page.
+- Old recipes currently stay on the site. The superuser/admin should be able to edit/delete all recipes so that any artifacts from old users can be deleted/updated. *This was referenced in the Prospective Features section.*
 
 ## Deployment
 
