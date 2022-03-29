@@ -731,7 +731,7 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 
  - The title of the site is shown in the browser with a favicon.
 
- - A blurb of the site is shown in the top banner.
+ - The introduction to the site is shown in the top banner.
 
 > As a user, I want to clearly view the website and content on any device.
 
@@ -743,11 +743,11 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 
  - On tablet and mobile, there is a burger menu which allows the user to get around the site.
 
- - Clicking the kitchen craft name logo takes the user to the homepage.
+ - Clicking the Kitchen Craft name logo takes the user to the homepage.
 
 > As a user, I want to be able to see what kitchen products are for sale and how much they are.
 
- - Navigating to the products page takes the user to a page displaying product names, images, description and pricing.
+ - Navigating to the products page takes the user to a page displaying product names, images, descriptions and pricing.
 
 > As a user, I want to be able to see all the community shared recipes.
 
@@ -757,69 +757,113 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 
 > As a user, I want to be able to search the community shared recipes.
 
- - "At the top of the recipes page, there is a search bar.
+ - At the top of the recipes page, there is a search bar.
 
  - Searching for a recipe name returns only that recipe. 
 
  - Searching for an ingredient returns all recipies that contain that ingredient. 
 
- - Partial searches should still return results. 
+ - Partial searches still return results. 
 
- - The search bar should turn red if the user does not fill out any options. 
+ - The search bar turns red if the user does not fill out any options. 
  
- - Clicking "Search" and hitting enter both allow the user to search once a term has been typed in."
+ - Clicking "Search" and hitting enter both allow the user to search once the field has content.
 
 > As a user, I want to be able to see information about the different cuisines of the world.
 
- - "The cuisines page shows a list of cuisines from around the world, with a little bit of information about each one.
+ - The cuisines page shows a list of cuisines from around the world, with a little bit of information about each one.
  
- - A little start should highlight the cuisine of the week, which is the featured cuisine on the home page.
+ - A star icon highlights the cuisine of the week which is the featured cuisine on the home page.
  
- - Hovering over the star on the cusine page should show a tooltip which lets the user know that this is the chosen cuisine of the week.
+ - Hovering over the star on the cusine page shows a tooltip which lets the user know that this is the chosen cuisine of the week.
 
 > As a user, I want to be able to register to the website so that I can share my own recipes.
 
  - When logged out or not registered, an option to register is available to the user in the top navigation menu. The user can click this and fill out a basic form to register for the site.
 
- - "When logged in as a user, the ""Add Recipe"" option is available on the nav menu. This takes the user to a form to fill out a new recipe.
+ - When logged in as a user, the "Add Recipe" option is available on the nav menu. This takes the user to a form to fill out a new recipe.
 
-When filling out the ""Add Recipe"" form, hitting submit will add a new recipe to the recipes page."
+When filling out the "Add Recipe" form, hitting submit will add a new recipe to the recipes page.
 
 > As a user, I want to be able to easily return to the website if I encounter a page error.
 
- - When a page error is found, click on the home link to get back to the homepage.
+ - When a page error is found, clicking on the home link allows user to get back to the homepage.
 
 > As a registered user, I want to be able to log in to my account on the website.
 
- - When not logged in or in a new session, the option to log in should be visible on the navigation.
+ - When not logged in, the option to log in should be visible on the navigation.
+ 
+ - Entering the correct username and matching password initiates a session and directs to a profile page.
 
 > As a registered user, I want to be able to view my profile, edit my details and change my password.
 
- - Content
+ - When logged in as a user, on the profile page, the user can edit their profile, including updating name and email address.
+
+ - The profile page also contains a link to a 'Change Password' page where the user can edit their password.
 
 > As a registered user, I want to be able to add, edit and delete my own recipes
 
- - Content
+ - When logged in as a user, the "Add Recipe" option is available on the nav menu. This takes the user to a form to fill out a new recipe.
+ 
+ - When filling out the "Add Recipe" form, hitting submit will add a new recipe to the recipes page.
+ 
+ - Once a recipe has been made, the user see the 'Edit' and 'Remove' buttons on their recipe if they were the original creators.
+
+ - Clicking on the 'Edit' button directs to the "Edit Recipe" page where user can edit the same information as creation.
+
+ - Clicking on the 'Remove' button initiates a popup window confirming deletion.
+
+ - Clicking on 'Confirm Delete' deletes that recipe from the database.
+
+ - Clicking on 'Return' directs back to the "Recipes" page.
 
 > As a registered user, I want to be able to see all my recipes on my profile page.
 
- - Content
+ - When logged in, on the profile page, if the user scrolls down they will find a full list of all the recipes that they have submitted in the past.
+
+ - Users can edit or remove recipes from the profile page as they are the original creators.
 
 > As an admin user, I want to be able to add, edit and delete cuisines
 
- - Content
+ - When logged in as an admin on the cuisines page, buttons are visible to edit, add, and delete cuisines.
+ 
+ - Clicking on the 'Add Cuisine' button directs to the respective page.
+
+ - When filling out the "Add Cuisine" form, hitting submit will add a new cuisine to the 'Cuisines' page.
+
+ - Clicking on the 'Edit' button directs to the "Edit Cuisine" page where the admin user can fully edit the cuisine.
+
+ - Clicking on the 'Remove' button initiates a popup window confirming deletion.
+
+ - Clicking on 'Confirm Delete' deletes that cuisine from the database.
+
+ - Clicking on the 'Return' button directs back to the "Cuisines" page.
 
 > As the superuser, I want to be able to view and search the users page.
 
- - Content
+ - When logged in as the superuser, the "Users" navigation link shows in the menu and the "Users" page becomes available to visit.
+ 
+ - Searching by username, first name, last name or email returns the applicable user/s in the database.
 
 > As the superuser, I want to be able to edit admins and bans for users.
 
- - Content
+ - On the users page, toggle options for banning/unbanning a user (in red) and granting/revoking user admin status (in green) are shown for all users.
+ 
+ - Toggling the red ban option 'on' will not allow a user to login to the site.
+
+ - Toggling the red ban option 'off' will allow a user to login to the site again.
+ 
+ - Toggling the green admin option 'on' grants user the admin status (permitting Cuisines page CRUD funtionality).
+
+ - Toggling the green admin option 'off' revokes this aforementioned status/permissions.
 
 > As the superuser, I want to be able to delete users
 
- - Content
+ - On the users page, pressing on the 'Remove' button initiates a popup window confirming deletion of user.
+ 
+ - Clicking on 'Confirm Delete' deletes that user from the database.
+
+ - Clicking on 'Return' directs back to the "Users" page.
 
 The live project is deployed [here](https://kitchen-craft.herokuapp.com/).
 
