@@ -23,39 +23,39 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 
 ### User Stories
 
-    - As a user, I want to easily understand the purpose of the site.
+- As a user, I want to easily understand the purpose of the site.
 
-    - As a user, I want to clearly view the website and content on any device.
+- As a user, I want to clearly view the website and content on any device.
 
-    - As a user, I want to easily navigate the website so that I can find content quickly.
+- As a user, I want to easily navigate the website so that I can find content quickly.
 
-    - As a user, I want to be able to see what kitchen products are for sale and how much they are.
+- As a user, I want to be able to see what kitchen products are for sale and how much they are.
 
-    - As a user, I want to be able to see all the community shared recipes
+- As a user, I want to be able to see all the community shared recipes
 
-    - As a user, I want to be able to search the community shared recipes
+- As a user, I want to be able to search the community shared recipes
 
-    - As a user, I want to be able to see information about the different cuisines of the world
+- As a user, I want to be able to see information about the different cuisines of the world
 
-    - As a user, I want to be able to register to the website so that I can share my own recipes
+- As a user, I want to be able to register to the website so that I can share my own recipes
 
-    - As a user, I want to be able to easily return to the website if I encounter a page error
+- As a user, I want to be able to easily return to the website if I encounter a page error
 
-    - As a registered user, I want to be able to log in to my account on the website
+- As a registered user, I want to be able to log in to my account on the website
 
-    - As a registered user, I want to be able to view my profile, edit my details and change my password
+- As a registered user, I want to be able to view my profile, edit my details and change my password
 
-    - As a registered user, I want to be able to add, edit and delete my own recipes
+- As a registered user, I want to be able to add, edit and delete my own recipes
 
-    - As a registered user, I want to be able to see all my recipes on my profile page
+- As a registered user, I want to be able to see all my recipes on my profile page
 
-    - As an admin user, I want to be able to add, edit and delete cuisines
+- As an admin user, I want to be able to add, edit and delete cuisines
 
-    - As the superuser, I want to be able to view and search the users page
+- As the superuser, I want to be able to view and search the users page
 
-    - As the superuser, I want to be able to edit admins and bans for users
+- As the superuser, I want to be able to edit admins and bans for users
 
-    - As the superuser, I want to be able to delete users
+- As the superuser, I want to be able to delete users
 
 ## UX SCOPE
 
@@ -173,7 +173,7 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
     - Indicate to user what the product may be useful for
 
  - #### Implementation:
-    Product images will be selected of sufficient dots per inch to clearly show the product without loss of quality. Descriptions to be thorough enough to encourage sales and prices displayed in both a larger font size and weight. Will also display what foods the applicable item may be useful on, or what recipes they be be useful for.
+    Product images will be selected of sufficient dots per inch to clearly show the product without loss of quality. Descriptions to be thorough enough to encourage sales and prices displayed in both a larger font size and weight. Will also display what foods the applicable item may be useful on, or what recipes they will be useful for.
 
 ### User Story:
 > As a user, I want to be able to see all the community shared recipes
@@ -680,6 +680,30 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
 
 - I ran the website locally and tested on the deployed version. No differences found.
 
+## Unit Testing
+- Unit testing was done using python unittest.
+
+    The testing included:
+
+    - Routing to all pages available prior to registration.
+    - Registration functionality.
+    ![Unit Test](docs/readmeimages/unittest.png)
+
+    **Note**
+    I am in the middle of learning about unit testing and will have expanded upon these tests after submission of project. They will include:
+    - For registered users;
+        - Log In functionality
+        - Add Recipe functionality
+        - Delete Recipe functionlaity
+    - For admin users:
+        - Add Cuisine functionality
+        - Edit Cuisine functionality
+        - Delete Cuisine functionality
+    - For Superuser:
+        - Edit User admins functionality
+        - Edit User bans functionality
+        - Delete User functionality
+
 ## Test Strategy
  - The testing will be 
 
@@ -694,6 +718,104 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
  - Validation of feature inclusion will be undertaken from the wireframes scoped during the Skeleton stage of UX design.
  
  - Elements should not overlap other container divs and should remain on the screen at all sizes above and including 300px.
+
+ - Testing is required on all features and user stories documented in this README. All clickable links must direct to the correct pages. All forms linked to MongoDB must be tested to ensure they insert all respective fields into the applicable collections.
+
+## User Story Testing
+
+> As a user, I want to easily understand the purpose of the site.
+
+ - The title of the site is shown in the browser with a favicon.
+
+ - A blurb of the site is shown in the top banner.
+
+> As a user, I want to clearly view the website and content on any device.
+
+  - The site is fully viewable and functional on Mobile, Tablet, and Desktop viewports.
+
+> As a user, I want to easily navigate the website so that I can find content quickly.
+
+ - On desktop, there is a menu at the top of the page which indicates other pages the user can visit.
+
+ - On tablet and mobile, there is a burger menu which allows the user to get around the site.
+
+ - Clicking the kitchen craft name logo takes the user to the homepage.
+
+> As a user, I want to be able to see what kitchen products are for sale and how much they are.
+
+ - Navigating to the products page takes the user to a page displaying product names, images, description and pricing.
+
+> As a user, I want to be able to see all the community shared recipes.
+
+ - The recipes page shows a list of user submitted recipies.
+
+ - The recipes in the recipes page shows which of the users in the community submitted the recipe.
+
+> As a user, I want to be able to search the community shared recipes.
+
+ - "At the top of the recipes page, there is a search bar.
+
+ - Searching for a recipe name returns only that recipe. 
+
+ - Searching for an ingredient returns all recipies that contain that ingredient. 
+
+ - Partial searches should still return results. 
+
+ - The search bar should turn red if the user does not fill out any options. 
+ 
+ - Clicking "Search" and hitting enter both allow the user to search once a term has been typed in."
+
+> As a user, I want to be able to see information about the different cuisines of the world.
+
+ - "The cuisines page shows a list of cuisines from around the world, with a little bit of information about each one.
+ 
+ - A little start should highlight the cuisine of the week, which is the featured cuisine on the home page.
+ 
+ - Hovering over the star on the cusine page should show a tooltip which lets the user know that this is the chosen cuisine of the week.
+
+> As a user, I want to be able to register to the website so that I can share my own recipes.
+
+ - When logged out or not registered, an option to register is available to the user in the top navigation menu. The user can click this and fill out a basic form to register for the site.
+
+ - "When logged in as a user, the ""Add Recipe"" option is available on the nav menu. This takes the user to a form to fill out a new recipe.
+
+When filling out the ""Add Recipe"" form, hitting submit will add a new recipe to the recipes page."
+
+> As a user, I want to be able to easily return to the website if I encounter a page error.
+
+ - When a page error is found, click on the home link to get back to the homepage.
+
+> As a registered user, I want to be able to log in to my account on the website.
+
+ - When not logged in or in a new session, the option to log in should be visible on the navigation.
+
+> As a registered user, I want to be able to view my profile, edit my details and change my password.
+
+ - Content
+
+> As a registered user, I want to be able to add, edit and delete my own recipes
+
+ - Content
+
+> As a registered user, I want to be able to see all my recipes on my profile page.
+
+ - Content
+
+> As an admin user, I want to be able to add, edit and delete cuisines
+
+ - Content
+
+> As the superuser, I want to be able to view and search the users page.
+
+ - Content
+
+> As the superuser, I want to be able to edit admins and bans for users.
+
+ - Content
+
+> As the superuser, I want to be able to delete users
+
+ - Content
 
 The live project is deployed [here](https://kitchen-craft.herokuapp.com/).
 

@@ -94,7 +94,7 @@ footer .container {
 }
 
 .social {
-    display:inline
+    display: inline
 }
 
 /* Generic form styles */
@@ -105,8 +105,8 @@ textarea {
     border-bottom: 1px solid #fff !important;
 }
 
-.dropdown-content li > span{
-    color:black;
+.dropdown-content li>span {
+    color: black;
 }
 
 span.character-counter {
@@ -128,17 +128,20 @@ span.character-counter {
     border-bottom: 2px solid #800080;
 }
 
-.intro-header h2 {
+.intro-header h1 {
     margin: 20px 0 0 0;
+    font-size: 3.56rem;
+    line-height: 110%;
+    color: #fff;
 }
 
 .intro-header p {
     margin: 0 0 20px 0;
 }
 
-.intro-header h2,
+.intro-header h1,
 .intro-header p {
-    background-color:rgba(100, 0, 95, 0.5);
+    background-color: rgba(100, 0, 95, 0.5);
     padding: 20px;
 }
 
@@ -146,6 +149,7 @@ span.character-counter {
     margin: 10.5px;
     padding: 25px
 }
+
 .home-footer-panel a {
     margin-bottom: 10px;
 }
@@ -154,8 +158,8 @@ span.character-counter {
 
 .products h1 {
     font-size: 2.3rem;
-    color:#fff;
-    background-color:#4a148c;
+    color: #fff;
+    background-color: #4a148c;
     padding: 30px 20px;
 }
 
@@ -173,7 +177,7 @@ span.character-counter {
 }
 
 .products .card {
-    padding-bottom:15px;
+    padding-bottom: 15px;
 }
 
 .products .card .card-title {
@@ -192,6 +196,16 @@ span.character-counter {
 }
 
 /* Register */
+
+.register-panel .card .card-content h1,
+.login-panel .card .card-content h1{
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    display: block;
+    line-height: 32px;
+    margin: 0 0 8px;
+}
 
 .register-input {
     padding: 0 30px;
@@ -257,6 +271,7 @@ span.character-counter {
 .recipe-info {
     margin: 40px 0 15px;
 }
+
 .collapsible-header {
     background-color: #4a148c;
 }
@@ -318,7 +333,7 @@ span.character-counter {
     height: 45px;
     position: relative;
     display: flex;
-    background-color:#4a148c41;
+    background-color: #4a148c41;
     border-bottom: 1px solid black;
 }
 
@@ -329,18 +344,18 @@ span.character-counter {
     color: black;
     border: none !important;
 }
-  
+
 .users-search input::placeholder {
     color: black;
 }
 
-.users-search input:focus{
+.users-search input:focus {
     color: black;
 }
-  
+
 .users-search button {
     width: 44px;
-    height:44px;
+    height: 44px;
     border: none;
     border-left: 1px solid black;
     background: #800080;
@@ -393,7 +408,7 @@ span.character-counter {
         padding: 0 6px;
     }
 
-    
+
     /* Footer */
 
     footer .social a i {
@@ -416,7 +431,7 @@ span.character-counter {
     .footer-copyright ul {
         margin: 0;
     }
-    
+
 }
 
 
@@ -426,7 +441,7 @@ span.character-counter {
         line-height: 3.1;
         font-size: 2.1rem;
     }
-    
+
     .intro-header {
         height: 400px;
     }
@@ -447,7 +462,7 @@ span.character-counter {
         padding-left: 0;
     }
 
-    .intro-header h2,
+    .intro-header h1,
     .intro-header p {
         margin-left: 40px;
         margin-right: 40px;

@@ -34,6 +34,7 @@ app.secret_key = os.environ.get('SECRET_KEY')
 # Create instance of pymongo and pass in flask app object
 mongo = PyMongo(app)
 
+
 # Default route decorator
 @app.route('/')
 # Home page route decorator
@@ -181,7 +182,7 @@ def login():
 def profile(username):
     """ Function requiring username param passed through from route. Check
     for current user session and if one does not exist then redirect to login
-    page. If session exists then render template for profile page passing 
+    page. If session exists then render template for profile page passing
     through username, recipes and cuisines variables.
     """
     # Search users collection by username from session and assign to variable
@@ -309,8 +310,11 @@ def recipe_search():
     # Find recipes in the recipes collection using an index text search on the
     #   index query variable and assign to new variable
     recipes = list(mongo.db.recipes.find({"$text": {"$search": index_query}}))
-    # Render the recipes.html page passing though the recipes variable
-    return render_template("recipes.html", recipes=recipes)
+    # Assign variable to a find on all cuisines sorted by ascending order
+    cuisines = list(mongo.db.cuisines.find().sort("cuisine_name", 1))
+    # Render the recipes.html page passing though the recipes and cuisines
+    #   variables
+    return render_template("recipes.html", recipes=recipes, cuisines=cuisines)
 
 
 # Add recipe page route decorator
@@ -687,7 +691,7 @@ def user_search():
     users = list(mongo.db.users.find({"$text": {"$search": index_query}}))
     # Render the users.html page passing though the users variable
     return render_template("users.html", users=users)
-    
+
 
 # Edit admin route decorator with user_id expected in route
 @app.route("/edit_admin/<user_id>", methods=['GET', 'POST'])
@@ -739,8 +743,8 @@ def edit_bans(user_id):
     flash(f"User: {user['username']} has been {status}")
     # Redirect to users route passing through username variable
     return redirect(url_for('users', username=session['user_session']))
-    
-    
+
+
 # Remove user route decorator with user_id expected in route
 @app.route("/remove_user/<user_id>")
 def remove_user(user_id):
