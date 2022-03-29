@@ -660,7 +660,11 @@ View the live project [here](https://kitchen-craft.herokuapp.com/).
     ![W3C CSS Validation Check](docs/readmeimages/cssvalidator-style-02.png)
 
 - WAVE, a Web Accessibility Evaluation Tool was used for contrast testing.
- ![WAVE Web Accessibility Evaluation Tool](docs/readmeimages/WAVE-results.png)
+    - No contrast errors found.
+    - 1 Error was returned for a Materialize specific sidenav trigger
+    ![WAVE Error](docs/readmeimages/WAVE-error.png)
+    ![WAVE Error Code](docs/readmeimages/WAVE-errorcode.png)
+
 
 - Lighthouse was used for performance, accessibility and SEO testing.<br>
     - Each page returned a score of **85-100** for each page.
